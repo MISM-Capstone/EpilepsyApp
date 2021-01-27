@@ -11,15 +11,15 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		276809C37407ADCAC5075E1F /* libPods-EpilepsyApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA3D99238836E04B728CD01 /* libPods-EpilepsyApp.a */; };
+		250C5D12CD015D121351C651 /* libPods-EpilepsyApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA36BA155BE15AEC67767DD7 /* libPods-EpilepsyApp-tvOSTests.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* EpilepsyAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* EpilepsyAppTests.m */; };
-		4F8B52B3D76E2BA06D1F93A3 /* libPods-EpilepsyApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BF0EA92212C74151AA228F /* libPods-EpilepsyApp-tvOS.a */; };
+		59798CB0BA2C50133BD65355 /* libPods-EpilepsyApp-EpilepsyAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 946B589E0C68573F9788ACF8 /* libPods-EpilepsyApp-EpilepsyAppTests.a */; };
+		7F3A86E25428099C750D175F /* libPods-EpilepsyApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C14B40B57E1D8460F1E15E /* libPods-EpilepsyApp.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		8515B3A291CBB9955CFC5C3A /* libPods-EpilepsyApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A73EFACA0AF642F79FD252E0 /* libPods-EpilepsyApp-tvOSTests.a */; };
-		91E352FFFAC0D10AEFD038AE /* libPods-EpilepsyApp-EpilepsyAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AA9F678BCE8F8EB88548287 /* libPods-EpilepsyApp-EpilepsyAppTests.a */; };
+		D1EF446AB943BF0E306EA0E4 /* libPods-EpilepsyApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8BABF9A1436C3CD7A261372 /* libPods-EpilepsyApp-tvOS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,29 +44,29 @@
 		00E356EE1AD99517003FC87E /* EpilepsyAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EpilepsyAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* EpilepsyAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EpilepsyAppTests.m; sourceTree = "<group>"; };
-		02BF0EA92212C74151AA228F /* libPods-EpilepsyApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EpilepsyApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		0683725251FED3AA6E93F194 /* Pods-EpilepsyApp-EpilepsyAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EpilepsyApp-EpilepsyAppTests.release.xcconfig"; path = "Target Support Files/Pods-EpilepsyApp-EpilepsyAppTests/Pods-EpilepsyApp-EpilepsyAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* EpilepsyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EpilepsyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = EpilepsyApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = EpilepsyApp/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = EpilepsyApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = EpilepsyApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = EpilepsyApp/main.m; sourceTree = "<group>"; };
-		24E33D9F54A39867D49415BE /* Pods-EpilepsyApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EpilepsyApp-tvOS.release.xcconfig"; path = "Target Support Files/Pods-EpilepsyApp-tvOS/Pods-EpilepsyApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		1907F7D52E296BF839B5AF3D /* Pods-EpilepsyApp-EpilepsyAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EpilepsyApp-EpilepsyAppTests.release.xcconfig"; path = "Target Support Files/Pods-EpilepsyApp-EpilepsyAppTests/Pods-EpilepsyApp-EpilepsyAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		28C65E8B1645BD12624A78B3 /* Pods-EpilepsyApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EpilepsyApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-EpilepsyApp-tvOSTests/Pods-EpilepsyApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* EpilepsyApp-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EpilepsyApp-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* EpilepsyApp-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "EpilepsyApp-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		360962A8F76893E972DFFAFE /* Pods-EpilepsyApp-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EpilepsyApp-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-EpilepsyApp-tvOS/Pods-EpilepsyApp-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		3DF3B130EAB46F5B800C1860 /* Pods-EpilepsyApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EpilepsyApp.debug.xcconfig"; path = "Target Support Files/Pods-EpilepsyApp/Pods-EpilepsyApp.debug.xcconfig"; sourceTree = "<group>"; };
-		5D13BA5727D521159609FD55 /* Pods-EpilepsyApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EpilepsyApp.release.xcconfig"; path = "Target Support Files/Pods-EpilepsyApp/Pods-EpilepsyApp.release.xcconfig"; sourceTree = "<group>"; };
-		6AA9F678BCE8F8EB88548287 /* libPods-EpilepsyApp-EpilepsyAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EpilepsyApp-EpilepsyAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		31336310F0B84960F96DCC67 /* Pods-EpilepsyApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EpilepsyApp-tvOS.release.xcconfig"; path = "Target Support Files/Pods-EpilepsyApp-tvOS/Pods-EpilepsyApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		63E3A200FD3F3428145D0505 /* Pods-EpilepsyApp-EpilepsyAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EpilepsyApp-EpilepsyAppTests.debug.xcconfig"; path = "Target Support Files/Pods-EpilepsyApp-EpilepsyAppTests/Pods-EpilepsyApp-EpilepsyAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = EpilepsyApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		8CA3D99238836E04B728CD01 /* libPods-EpilepsyApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EpilepsyApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A73EFACA0AF642F79FD252E0 /* libPods-EpilepsyApp-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EpilepsyApp-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		BE0D943C442F1F1BD4FBE231 /* Pods-EpilepsyApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EpilepsyApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-EpilepsyApp-tvOSTests/Pods-EpilepsyApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
-		CD146C46F4F5F52C09EAA1FE /* Pods-EpilepsyApp-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EpilepsyApp-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-EpilepsyApp-tvOSTests/Pods-EpilepsyApp-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		8AC9B9C68D5EC7E9B5D976BD /* Pods-EpilepsyApp-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EpilepsyApp-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-EpilepsyApp-tvOS/Pods-EpilepsyApp-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		946B589E0C68573F9788ACF8 /* libPods-EpilepsyApp-EpilepsyAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EpilepsyApp-EpilepsyAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9AC1CDF38EF82D43E7460CBF /* Pods-EpilepsyApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EpilepsyApp.release.xcconfig"; path = "Target Support Files/Pods-EpilepsyApp/Pods-EpilepsyApp.release.xcconfig"; sourceTree = "<group>"; };
+		A8BABF9A1436C3CD7A261372 /* libPods-EpilepsyApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EpilepsyApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9C14B40B57E1D8460F1E15E /* libPods-EpilepsyApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EpilepsyApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDAE4B62794EF8AC9AE67775 /* Pods-EpilepsyApp-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EpilepsyApp-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-EpilepsyApp-tvOSTests/Pods-EpilepsyApp-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D495CD3AB9CD79DC89CA5AE0 /* Pods-EpilepsyApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EpilepsyApp.debug.xcconfig"; path = "Target Support Files/Pods-EpilepsyApp/Pods-EpilepsyApp.debug.xcconfig"; sourceTree = "<group>"; };
+		DA36BA155BE15AEC67767DD7 /* libPods-EpilepsyApp-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EpilepsyApp-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		FBC8FA404F82FFD0358E51C5 /* Pods-EpilepsyApp-EpilepsyAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EpilepsyApp-EpilepsyAppTests.debug.xcconfig"; path = "Target Support Files/Pods-EpilepsyApp-EpilepsyAppTests/Pods-EpilepsyApp-EpilepsyAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91E352FFFAC0D10AEFD038AE /* libPods-EpilepsyApp-EpilepsyAppTests.a in Frameworks */,
+				59798CB0BA2C50133BD65355 /* libPods-EpilepsyApp-EpilepsyAppTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				276809C37407ADCAC5075E1F /* libPods-EpilepsyApp.a in Frameworks */,
+				7F3A86E25428099C750D175F /* libPods-EpilepsyApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,7 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F8B52B3D76E2BA06D1F93A3 /* libPods-EpilepsyApp-tvOS.a in Frameworks */,
+				D1EF446AB943BF0E306EA0E4 /* libPods-EpilepsyApp-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,7 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8515B3A291CBB9955CFC5C3A /* libPods-EpilepsyApp-tvOSTests.a in Frameworks */,
+				250C5D12CD015D121351C651 /* libPods-EpilepsyApp-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,6 +122,22 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		0E8E3567F0D5DE162A1AE6BA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D495CD3AB9CD79DC89CA5AE0 /* Pods-EpilepsyApp.debug.xcconfig */,
+				9AC1CDF38EF82D43E7460CBF /* Pods-EpilepsyApp.release.xcconfig */,
+				63E3A200FD3F3428145D0505 /* Pods-EpilepsyApp-EpilepsyAppTests.debug.xcconfig */,
+				1907F7D52E296BF839B5AF3D /* Pods-EpilepsyApp-EpilepsyAppTests.release.xcconfig */,
+				8AC9B9C68D5EC7E9B5D976BD /* Pods-EpilepsyApp-tvOS.debug.xcconfig */,
+				31336310F0B84960F96DCC67 /* Pods-EpilepsyApp-tvOS.release.xcconfig */,
+				CDAE4B62794EF8AC9AE67775 /* Pods-EpilepsyApp-tvOSTests.debug.xcconfig */,
+				28C65E8B1645BD12624A78B3 /* Pods-EpilepsyApp-tvOSTests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		13B07FAE1A68108700A75B9A /* EpilepsyApp */ = {
 			isa = PBXGroup;
 			children = (
@@ -141,10 +157,10 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				8CA3D99238836E04B728CD01 /* libPods-EpilepsyApp.a */,
-				6AA9F678BCE8F8EB88548287 /* libPods-EpilepsyApp-EpilepsyAppTests.a */,
-				02BF0EA92212C74151AA228F /* libPods-EpilepsyApp-tvOS.a */,
-				A73EFACA0AF642F79FD252E0 /* libPods-EpilepsyApp-tvOSTests.a */,
+				B9C14B40B57E1D8460F1E15E /* libPods-EpilepsyApp.a */,
+				946B589E0C68573F9788ACF8 /* libPods-EpilepsyApp-EpilepsyAppTests.a */,
+				A8BABF9A1436C3CD7A261372 /* libPods-EpilepsyApp-tvOS.a */,
+				DA36BA155BE15AEC67767DD7 /* libPods-EpilepsyApp-tvOSTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -164,7 +180,7 @@
 				00E356EF1AD99517003FC87E /* EpilepsyAppTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				EAE56D9D4888FFCA9EE7E6BE /* Pods */,
+				0E8E3567F0D5DE162A1AE6BA /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -182,22 +198,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		EAE56D9D4888FFCA9EE7E6BE /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				3DF3B130EAB46F5B800C1860 /* Pods-EpilepsyApp.debug.xcconfig */,
-				5D13BA5727D521159609FD55 /* Pods-EpilepsyApp.release.xcconfig */,
-				FBC8FA404F82FFD0358E51C5 /* Pods-EpilepsyApp-EpilepsyAppTests.debug.xcconfig */,
-				0683725251FED3AA6E93F194 /* Pods-EpilepsyApp-EpilepsyAppTests.release.xcconfig */,
-				360962A8F76893E972DFFAFE /* Pods-EpilepsyApp-tvOS.debug.xcconfig */,
-				24E33D9F54A39867D49415BE /* Pods-EpilepsyApp-tvOS.release.xcconfig */,
-				CD146C46F4F5F52C09EAA1FE /* Pods-EpilepsyApp-tvOSTests.debug.xcconfig */,
-				BE0D943C442F1F1BD4FBE231 /* Pods-EpilepsyApp-tvOSTests.release.xcconfig */,
-			);
-			name = Pods;
-			path = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -205,11 +205,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "EpilepsyAppTests" */;
 			buildPhases = (
-				A43C0DB828101134C031BE27 /* [CP] Check Pods Manifest.lock */,
+				EBB64C4F631FA6E98E028DB8 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				015283A186E300EF4733AA26 /* [CP] Copy Pods Resources */,
+				2E7864964DEF9DD9638CF3F9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -225,13 +225,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "EpilepsyApp" */;
 			buildPhases = (
-				6FCB9C7191F40AA024012A3E /* [CP] Check Pods Manifest.lock */,
+				B115B53E53DDA2B5945E7C36 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				D49EEDB9EE643C4289C68DC8 /* [CP] Copy Pods Resources */,
+				7F602F9B6566C016993A580F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -246,7 +246,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "EpilepsyApp-tvOS" */;
 			buildPhases = (
-				D502362A92514C5DC47B8822 /* [CP] Check Pods Manifest.lock */,
+				C55ACF4FFD5F9597A268C17C /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
 				2D02E4771E0B4A5D006451C7 /* Sources */,
 				2D02E4781E0B4A5D006451C7 /* Frameworks */,
@@ -266,7 +266,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "EpilepsyApp-tvOSTests" */;
 			buildPhases = (
-				0931703F2046B3AD7B289C6E /* [CP] Check Pods Manifest.lock */,
+				B6F8B87E4A250F2BE32E80C9 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
 				2D02E48D1E0B4A5D006451C7 /* Frameworks */,
 				2D02E48E1E0B4A5D006451C7 /* Resources */,
@@ -377,7 +377,21 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
-		015283A186E300EF4733AA26 /* [CP] Copy Pods Resources */ = {
+		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native Code And Images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		2E7864964DEF9DD9638CF3F9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -395,43 +409,25 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EpilepsyApp-EpilepsyAppTests/Pods-EpilepsyApp-EpilepsyAppTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		0931703F2046B3AD7B289C6E /* [CP] Check Pods Manifest.lock */ = {
+		7F602F9B6566C016993A580F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
+				"${PODS_ROOT}/Target Support Files/Pods-EpilepsyApp/Pods-EpilepsyApp-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-EpilepsyApp-tvOSTests-checkManifestLockResult.txt",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EpilepsyApp/Pods-EpilepsyApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Bundle React Native Code And Images";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
-		};
-		6FCB9C7191F40AA024012A3E /* [CP] Check Pods Manifest.lock */ = {
+		B115B53E53DDA2B5945E7C36 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -453,7 +449,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A43C0DB828101134C031BE27 /* [CP] Check Pods Manifest.lock */ = {
+		B6F8B87E4A250F2BE32E80C9 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -468,32 +464,14 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-EpilepsyApp-EpilepsyAppTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-EpilepsyApp-tvOSTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D49EEDB9EE643C4289C68DC8 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-EpilepsyApp/Pods-EpilepsyApp-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EpilepsyApp/Pods-EpilepsyApp-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D502362A92514C5DC47B8822 /* [CP] Check Pods Manifest.lock */ = {
+		C55ACF4FFD5F9597A268C17C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -509,6 +487,28 @@
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-EpilepsyApp-tvOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EBB64C4F631FA6E98E028DB8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-EpilepsyApp-EpilepsyAppTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -608,7 +608,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FBC8FA404F82FFD0358E51C5 /* Pods-EpilepsyApp-EpilepsyAppTests.debug.xcconfig */;
+			baseConfigurationReference = 63E3A200FD3F3428145D0505 /* Pods-EpilepsyApp-EpilepsyAppTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -631,7 +631,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0683725251FED3AA6E93F194 /* Pods-EpilepsyApp-EpilepsyAppTests.release.xcconfig */;
+			baseConfigurationReference = 1907F7D52E296BF839B5AF3D /* Pods-EpilepsyApp-EpilepsyAppTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -651,7 +651,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3DF3B130EAB46F5B800C1860 /* Pods-EpilepsyApp.debug.xcconfig */;
+			baseConfigurationReference = D495CD3AB9CD79DC89CA5AE0 /* Pods-EpilepsyApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -674,7 +674,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5D13BA5727D521159609FD55 /* Pods-EpilepsyApp.release.xcconfig */;
+			baseConfigurationReference = 9AC1CDF38EF82D43E7460CBF /* Pods-EpilepsyApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -695,7 +695,7 @@
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 360962A8F76893E972DFFAFE /* Pods-EpilepsyApp-tvOS.debug.xcconfig */;
+			baseConfigurationReference = 8AC9B9C68D5EC7E9B5D976BD /* Pods-EpilepsyApp-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -723,7 +723,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 24E33D9F54A39867D49415BE /* Pods-EpilepsyApp-tvOS.release.xcconfig */;
+			baseConfigurationReference = 31336310F0B84960F96DCC67 /* Pods-EpilepsyApp-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -751,7 +751,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD146C46F4F5F52C09EAA1FE /* Pods-EpilepsyApp-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = CDAE4B62794EF8AC9AE67775 /* Pods-EpilepsyApp-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -778,7 +778,7 @@
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BE0D943C442F1F1BD4FBE231 /* Pods-EpilepsyApp-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = 28C65E8B1645BD12624A78B3 /* Pods-EpilepsyApp-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
