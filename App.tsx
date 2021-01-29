@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -8,30 +9,38 @@
  * @format
  */
 
-import 'react-native-gesture-handler';
 import React from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import Home from "./src/Home";
+import Home from "./src/pages/Home";
+import Trends from "./src/pages/Trends";
 
-declare const global: {HermesInternal: null | {}};
-
-const App = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      
-      <SafeAreaView>
-        <NavigationContainer>
-          <Home />
-        </NavigationContainer>
-      </SafeAreaView>
-    </>
-  );
+export type RootStackParamList = {
+    Home: undefined;
+    Trends: undefined;
 };
 
-export default App;
+const Stack = createStackNavigator<RootStackParamList>();
+
+const App = () => {
+    return (
+        <SafeAreaProvider>
+            <NavigationContainer>
+                <Stack.Navigator initialRouteName="Home" headerMode="none">
+                    <Stack.Screen
+                        name="Home"
+                        component={Home}
+                    />
+                    <Stack.Screen
+                        name="Trends"
+                        component={Trends}
+                    />
+                </Stack.Navigator>
+            </NavigationContainer>
+        </SafeAreaProvider>
+     );
+ };
+
+ export default App;
