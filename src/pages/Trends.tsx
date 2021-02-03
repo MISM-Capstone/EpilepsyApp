@@ -3,10 +3,9 @@ import { Pressable, StatusBar, Text, View } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import HeaderTitle from "../components/HeaderTitle";
-import {RootStackParamList} from "../../App";
+import {RootStackParamList} from "../navigation/TrendsNavigation";
 
-import styles from "../styles/HomeStyles";
+import styles from "../styles/ButtonStyles";
 import {default as mainStyle} from "../styles/MainStyles";
 
 type TrendsScreenNavigationProp = StackNavigationProp<
@@ -20,21 +19,18 @@ type Props = {
 
 const Trends = (props:Props) => {
     return (
-        <>
-            <HeaderTitle title="Trends" />
-            <SafeAreaView style={mainStyle.container}>
-                <StatusBar barStyle="dark-content" />
-                <View style={styles.surveyButtonContainer}>
-                    <Text>Trends</Text>
-                    <Pressable
-                        style={styles.surveyButton}
-                        onPress={() => props.navigation.navigate("Home")}
-                    >
-                        <Text style={styles.surveyButtonText}>Home</Text>
-                    </Pressable>
-                </View>
-            </SafeAreaView>
-        </>
+        <SafeAreaView style={mainStyle.container}>
+            <StatusBar barStyle="dark-content" />
+            <View style={styles.surveyButtonContainer}>
+                <Text>Trends</Text>
+                {/* <Pressable
+                    style={styles.surveyButton}
+                    onPress={() => props.navigation.navigate("Home")}
+                >
+                    <Text style={styles.surveyButtonText}>Home</Text>
+                </Pressable> */}
+            </View>
+        </SafeAreaView>
     );
 }
 

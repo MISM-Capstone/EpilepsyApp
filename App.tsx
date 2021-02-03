@@ -11,33 +11,18 @@ import 'react-native-gesture-handler';
 
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { StatusBar } from 'react-native';
 
-import Home from "./src/pages/Home";
-import Trends from "./src/pages/Trends";
+import BottomTabs from "./src/components/BottomTabs";
 
-export type RootStackParamList = {
-    Home: undefined;
-    Trends: undefined;
-};
-
-const Stack = createStackNavigator<RootStackParamList>();
 
 const App = () => {
     return (
         <SafeAreaProvider>
+            <StatusBar barStyle="dark-content" />
             <NavigationContainer>
-                <Stack.Navigator initialRouteName="Home" headerMode="none">
-                    <Stack.Screen
-                        name="Home"
-                        component={Home}
-                    />
-                    <Stack.Screen
-                        name="Trends"
-                        component={Trends}
-                    />
-                </Stack.Navigator>
+                <BottomTabs />
             </NavigationContainer>
         </SafeAreaProvider>
      );
