@@ -1,31 +1,79 @@
-import React from 'react';
-import { StatusBar, Pressable, Text, View } from 'react-native';
+import React, { useState } from 'react';
+
+import { Text, View, Button, Platform } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { TextInput } from 'react-native-gesture-handler';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from "../navigation/HomeNavigation";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {RootStackParamList} from "../navigation/HomeNavigation"
-
-import styles from "../styles/ButtonStyles";
-import {default as mainStyle} from "../styles/MainStyles";
-
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList,'DailySurvey'>;
+type DailySurveyScreenNavigationProp = StackNavigationProp<RootStackParamList,'DailySurvey'>;
 
 type Props = {
-  navigation: HomeScreenNavigationProp;
+  navigation: DailySurveyScreenNavigationProp;
 };
 
 
 const DailySurvey = (props:Props) => {
-    return (
-        <>
-            <SafeAreaView style={mainStyle.container}>
-                <View style={styles.surveyButtonContainer}>
-                    <Text>Survey</Text>
-                </View>
+    const [date, changeDate] = useState<Date>(new Date(Date.now()));
+    const [time, changeTime] = useState(new Date(Date.now()));
+    const [locationText, onChangeLocationText] = useState('');
+    const [detailsText, onChangeDetailsText] = useState('');
 
-            </SafeAreaView>
-        </>
-    );
+    const storeData = async () => {
+        try {
+            var arr = [date, time, locationText, detailsText]
+            var json = JSON.stringify(arr);
+            console.log(json);
+            await AsyncStorage.setItem('@survey_resp', json);
+        } catch (e) {
+            console.error(e);
+        } finally {
+            props.navigation.navigate("Home")
+        }
+    }
+
+    const navigateBack = () => {
+        props.navigation.navigate("Home")
+    }
+
+    return (
+        <SafeAreaView>
+            <View style={{ padding: 12 }}>
+                <Text>Date of Seizure</Text>
+                <DateTimePicker
+                    testID="datePicker"
+                    value={date}
+                    mode="date"
+                    display="default"
+                    onChange={() => changeDate}
+                />
+                <Text>Time of Seizure</Text>
+                <DateTimePicker
+                    testID="timePicker"
+                    value={time}
+                    mode="time"
+                    display="default"
+                    onChange={() => changeTime}
+                />
+                <Text>Location</Text>
+                <TextInput
+                    style={{ height: 40, backgroundColor: 'lightgray' }}
+                    onChangeText={text => onChangeLocationText(text)}
+                    value={locationText} />
+                <Text>Details</Text>
+                <TextInput
+                    style={{ backgroundColor: 'lightgray', height: 100 }}
+                    onChangeText={text => onChangeDetailsText(text)}
+                    value={detailsText}
+                    multiline
+                    numberOfLines={5} />
+            </View>
+            <Button title="Save" onPress={() => storeData()} />
+            <Button title="Cancel" onPress={navigateBack} />
+        </SafeAreaView>
+    )
 }
 
 export default DailySurvey;

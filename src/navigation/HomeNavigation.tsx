@@ -3,12 +3,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Home from "../pages/Home";
 import DailySurvey from "../pages/DailySurvey";
+import SurveyHistory from "../pages/SurveyHistory";
 
 import HeaderStyle from "../styles/HeaderStyle";
 
 export type RootStackParamList = {
     Home: undefined;
     DailySurvey: undefined;
+    SurveyHistory: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -29,6 +31,13 @@ const HomeNavigation = () => {
                         component={DailySurvey}
                         options={{
                           title: 'Daily Survey'
+                        }}
+                />
+                <Stack.Screen
+                        name="SurveyHistory"
+                        component={SurveyHistory}
+                        options={{
+                          title: 'Survey History'
                         }}
                 />
             </Stack.Navigator>
