@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Trends from "../pages/Trends";
+import Trends from "../pages/Trends/Trends";
 
 import HeaderStyle from "../styles/HeaderStyle";
 

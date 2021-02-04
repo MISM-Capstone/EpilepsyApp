@@ -4,11 +4,11 @@ import { View } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import {HomeStackParamList} from "../navigation/HomeNavigation"
-import NavigationButton from "../components/NavigationButton";
+import {HomeStackParamList} from "../../navigation/HomeNavigation"
+import NavigationButton from "../../components/NavigationButton";
 
-import HomeStyles from "../styles/HomeStyles";
-import {default as mainStyle} from "../styles/MainStyles";
+import HomeStyles from "../../styles/HomeStyles";
+import {default as mainStyle} from "../../styles/MainStyles";
 
 type HomeScreenNavigationProp = StackNavigationProp<HomeStackParamList,'Home'>;
 

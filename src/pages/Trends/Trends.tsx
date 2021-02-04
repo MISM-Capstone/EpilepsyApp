@@ -3,10 +3,10 @@ import { Pressable, StatusBar, Text, View } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import {TrendsStackParamList} from "../navigation/TrendsNavigation";
+import {TrendsStackParamList} from "../../navigation/TrendsNavigation";
 
-import styles from "../styles/ButtonStyles";
-import {default as mainStyle} from "../styles/MainStyles";
+import styles from "../../styles/ButtonStyles";
+import {default as mainStyle} from "../../styles/MainStyles";
 
 type TrendsScreenNavigationProp = StackNavigationProp<
   TrendsStackParamList,

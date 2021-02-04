@@ -3,11 +3,11 @@ import { Pressable, StatusBar, Text, View } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import { ProfileStackParamList } from '../navigation/ProfileNavigation';
+import { ProfileStackParamList } from '../../navigation/ProfileNavigation';
 
-import MainStyles from "../styles/MainStyles";
-import NavigationButton from '../components/NavigationButton';
-import AuthContext from '../Authentication/AuthContext';
+import MainStyles from "../../styles/MainStyles";
+import NavigationButton from '../../components/NavigationButton';
+import AuthContext from '../../Authentication/AuthContext';
 
 type TrendsScreenNavigationProp = StackNavigationProp<
   ProfileStackParamList,

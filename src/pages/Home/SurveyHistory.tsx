@@ -2,8 +2,8 @@ import React, { Component, useEffect, useState } from 'react';
 import { Button, SafeAreaView, Text, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
-import {HomeStackParamList} from "../navigation/HomeNavigation"
-import { STORAGE_KEYS } from '../constants';
+import {HomeStackParamList} from "../../navigation/HomeNavigation"
+import { STORAGE_KEYS } from '../../constants';
 
 type SurveyHistoryScreenNavigationProp = StackNavigationProp<
     HomeStackParamList,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Profile from "../pages/Profile";
+import Profile from "../pages/Profile/Profile";
 
 import HeaderStyle from "../styles/HeaderStyle";
 

@@ -5,17 +5,17 @@ import SafeAreaView from 'react-native-safe-area-view';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { TextInput } from 'react-native-gesture-handler';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { HomeStackParamList } from "../navigation/HomeNavigation";
+import { HomeStackParamList } from "../../navigation/HomeNavigation";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-type RecordMedicationScreenNavigationProp = StackNavigationProp<HomeStackParamList,'RecordMedication'>;
+type DailySurveyScreenNavigationProp = StackNavigationProp<HomeStackParamList,'DailySurvey'>;
 
 type Props = {
-  navigation: RecordMedicationScreenNavigationProp;
+  navigation: DailySurveyScreenNavigationProp;
 };
 
 
-export default function RecordMedication(props:Props) {
+const DailySurvey = (props:Props) => {
     const [date, changeDate] = useState<Date>(new Date(Date.now()));
     const [time, changeTime] = useState(new Date(Date.now()));
     const [locationText, onChangeLocationText] = useState('');
@@ -24,7 +24,6 @@ export default function RecordMedication(props:Props) {
     const storeData = async () => {
         try {
             var arr = ["Date", date, "Time", time, "Location", locationText, "Details", detailsText]
-            
             var json = JSON.stringify(arr);
             console.log(json);
             await AsyncStorage.setItem('@survey_resp', json);
@@ -76,3 +75,5 @@ export default function RecordMedication(props:Props) {
         </SafeAreaView>
     )
 }
+
+export default DailySurvey;
