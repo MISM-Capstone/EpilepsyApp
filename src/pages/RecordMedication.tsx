@@ -8,14 +8,14 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from "../navigation/HomeNavigation";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-type DailySurveyScreenNavigationProp = StackNavigationProp<HomeStackParamList,'DailySurvey'>;
+type RecordMedicationScreenNavigationProp = StackNavigationProp<HomeStackParamList,'RecordMedication'>;
 
 type Props = {
-  navigation: DailySurveyScreenNavigationProp;
+  navigation: RecordMedicationScreenNavigationProp;
 };
 
 
-const DailySurvey = (props:Props) => {
+export default function RecordMedication(props:Props) {
     const [date, changeDate] = useState<Date>(new Date(Date.now()));
     const [time, changeTime] = useState(new Date(Date.now()));
     const [locationText, onChangeLocationText] = useState('');
@@ -24,6 +24,7 @@ const DailySurvey = (props:Props) => {
     const storeData = async () => {
         try {
             var arr = ["Date", date, "Time", time, "Location", locationText, "Details", detailsText]
+            
             var json = JSON.stringify(arr);
             console.log(json);
             await AsyncStorage.setItem('@survey_resp', json);
@@ -75,5 +76,3 @@ const DailySurvey = (props:Props) => {
         </SafeAreaView>
     )
 }
-
-export default DailySurvey;

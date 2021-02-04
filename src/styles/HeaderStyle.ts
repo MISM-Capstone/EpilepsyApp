@@ -7,15 +7,15 @@ const HeaderStyle:StackNavigationOptions = {
         height: 100
     },
     headerTitleStyle: {
-        fontSize: 35,
+        fontSize: 26,
         fontWeight: 'bold',
     },
     headerTitleContainerStyle : {
-        height: 100,
+        height: 85,
         paddingTop: 20
     },
     headerLeftContainerStyle : {
-        paddingBottom: 15
+        paddingBottom: 14
     }
   };
 
