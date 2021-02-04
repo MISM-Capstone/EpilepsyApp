@@ -1,17 +1,10 @@
 import { StyleSheet } from "react-native";
 
-const styles = StyleSheet.create({
-    titleText:{
-        fontSize: 40,
-        fontWeight: "bold",
-        textAlign: "center",
-        backgroundColor: "rgba(46, 77, 158, 0.2)"
-    },
+const ButtonStyles = StyleSheet.create({
     surveyButtonContainer:{
         backgroundColor: "#2E4D9E",
         paddingTop: 40,
-        paddingBottom: 40,
-        minHeight: 770
+        paddingBottom: 40
     },
     surveyButton:{
         marginRight:40,
@@ -33,4 +26,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default styles;
+export default ButtonStyles;

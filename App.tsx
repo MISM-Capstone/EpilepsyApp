@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -8,30 +9,23 @@
  * @format
  */
 
-import 'react-native-gesture-handler';
 import React from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { StatusBar } from 'react-native';
 
-import Home from "./src/Home";
+import BottomTabs from "./src/components/BottomTabs";
 
-declare const global: {HermesInternal: null | {}};
 
 const App = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      
-      <SafeAreaView>
-        <NavigationContainer>
-          <Home />
-        </NavigationContainer>
-      </SafeAreaView>
-    </>
-  );
-};
+    return (
+        <SafeAreaProvider>
+            <StatusBar barStyle="dark-content" />
+            <NavigationContainer>
+                <BottomTabs />
+            </NavigationContainer>
+        </SafeAreaProvider>
+     );
+ };
 
-export default App;
+ export default App;
