@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { View } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -32,6 +33,10 @@ const Home = (props:Props) => {
                 <NavigationButton
                     title="Record Medication"
                     navigate={() => props.navigation.navigate("DailySurvey")}
+                />
+                <NavigationButton
+                    title="Survey History"
+                    navigate={() => props.navigation.navigate("SurveyHistory")}
                 />
             </View>
 
