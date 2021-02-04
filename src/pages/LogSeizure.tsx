@@ -7,15 +7,16 @@ import { TextInput } from 'react-native-gesture-handler';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from "../navigation/HomeNavigation";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { STORAGE_KEYS } from '../constants';
 
-type DailySurveyScreenNavigationProp = StackNavigationProp<HomeStackParamList,'DailySurvey'>;
+type LogSeizureScreenNavigationProp = StackNavigationProp<HomeStackParamList,'LogSeizure'>;
 
 type Props = {
-  navigation: DailySurveyScreenNavigationProp;
+  navigation: LogSeizureScreenNavigationProp;
 };
 
 
-const DailySurvey = (props:Props) => {
+export default function LogSeizure(props:Props) {
     const [date, changeDate] = useState<Date>(new Date(Date.now()));
     const [time, changeTime] = useState(new Date(Date.now()));
     const [locationText, onChangeLocationText] = useState('');
@@ -23,10 +24,10 @@ const DailySurvey = (props:Props) => {
 
     const storeData = async () => {
         try {
-            var arr = ["Date", date, "Time", time, "Location", locationText, "Details", detailsText]
+            var arr = {"Date": date, "Time": time, "Location": locationText, "Details": detailsText};
             var json = JSON.stringify(arr);
             console.log(json);
-            await AsyncStorage.setItem('@survey_resp', json);
+            await AsyncStorage.setItem(STORAGE_KEYS.survey, json);
         } catch (e) {
             console.error(e);
         } finally {
@@ -75,5 +76,3 @@ const DailySurvey = (props:Props) => {
         </SafeAreaView>
     )
 }
-
-export default DailySurvey;
