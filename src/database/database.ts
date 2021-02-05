@@ -9,9 +9,9 @@
 import SQLite from 'react-native-sqlite-storage';
 SQLite.enablePromise(true);
 
-const DATABASE = {
-    name: "",
-    version: "",
-    displayName: "",
-    size: ""
-}
+// const DATABASE = {
+//     name: "",
+//     version: "",
+//     displayName: "",
+//     size: ""
+// }

@@ -13,8 +13,7 @@ import LoginReducer, { ReducerState } from './src/reducers/LoginReducer';
 import AuthContext from './src/Authentication/AuthContext';
 import { AddAuthToken, GetAuthToken, RemoveAuthToken } from './src/Authentication/AuthFunctions';
 
-
-const initialReducerState:ReducerState = {
+const initialReducerState: ReducerState = {
     isLoading: true,
     isSignout: false,
     userToken: null,
@@ -22,22 +21,22 @@ const initialReducerState:ReducerState = {
 
 function SplashScreen() {
     return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
+        <View>
+            <Text>Loading...</Text>
+        </View>
     );
-  }
+}
 
 const App = () => {
     const [state, dispatch] = useReducer(LoginReducer, initialReducerState);
 
     useEffect(() => {
         GetAuthToken(dispatch);
-    },[]);
+    }, []);
 
     const authContext = useMemo(
         () => ({
-            signIn: async (data:any) => {
+            signIn: async (data: any) => {
                 // In a production app, we need to send some data (usually username, password) to server and get a token
                 // We will also need to handle errors if sign in failed
                 // After getting token, we need to persist the token using `AsyncStorage`
@@ -50,7 +49,7 @@ const App = () => {
                 RemoveAuthToken();
                 dispatch({ type: CONTEXT_OPTIONS.logout })
             },
-            signUp: async (data:any) => {
+            signUp: async (data: any) => {
                 // In a production app, we need to send user data to server and get a token
                 // We will also need to handle errors if sign up failed
                 // After getting token, we need to persist the token using `AsyncStorage`
@@ -59,8 +58,8 @@ const App = () => {
                 AddAuthToken(token);
                 dispatch({ type: CONTEXT_OPTIONS.login, token: token });
             },
-          }),
-          []
+        }),
+        []
     );
 
     return (
@@ -70,15 +69,15 @@ const App = () => {
                 <NavigationContainer>
                     {state.isLoading ? (
                         <SplashScreen />
-                    ): state.userToken === null ? (
+                    ) : state.userToken === null ? (
                         <LoginNavigation />
                     ) : (
-                        <BottomTabs />
-                    )}
+                                <BottomTabs />
+                            )}
                 </NavigationContainer>
             </SafeAreaProvider>
         </AuthContext.Provider>
-     );
- };
+    );
+};
 
- export default App;
+export default App;
