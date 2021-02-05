@@ -11,7 +11,7 @@ import LoginNavigation from './src/navigation/LoginNavigation';
 import { CONTEXT_OPTIONS } from './src/constants';
 import LoginReducer, { ReducerState } from './src/reducers/LoginReducer';
 import AuthContext from './src/Authentication/AuthContext';
-import { GetAuthToken } from './src/Authentication/AuthFunctions';
+import { AddAuthToken, GetAuthToken, RemoveAuthToken } from './src/Authentication/AuthFunctions';
 
 
 const initialReducerState:ReducerState = {
@@ -42,16 +42,22 @@ const App = () => {
                 // We will also need to handle errors if sign in failed
                 // After getting token, we need to persist the token using `AsyncStorage`
                 // In the example, we'll use a dummy token
-                dispatch({ type: CONTEXT_OPTIONS.login, token: 'dummy-auth-token' });
+                const token = "dummy-auth-token";
+                AddAuthToken(token);
+                dispatch({ type: CONTEXT_OPTIONS.login, token: token });
             },
-            signOut: () => dispatch({ type: CONTEXT_OPTIONS.logout }),
+            signOut: () => {
+                RemoveAuthToken();
+                dispatch({ type: CONTEXT_OPTIONS.logout })
+            },
             signUp: async (data:any) => {
                 // In a production app, we need to send user data to server and get a token
                 // We will also need to handle errors if sign up failed
                 // After getting token, we need to persist the token using `AsyncStorage`
                 // In the example, we'll use a dummy token
-      
-                dispatch({ type: CONTEXT_OPTIONS.login, token: 'dummy-auth-token' });
+                const token = "dummy-auth-token";
+                AddAuthToken(token);
+                dispatch({ type: CONTEXT_OPTIONS.login, token: token });
             },
           }),
           []

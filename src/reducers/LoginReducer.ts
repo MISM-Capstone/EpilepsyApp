@@ -8,9 +8,6 @@ export type ReducerState = {
 }
 
 const LoginReducer:Reducer<ReducerState, any> = (state:ReducerState, action) => {
-    console.log("Called Reducer -------------------------");
-    console.log(state);
-    console.log(action);
     switch (action.type) {
         case CONTEXT_OPTIONS.restoreToke:
           return {

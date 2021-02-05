@@ -10,3 +10,11 @@ export async function GetAuthToken(dispatch:React.Dispatch<any>) {
     }
     dispatch({type: CONTEXT_OPTIONS.restoreToke, token: userToken});
 }
+
+export async function AddAuthToken(userToken:string) {
+    await AsyncStorage.setItem(STORAGE_KEYS.userToken, userToken);
+}
+
+export async function RemoveAuthToken() {
+    await AsyncStorage.removeItem(STORAGE_KEYS.userToken);
+}
