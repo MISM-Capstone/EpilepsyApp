@@ -1,30 +1,30 @@
+
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Trends from "../pages/Trends/Trends";
+import Login from "../pages/Login";
 
 import HeaderStyle from "../styles/HeaderStyle";
 
-export type TrendsStackParamList = {
-    Trends: undefined;
-};
+export type LoginStackParamList = {
+    Login: undefined;
+    SingUp: undefined;
+}
 
-const Stack = createStackNavigator<TrendsStackParamList>();
+const Stack = createStackNavigator<LoginStackParamList>();
 
-const HomeNavigation = () => {
+export default function LoginNavigation() {
     return (
         <>
             <Stack.Navigator
-                initialRouteName="Trends"
+                initialRouteName="Login"
                 screenOptions={HeaderStyle}
             >
                 <Stack.Screen
-                        name="Trends"
-                        component={Trends}
+                        name="Login"
+                        component={Login}
                 />
             </Stack.Navigator>
         </>
     );
 }
-
-export default HomeNavigation;
