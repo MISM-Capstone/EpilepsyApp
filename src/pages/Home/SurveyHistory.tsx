@@ -1,65 +1,47 @@
-import React, { Component, useEffect, useState } from 'react';
-import { Button, SafeAreaView, Text, View } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, Text, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from "../../navigation/HomeNavigation"
-import { STORAGE_KEYS } from '../../constants';
-import SQLite from 'react-native-sqlite-storage';
+import SeizureLogDao from '../../database/dao/SeizureLogDao';
+import { FlatList } from 'react-native-gesture-handler';
 
 type Props = {
     navigation: any;
 };
-type StateTypes = {
-    record: any
+
+type RenderProps = {
+    log: any;
 }
 
-export default class SurveyHistory extends React.Component<Props, StateTypes> {
-    constructor(props: Props | Readonly<Props>) {
-        super(props)
-    
-        this.state = {
-          record: null
-        }
-    
-        let db = SQLite.openDatabase({
-            name: 'epilepsy.db',
-            location: 'default',
-            createFromLocation: 1
-        },
-            () => { console.log('DB success') },
-            error => {
-                console.log("ERROR: " + error);
-            }
-        );
+function RenderItem(props:RenderProps) {
+    return (
+        <View>
+            <Text>ID: log.seizure_id</Text>
+            <Text>Date: log.date</Text>
+            <Text>Location: log.location</Text>
+            <Text>Notes: log.notes</Text>
+        </View>
+    )
+}
 
-        db.transaction((tx) => {
-          tx.executeSql('SELECT * FROM seizure_log', [], (tx, results) => {
-              console.log("Query completed");
-    
-              // Get rows with Web SQL Database spec compliance.
-    
-              var len = results.rows.length;
-              for (let i = 0; i < len; i++) {
-                let row = results.rows.item(i);
-                console.log(`Record: ${row.name}`);
-                this.setState({record: row});
-              }
-            });
-        });
-    
-      }
+export default function SurveyHistory(props:Props) {
+    const [records, setRecords] = useState<any[]>([]);
+
+    useEffect(() => {
+        (async () => {
+            const results = await SeizureLogDao.getLogs();
+            setRecords(results);
+        })();
+    },[]);
 
 
-    render() {
-        return (
-            <SafeAreaView>
-                <View style={{ padding: 12 }}>
-                    <Text>Survey History</Text>
-                    <Text>
-                        {this.state.record !== null ? 'Success: ' + this.state.record.name : 'Waiting...'}
-                    </Text>
-                </View>
-            </SafeAreaView >
-        )
-    }
+    return (
+        <SafeAreaView>
+            <FlatList 
+                data={records}
+                renderItem={({item}) => <RenderItem log={item} />}
+                keyExtractor={(item) => item.id}
+            />
+        </SafeAreaView >
+    )
 }
