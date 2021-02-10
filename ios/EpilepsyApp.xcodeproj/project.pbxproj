@@ -16,10 +16,10 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* EpilepsyAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* EpilepsyAppTests.m */; };
+		3FBA364025D422EF007F3421 /* www in Resources */ = {isa = PBXBuildFile; fileRef = 3FBA363F25D422EF007F3421 /* www */; };
 		59798CB0BA2C50133BD65355 /* libPods-EpilepsyApp-EpilepsyAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 946B589E0C68573F9788ACF8 /* libPods-EpilepsyApp-EpilepsyAppTests.a */; };
 		7F3A86E25428099C750D175F /* libPods-EpilepsyApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C14B40B57E1D8460F1E15E /* libPods-EpilepsyApp.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		91B20D5C25D1F80800678FA3 /* www in Resources */ = {isa = PBXBuildFile; fileRef = 91B20D5B25D1F80800678FA3 /* www */; };
 		D1EF446AB943BF0E306EA0E4 /* libPods-EpilepsyApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8BABF9A1436C3CD7A261372 /* libPods-EpilepsyApp-tvOS.a */; };
 /* End PBXBuildFile section */
 
@@ -56,10 +56,10 @@
 		2D02E47B1E0B4A5D006451C7 /* EpilepsyApp-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EpilepsyApp-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* EpilepsyApp-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "EpilepsyApp-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		31336310F0B84960F96DCC67 /* Pods-EpilepsyApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EpilepsyApp-tvOS.release.xcconfig"; path = "Target Support Files/Pods-EpilepsyApp-tvOS/Pods-EpilepsyApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		3FBA363F25D422EF007F3421 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = EpilepsyApp/www; sourceTree = "<group>"; };
 		63E3A200FD3F3428145D0505 /* Pods-EpilepsyApp-EpilepsyAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EpilepsyApp-EpilepsyAppTests.debug.xcconfig"; path = "Target Support Files/Pods-EpilepsyApp-EpilepsyAppTests/Pods-EpilepsyApp-EpilepsyAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = EpilepsyApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8AC9B9C68D5EC7E9B5D976BD /* Pods-EpilepsyApp-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EpilepsyApp-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-EpilepsyApp-tvOS/Pods-EpilepsyApp-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		91B20D5B25D1F80800678FA3 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../www; sourceTree = "<group>"; };
 		946B589E0C68573F9788ACF8 /* libPods-EpilepsyApp-EpilepsyAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EpilepsyApp-EpilepsyAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AC1CDF38EF82D43E7460CBF /* Pods-EpilepsyApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EpilepsyApp.release.xcconfig"; path = "Target Support Files/Pods-EpilepsyApp/Pods-EpilepsyApp.release.xcconfig"; sourceTree = "<group>"; };
 		A8BABF9A1436C3CD7A261372 /* libPods-EpilepsyApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EpilepsyApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -142,7 +142,7 @@
 		13B07FAE1A68108700A75B9A /* EpilepsyApp */ = {
 			isa = PBXGroup;
 			children = (
-				91B20D5B25D1F80800678FA3 /* www */,
+				3FBA363F25D422EF007F3421 /* www */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -342,7 +342,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91B20D5C25D1F80800678FA3 /* www in Resources */,
+				3FBA364025D422EF007F3421 /* www in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
