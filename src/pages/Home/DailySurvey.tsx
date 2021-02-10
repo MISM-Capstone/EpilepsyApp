@@ -9,13 +9,22 @@ import { HomeStackParamList } from "../../navigation/HomeNavigation";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LogSurveyDao from '../../_services/database/dao/LogSurveyDao';
 
-type DailySurveyScreenNavigationProp = StackNavigationProp<HomeStackParamList,'DailySurvey'>;
+type DailySurveyScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'DailySurvey'>;
 
 type Props = {
-  navigation: DailySurveyScreenNavigationProp;
+    navigation: DailySurveyScreenNavigationProp;
 };
 
-export default function DailySurvey(props:Props) {
+function ButtonSet(props: any) {
+    return (
+        <View style={{flexDirection: 'row'}}>
+            <Button title="Yes" onPress={()=>{return true}}/>
+            <Button title="No" onPress={()=>{return false}}/>
+        </View>
+    )
+}
+
+export default function DailySurvey(props: Props) {
     const [date, setDate] = useState<Date>(new Date());
     const [sleep, setSleep] = useState<string>();
     const [stress_level, setStressLevel] = useState<string>();
@@ -54,12 +63,12 @@ export default function DailySurvey(props:Props) {
     }
 
     const insertQuery = async (date: Date, sleep: string | any, stress_level: string | any, illness: boolean, fever: boolean, miss_meal: boolean, medication: boolean) => {
-        let results = await LogSurveyDao.insertSurveyEntry(date,sleep,stress_level,illness,fever,miss_meal,medication);
-        console.log('inserted: ',results);
+        let results = await LogSurveyDao.insertSurveyEntry(date, sleep, stress_level, illness, fever, miss_meal, medication);
+        console.log('inserted: ', results);
         props.navigation.goBack();
     }
 
-    return(
+    return (
         <SafeAreaView>
             <View style={{ padding: 12 }}>
                 <Text>Date</Text>
@@ -83,9 +92,16 @@ export default function DailySurvey(props:Props) {
                     keyboardType='numeric'
                     onChangeText={text => onChangeStress(text)}
                     value={stress_level} />
-                {/* Add radio buttons here */}
+                <Text>Have you felt sick lately?</Text>
+                <ButtonSet />
+                <Text>Have you had a fever?</Text>
+                <ButtonSet />
+                <Text>Have you missed any meals?</Text>
+                <ButtonSet />
+                <Text>Have you taken proper medications?</Text>
+                <ButtonSet />
             </View>
-            <Button title="Save" onPress={() => insertQuery(date, sleep,stress_level,true,true,false,true)} />
+            <Button title="Save" onPress={() => insertQuery(date, sleep, stress_level, true, true, false, true)} />
             <Button title="Cancel" onPress={props.navigation.goBack} />
         </SafeAreaView>
     )
