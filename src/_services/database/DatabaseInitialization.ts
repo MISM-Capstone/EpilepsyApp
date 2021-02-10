@@ -58,6 +58,16 @@ export class DatabaseInitialization {
                 location TEXT NOT NULL,
                 notes TEXT NOT NULL
             );
+            CREATE TABLE IF NOT EXISTS survey_log(
+                survey_entry_id INTEGER PRIMARY KEY NOT NULL,
+                date DATE NOT NULL,
+                sleep REAL NOT NULL,
+                stress_level INTEGER NOT NULL,
+                illness BOOLEAN NOT NULL,
+                fever BOOLEAN NOT NULL,
+                miss_meal BOOLEAN NOT NULL,
+                medication BOOLEAN NOT NULL
+            );
         `);
 
       // Version table

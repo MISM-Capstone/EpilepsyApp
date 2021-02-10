@@ -14,18 +14,13 @@ type LogSeizureScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'L
 type Props = {
     navigation: LogSeizureScreenNavigationProp;
 };
-type StateTypes = {
-    date: Date,
-    location: string,
-    notes: string
-}
 
 export default function LogSeizure(props: Props) {
     const [date, setDate] = useState<any>(new Date());
     const [location, setLocation] = useState<string>();
     const [notes, setNotes] = useState<string>();
 
-    const onChange = (_event: Event, selectedDate: Date | undefined) => {
+    const onChangeDate = (_event: Event, selectedDate: Date | undefined) => {
         const currentDate = selectedDate || date;
         setDate(currentDate);
     };
@@ -53,7 +48,7 @@ export default function LogSeizure(props: Props) {
                     value={date}
                     mode="date"
                     display="default"
-                    onChange={onChange}
+                    onChange={onChangeDate}
                 />
                 <Text>Time of Seizure</Text>
                 <Text>Location</Text>
