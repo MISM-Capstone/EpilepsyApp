@@ -7,7 +7,7 @@ import { ProfileStackParamList } from '../../navigation/ProfileNavigation';
 
 import MainStyles from "../../styles/MainStyles";
 import NavigationButton from '../../components/NavigationButton';
-import AuthContext from '../../Authentication/AuthContext';
+import AuthContext from '../../_services/Authentication/AuthContext';
 
 type TrendsScreenNavigationProp = StackNavigationProp<
   ProfileStackParamList,

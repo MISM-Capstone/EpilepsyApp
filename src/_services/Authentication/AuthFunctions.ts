@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { CONTEXT_OPTIONS, STORAGE_KEYS } from "../constants";
+import { CONTEXT_OPTIONS, STORAGE_KEYS } from "../../constants";
 
 export async function GetAuthToken(dispatch:React.Dispatch<any>) {
     let userToken;

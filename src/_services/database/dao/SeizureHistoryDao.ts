@@ -1,7 +1,7 @@
 import Dao from "./Dao";
 // import SQLite from "react-native-sqlite-storage";
 
-export default class SeizureLogDao extends Dao {
+export default class SeizureHistoryDao extends Dao {
     static async getLogs() {
         const sql = `
             SELECT

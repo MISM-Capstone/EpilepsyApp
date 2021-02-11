@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, Text, View } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { HomeStackParamList } from "../../navigation/HomeNavigation"
-import SeizureLogDao from '../../database/dao/SeizureLogDao';
 import { FlatList } from 'react-native-gesture-handler';
+import SeizureHistoryDao from '../../_services/database/dao/SeizureHistoryDao';
 
 type Props = {
     navigation: any;
@@ -31,7 +29,7 @@ export default function SurveyHistory(props:Props) {
     // when the component first renders.
     useEffect(() => {
         (async () => {
-            const results = await SeizureLogDao.getLogs();
+            const results = await SeizureHistoryDao.getLogs();
             setRecords(results);
         })();
     },[]); // These square brackets define when the effect should

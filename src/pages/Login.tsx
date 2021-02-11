@@ -7,7 +7,7 @@ import {LoginStackParamList} from "../navigation/LoginNavigation";
 
 import styles from "../styles/ButtonStyles";
 import {default as mainStyle} from "../styles/MainStyles";
-import AuthContext from '../Authentication/AuthContext';
+import AuthContext from '../_services/Authentication/AuthContext';
 import { TextInput } from 'react-native-gesture-handler';
 
 type LoginScreenNavigationProp = StackNavigationProp<
