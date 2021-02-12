@@ -3,26 +3,18 @@ import React, { useState } from 'react';
 import { Text, View, Button, Platform } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { TextInput } from 'react-native-gesture-handler';
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from "../../navigation/HomeNavigation";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LogSurveyDao from '../../_services/database/dao/LogSurveyDao';
+import ButtonSet from '../../components/ButtonSet';
 
 type DailySurveyScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'DailySurvey'>;
 
 type Props = {
     navigation: DailySurveyScreenNavigationProp;
 };
-
-function ButtonSet(props: any) {
-    return (
-        <View style={{flexDirection: 'row'}}>
-            <Button title="Yes" onPress={()=>{return true}}/>
-            <Button title="No" onPress={()=>{return false}}/>
-        </View>
-    )
-}
 
 export default function DailySurvey(props: Props) {
     const [date, setDate] = useState<Date>(new Date());
@@ -46,22 +38,6 @@ export default function DailySurvey(props: Props) {
         setStressLevel(stress);
     }
 
-    const onChangeIllness = (illness: boolean) => {
-        setIllness(illness);
-    }
-
-    const onChangeFever = (fever: boolean) => {
-        setFever(fever);
-    }
-
-    const onChangeMissMeal = (miss_meal: boolean) => {
-        setMissMeal(miss_meal);
-    }
-
-    const onChangeMedication = (medication: boolean) => {
-        setMedication(medication);
-    }
-
     const insertQuery = async (date: Date, sleep: string | any, stress_level: string | any, illness: boolean, fever: boolean, miss_meal: boolean, medication: boolean) => {
         let results = await LogSurveyDao.insertSurveyEntry(date, sleep, stress_level, illness, fever, miss_meal, medication);
         console.log('inserted: ', results);
@@ -72,7 +48,7 @@ export default function DailySurvey(props: Props) {
         <SafeAreaView>
             <View style={{ padding: 12 }}>
                 <Text>Date</Text>
-                {/* Maybe we don't need to have them enter this? */}
+                {/* TODO: Maybe we don't need to have them enter a date? */}
                 <DateTimePicker
                     testID="datePicker"
                     value={date}
@@ -86,6 +62,8 @@ export default function DailySurvey(props: Props) {
                     keyboardType='numeric'
                     onChangeText={text => onChangeSleep(text)}
                     value={sleep} />
+                {/* TODO: Find a good way to make this entry numeric only */}
+                {/* TODO: Find a more intuitive way to enter in hours & minutes */}
                 <Text>How stressed do you feel on a scale of 1-10?</Text>
                 <TextInput
                     style={{ height: 40, backgroundColor: 'lightgray' }}
@@ -93,15 +71,15 @@ export default function DailySurvey(props: Props) {
                     onChangeText={text => onChangeStress(text)}
                     value={stress_level} />
                 <Text>Have you felt sick lately?</Text>
-                <ButtonSet />
+                <ButtonSet onChange={setIllness} />
                 <Text>Have you had a fever?</Text>
-                <ButtonSet />
+                <ButtonSet onChange={setFever} />
                 <Text>Have you missed any meals?</Text>
-                <ButtonSet />
+                <ButtonSet onChange={setMissMeal} />
                 <Text>Have you taken proper medications?</Text>
-                <ButtonSet />
+                <ButtonSet onChange={setMedication} />
             </View>
-            <Button title="Save" onPress={() => insertQuery(date, sleep, stress_level, true, true, false, true)} />
+            <Button title="Save" onPress={() => insertQuery(date, sleep, stress_level, illness, fever, miss_meal, medication)} />
             <Button title="Cancel" onPress={props.navigation.goBack} />
         </SafeAreaView>
     )
