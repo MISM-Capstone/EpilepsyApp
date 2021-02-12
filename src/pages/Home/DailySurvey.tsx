@@ -38,7 +38,7 @@ export default function DailySurvey(props: Props) {
         setStressLevel(stress);
     }
 
-    const insertQuery = async (date: Date, sleep: string | any, stress_level: string | any, illness: boolean, fever: boolean, miss_meal: boolean, medication: boolean) => {
+    const insertQuery = async (date: Date, sleep: string | any, stress_level: string | any, illness: boolean | any, fever: boolean | any, miss_meal: boolean | any, medication: boolean | any) => {
         let results = await LogSurveyDao.insertSurveyEntry(date, sleep, stress_level, illness, fever, miss_meal, medication);
         console.log('inserted: ', results);
         props.navigation.goBack();

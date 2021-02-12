@@ -6,11 +6,11 @@ const ButtonSet = (params: any) => {
     return (
         <View style={{ flexDirection: 'row' }}>
             <Button 
-                color={ activeChoice === 'yes' ? 'blue' : 'gray' } 
+                color={ activeChoice === 'yes' ? '#2E4D9E' : 'gray' } 
                 title="Yes" 
                 onPress={() => { params.onChange(true); setActive('yes') }}>
             </Button>
-            <Button color={ activeChoice === 'no' ? 'blue' : 'gray' } 
+            <Button color={ activeChoice === 'no' ? '#2E4D9E' : 'gray' } 
                 title="No" 
                 onPress={() => { params.onChange(true); setActive('no') }}>
             </Button>
