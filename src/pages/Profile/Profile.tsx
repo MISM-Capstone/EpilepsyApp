@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, StatusBar, Text, View } from 'react-native';
+import { StatusBar, Text, View } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
 
@@ -24,7 +24,10 @@ const Profile = (props:Props) => {
         <SafeAreaView style={MainStyles.container}>
             <StatusBar barStyle="dark-content" />
             <View>
-                <Text>Profile</Text>
+                <NavigationButton
+                    title="Export Report"
+                    navigate={() => props.navigation.navigate("ExportReport")}
+                />
                 <NavigationButton
                     title="Log Out"
                     navigate={signOut}

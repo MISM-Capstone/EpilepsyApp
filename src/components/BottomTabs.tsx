@@ -9,10 +9,13 @@ import ProfileNavigation from '../navigation/ProfileNavigation';
 
 export default function BottomTabs() {
     return (
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeNavigation} />
-        <Tab.Screen name="Trends" component={TrendsNavigation} />
-        <Tab.Screen name="Profile" component={ProfileNavigation} />
-      </Tab.Navigator>
+        <Tab.Navigator
+            initialRouteName="Home"
+            // initialRouteName="Profile"
+        >
+            <Tab.Screen name="Home" component={HomeNavigation} />
+            <Tab.Screen name="Trends" component={TrendsNavigation} />
+            <Tab.Screen name="Profile" component={ProfileNavigation} />
+        </Tab.Navigator>
     );
-  }
+}
