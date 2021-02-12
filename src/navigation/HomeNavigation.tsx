@@ -25,7 +25,7 @@ const HomeNavigation = () => {
             <Stack.Navigator
                 initialRouteName="Home"
                 screenOptions={HeaderStyle}
-                mode="modal"
+                // mode="modal"
             >
                 <Stack.Screen
                     name="Home"
