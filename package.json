@@ -19,7 +19,6 @@
     "react": "16.13.1",
     "react-native": "0.63.4",
     "react-native-calendars": "^1.1249.0",
-    "react-native-charts-wrapper": "^0.5.7",
     "react-native-gesture-handler": "^1.9.0",
     "react-native-reanimated": "^1.13.2",
     "react-native-safe-area-context": "^3.1.9",

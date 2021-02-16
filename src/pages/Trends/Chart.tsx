@@ -1,35 +1,16 @@
 import React from 'react';
 import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View, processColor
-} from 'react-native';
+    Text,
+    View} from 'react-native';
 
-import {LineChart} from 'react-native-charts-wrapper';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const Chart = () => {
     return (
-        <View style={{flex: 1}}>
-        <View style={styles.container}>
-          <LineChart style={styles.chart}
-            data={{dataSets:[{label: "demo", values: [{y: 1}, {y: 2}, {y: 1}]}]}}
-          />
+        <View>
+            <Text>Chart</Text>
         </View>
-      </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#F5FCFF'
-    },
-    chart: {
-      flex: 1
-    }
-  });
 
 export default Chart;
