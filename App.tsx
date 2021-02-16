@@ -12,8 +12,6 @@ import { CONTEXT_OPTIONS } from './src/constants';
 import LoginReducer, { ReducerState } from './src/reducers/LoginReducer';
 import AuthContext from './src/_services/Authentication/AuthContext';
 import { AddAuthToken, GetAuthToken, RemoveAuthToken } from './src/_services/Authentication/AuthFunctions';
-import SeizureLogDao from './src/_services/Authentication/database/dao/SeizureLogDao';
-
 
 const initialReducerState: ReducerState = {
     isLoading: true,

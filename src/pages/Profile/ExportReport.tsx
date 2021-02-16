@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { StatusBar, View } from 'react-native';
+import { StatusBar, Text, View } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 import { ProfileStackParamList } from '../../navigation/ProfileNavigation';
 
@@ -27,6 +28,8 @@ const dateOptions = {
   
 const ExportReport = (props:Props) => {
     const [dateOption, setDateOption] = useState(dateOptions.oneMonth)
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
 
     return (
         <SafeAreaView style={{ padding: 12 }}>
@@ -53,6 +56,21 @@ const ExportReport = (props:Props) => {
                     onPress={() => setDateOption(dateOptions.custom)}
                 />
             </View>
+            {dateOption===dateOptions.custom ? (
+                <View>
+                    <Text>From:</Text>
+                    <DateTimePicker
+                        value={startDate}
+                        onChange={(_event, selectedDate) => {
+                            const currDate = selectedDate || startDate;
+                            setStartDate(currDate);
+                        }}
+                    />
+                </View>
+            ) : (
+                null
+            )
+            }
         </SafeAreaView>
     );
 }
