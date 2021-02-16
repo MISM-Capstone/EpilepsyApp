@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, StatusBar, Text, View } from 'react-native';
+import { Pressable, StatusBar, Text, View, Button } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
 
@@ -21,7 +21,9 @@ type Props = {
 const Trends = (props: Props) => {
     return (
         <SafeAreaView style={mainStyle.container}>
-            <StatusBar barStyle="dark-content" />
+            <View>
+                <Button title="View Chart" onPress={()=>props.navigation.navigate("Chart")}/>
+            </View>
             {/* Docs: https://github.com/wix/react-native-calendars */}
             <CalendarList
                 // Max amount of months allowed to scroll to the past. Default = 50
