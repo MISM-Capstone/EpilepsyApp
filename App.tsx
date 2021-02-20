@@ -72,8 +72,8 @@ const App = () => {
                     ) : state.userToken === null ? (
                         <LoginNavigation />
                     ) : (
-                                <BottomTabs />
-                            )}
+                        <BottomTabs />
+                    )}
                 </NavigationContainer>
             </SafeAreaProvider>
         </AuthContext.Provider>

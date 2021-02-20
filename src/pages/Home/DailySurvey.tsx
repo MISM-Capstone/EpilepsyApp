@@ -40,7 +40,7 @@ export default function DailySurvey(props: Props) {
 
     const insertQuery = async (date: Date, sleep: string | any, stress_level: string | any, illness: boolean | any, fever: boolean | any, miss_meal: boolean | any, medication: boolean | any) => {
         let results = await LogSurveyDao.insertSurveyEntry(date, sleep, stress_level, illness, fever, miss_meal, medication);
-        console.log('inserted: ', results);
+        console.log('inserted:', results);
         props.navigation.goBack();
     }
 

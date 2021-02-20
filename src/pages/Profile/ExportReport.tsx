@@ -5,6 +5,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 import { ProfileStackParamList } from '../../navigation/ProfileNavigation';
+import ProfileStyles from "../../styles/ProfileStyles";
 
 import RadioButton from '../../components/RadioButton';
 
@@ -16,8 +17,6 @@ type TrendsScreenNavigationProp = StackNavigationProp<
 type Props = {
   navigation: TrendsScreenNavigationProp;
 };
-
-
 
 const dateOptions = {
     oneMonth: 1,
@@ -58,14 +57,28 @@ const ExportReport = (props:Props) => {
             </View>
             {dateOption===dateOptions.custom ? (
                 <View>
-                    <Text>From:</Text>
-                    <DateTimePicker
-                        value={startDate}
-                        onChange={(_event, selectedDate) => {
-                            const currDate = selectedDate || startDate;
-                            setStartDate(currDate);
-                        }}
-                    />
+                    <View style={ProfileStyles.dateWithLabel}>
+                        <Text>From:</Text>
+                        <DateTimePicker
+                            value={startDate}
+                            onChange={(_event, selectedDate) => {
+                                const currDate = selectedDate || startDate;
+                                setStartDate(currDate);
+                            }}
+                            style={ProfileStyles.date}
+                        />
+                    </View>
+                    <View style={ProfileStyles.dateWithLabel}>
+                        <Text>To:</Text>
+                        <DateTimePicker
+                            value={endDate}
+                            onChange={(_event, selectedDate) => {
+                                const currDate = selectedDate || endDate;
+                                setEndDate(currDate);
+                            }}
+                            style={ProfileStyles.date}
+                        />
+                    </View>
                 </View>
             ) : (
                 null

@@ -12,17 +12,20 @@ export default class LogSurveyDao extends Dao {
                 miss_meal,
                 medication) 
             VALUES 
-                ('${date}',
-                ${sleep},
-                ${stress_level},
-                ${illness},
-                ${fever},
-                ${miss_meal},
-                ${medication})
+                (?,?,?,?,?,?,?)
             ;
         `;
+        const params = [
+            date.toString(),
+            sleep,
+            stress_level,
+            illness.toString(),
+            fever.toString(),
+            miss_meal.toString(),
+            medication.toString()
+        ]
         const db = await this.getDatabase();
-        const results = await db.executeSql(sql);
+        const results = await db.executeSql(sql, params);
         return results;
     }
 }
