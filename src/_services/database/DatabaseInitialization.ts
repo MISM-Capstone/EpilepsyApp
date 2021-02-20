@@ -9,46 +9,34 @@ export class DatabaseInitialization {
         console.log("Beginning database updates...");
   
         // First: create tables if they do not already exist
-        return (
-            database
-            .transaction(this.createTables)
-            .then(() => {
-                // Get the current database version
-                return this.getDatabaseVersion(database);
-            })
-            .then((version) => {
-                dbVersion = version;
-                console.log("Current database version is: " + dbVersion);
-  
-                // Perform DB updates based on this version
-  
-                // This is included as an example of how you make database schema changes once the app has been shipped
-                if (dbVersion < 1) {
-                    // Uncomment the next line, and the referenced function below, to enable this
-                    // return database.transaction(this.preVersion1Inserts);
-                }
-                // otherwise,
-                return;
-            })
-            .then(() => {
-                if (dbVersion < 2) {
-                    // Uncomment the next line, and the referenced function below, to enable this
-                    // return database.transaction(this.preVersion2Inserts);
-                }
-                // otherwise,
-                return;
-            })
-        );
+        console.log("__________________Running____________________")
+        await database.transaction(this.createTables)
+        let version = await this.getDatabaseVersion(database);
+        dbVersion = version;
+        console.log("Current database version is: " + dbVersion);
+        // Perform DB updates based on this version
+        // This is included as an example of how you make database schema changes once the app has been shipped
+        if (dbVersion < 1) {
+            // Uncomment the next line, and the referenced function below, to enable this
+            // return database.transaction(this.preVersion1Inserts);
+        }
+        if (dbVersion < 2) {
+            // Uncomment the next line, and the referenced function below, to enable this
+            // return database.transaction(this.preVersion2Inserts);
+        }
     }
   
     // Perform initial setup of the database tables
     private static createTables(transaction: SQLite.Transaction) {
         // DANGER! For dev only
+        console.log("Creating Tables ***************************")
         const dropAllTables = false;
         if (dropAllTables) {
             transaction.executeSql("DROP TABLE IF EXISTS seizure_log;");
+            transaction.executeSql("DROP TABLE IF EXISTS survey_log;");
             transaction.executeSql("DROP TABLE IF EXISTS Version;");
         }
+        console.log("Dropped ***************************")
       
         // List table
         transaction.executeSql(`
@@ -58,6 +46,9 @@ export class DatabaseInitialization {
                 location TEXT NOT NULL,
                 notes TEXT NOT NULL
             );
+        `);
+        console.log("Seizure Done ***************************")
+        transaction.executeSql(`
             CREATE TABLE IF NOT EXISTS survey_log(
                 survey_entry_id INTEGER PRIMARY KEY NOT NULL,
                 date DATE NOT NULL,
@@ -69,14 +60,16 @@ export class DatabaseInitialization {
                 medication BOOLEAN NOT NULL
             );
         `);
+        console.log("Survey Done ***************************")
 
-      // Version table
+        // Version table
         transaction.executeSql(`
             CREATE TABLE IF NOT EXISTS Version(
                 version_id INTEGER PRIMARY KEY NOT NULL,
                 version INTEGER
             );
         `);
+        console.log("Version Done ***************************")
     }
   
     // Get the version of the database, as specified in the Version table

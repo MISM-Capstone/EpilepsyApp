@@ -35,10 +35,11 @@ export default abstract class DAO {
             AppState.removeEventListener("change", DAO.handleAppStateChange);
             AppState.addEventListener("change", DAO.handleAppStateChange);
         }
-  
+        console.log("set listener")
         if (DAO.databaseInstance) {
             console.log("[db] Database is already open: returning the existing instance");
         } else {
+            console.log("Opening db")
             // Otherwise, create a new instance
             const db = await SQLite.openDatabase(DATABASE);
             console.log("[db] Database open!");
@@ -59,6 +60,7 @@ export default abstract class DAO {
             return;
         }
         const status = await DAO.databaseInstance.close();
+        console.log("Status:", status)
         console.log("[db] Database closed.");
         DAO.databaseInstance = undefined;
     }
@@ -69,7 +71,7 @@ export default abstract class DAO {
         if (DAO.appState === "active" && nextAppState.match(/inactive|background/)) {
             // App has moved from the foreground into the background (or become inactive)
             console.log("[db] App has gone to the background - closing DB connection.");
-            DAO.close();
+            DAO.close().then(() => console.log("Finished closing"));
         }
         DAO.appState = nextAppState;
     }
