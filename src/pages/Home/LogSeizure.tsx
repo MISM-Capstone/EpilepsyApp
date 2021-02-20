@@ -1,12 +1,11 @@
-import React, { useState, Component, useEffect } from 'react';
+import React, { useState } from 'react';
 
-import { Text, View, Button, Platform } from 'react-native';
+import { Text, View, Button } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { TextInput } from 'react-native-gesture-handler';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from "../../navigation/HomeNavigation";
-import SQLite from 'react-native-sqlite-storage';
 import LogSeizureDao from '../../_services/database/dao/LogSeizureDao';
 
 type LogSeizureScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'LogSeizure'>;
