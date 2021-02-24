@@ -17,7 +17,7 @@ export default class LogSurveyDao extends Dao {
             ;
         `;
         const params = [
-            date.toString(),
+            date_string,
             sleep,
             stress_level,
             illness.toString(),

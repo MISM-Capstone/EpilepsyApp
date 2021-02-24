@@ -29,14 +29,12 @@ export class DatabaseInitialization {
     // Perform initial setup of the database tables
     private static createTables(transaction: SQLite.Transaction) {
         // DANGER! For dev only
-        console.log("Creating Tables ***************************")
         const dropAllTables = false;
         if (dropAllTables) {
             transaction.executeSql("DROP TABLE IF EXISTS seizure_log;");
             transaction.executeSql("DROP TABLE IF EXISTS survey_log;");
             transaction.executeSql("DROP TABLE IF EXISTS Version;");
         }
-        console.log("Dropped ***************************")
       
         // List table
         transaction.executeSql(`
@@ -47,7 +45,6 @@ export class DatabaseInitialization {
                 notes TEXT NOT NULL
             );
         `);
-        console.log("Seizure Done ***************************")
         transaction.executeSql(`
             CREATE TABLE IF NOT EXISTS survey_log(
                 survey_entry_id INTEGER PRIMARY KEY NOT NULL,
@@ -60,7 +57,6 @@ export class DatabaseInitialization {
                 medication BOOLEAN NOT NULL
             );
         `);
-        console.log("Survey Done ***************************")
 
         // Version table
         transaction.executeSql(`
@@ -69,12 +65,12 @@ export class DatabaseInitialization {
                 version INTEGER
             );
         `);
-        console.log("Version Done ***************************")
     }
   
     // Get the version of the database, as specified in the Version table
     private static async getDatabaseVersion(database: SQLite.SQLiteDatabase): Promise<number> {
         // Select the highest version number from the version table
+        
         return (
             database
             .executeSql(`
