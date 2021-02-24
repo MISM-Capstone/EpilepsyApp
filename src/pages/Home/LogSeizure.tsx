@@ -6,7 +6,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { TextInput } from 'react-native-gesture-handler';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from "../../navigation/HomeNavigation";
-import LogSeizureDao from '../../_services/database/dao/LogSeizureDao';
+import SeizureLogDao from '../../_services/database/dao/SeizureLogDao';
 
 type LogSeizureScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'LogSeizure'>;
 
@@ -33,7 +33,7 @@ export default function LogSeizure(props: Props) {
     }
 
     const insertQuery = async (date: Date, location: string | any, notes: string | any) => {
-        let results = await LogSeizureDao.insertSeizure(date,location,notes);
+        let results = await SeizureLogDao.insertSeizure(date,location,notes);
         console.log('inserted: ',results);
         props.navigation.goBack();
     }
