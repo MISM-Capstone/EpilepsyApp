@@ -45,8 +45,8 @@ const getChartDataTime = async () => {
     data[5] = { hour: "8pm", seizures: 0 };
 
     seizures.forEach(seizure => {
-        let time = seizure.time.substring(1,3); // TODO: this substring should change as we fix the date format
-        console.log('time: ', time);
+        let time = new Date("01/01/2021 " + seizure.time).getHours();
+        console.log('TIME: ', time);
         let bucket = Math.ceil(time / 4) // 4 hour buckets
         console.log('bucket: ', bucket);
         data[bucket-1].seizures = +data[bucket-1].seizures + 1;

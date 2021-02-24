@@ -25,10 +25,9 @@ export default function LogSeizure(props: Props) {
         setDate(currentDate);
     };
 
-    // TODO: this isn't saving quite right
     const onChangeTime = (_event: Event, selectedDate: Date | undefined) => {
-        const currentDate = selectedDate || date;
-        setTime(currentDate);
+        console.log(selectedDate);
+        setTime(selectedDate);
     };
 
     const onChangeLocationText = (text: string) => {
