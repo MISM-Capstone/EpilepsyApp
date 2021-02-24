@@ -16,12 +16,19 @@ type Props = {
 
 export default function LogSeizure(props: Props) {
     const [date, setDate] = useState<any>(new Date());
+    const [time, setTime] = useState<any>(new Date());
     const [location, setLocation] = useState<string>();
     const [notes, setNotes] = useState<string>();
 
     const onChangeDate = (_event: Event, selectedDate: Date | undefined) => {
         const currentDate = selectedDate || date;
         setDate(currentDate);
+    };
+
+    // TODO: this isn't saving quite right
+    const onChangeTime = (_event: Event, selectedDate: Date | undefined) => {
+        const currentDate = selectedDate || date;
+        setTime(currentDate);
     };
 
     const onChangeLocationText = (text: string) => {
@@ -32,8 +39,8 @@ export default function LogSeizure(props: Props) {
         setNotes(text);
     }
 
-    const insertQuery = async (date: Date, location: string | any, notes: string | any) => {
-        let results = await LogSeizureDao.insertSeizure(date,location,notes);
+    const insertQuery = async (date: Date, time: Date, location: string | any, notes: string | any) => {
+        let results = await LogSeizureDao.insertSeizure(date,time,location,notes);
         console.log('inserted: ',results);
         props.navigation.goBack();
     }
@@ -50,6 +57,13 @@ export default function LogSeizure(props: Props) {
                     onChange={onChangeDate}
                 />
                 <Text>Time of Seizure</Text>
+                <DateTimePicker
+                    testID="timePicker"
+                    value={time}
+                    mode="time"
+                    display="default"
+                    onChange={onChangeTime}
+                />
                 <Text>Location</Text>
                 <TextInput
                     style={{ height: 40, backgroundColor: 'lightgray' }}
@@ -63,7 +77,7 @@ export default function LogSeizure(props: Props) {
                     multiline
                     numberOfLines={5} />
             </View>
-            <Button title="Save" onPress={() => insertQuery(date, location, notes)} />
+            <Button title="Save" onPress={() => insertQuery(date, time, location, notes)} />
             <Button title="Cancel" onPress={props.navigation.goBack} />
         </SafeAreaView>
     )
