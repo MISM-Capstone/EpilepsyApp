@@ -1,31 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { VictoryLine, VictoryChart, VictoryTheme } from "victory-native";
+import { VictoryLine, VictoryChart, VictoryTheme, VictoryBar } from "victory-native";
+import chartsService from '../../_services/Charts/charts.service';
 
-const Chart = () => {
+
+function Chart() {
+    const [seizureData, setData] = useState<any[]>([]);
+
+    useEffect(() => {
+        (async () => {
+            const results = await chartsService.getChartDataDay();
+            console.log(results);
+            setData(results);
+        })();
+    }, []);
+
     return (
         <SafeAreaView>
-            <Text>Chart</Text>
+            <Text>Seizures by Day of the Week</Text>
             <VictoryChart width={350} theme={VictoryTheme.material}>
-                <VictoryLine
-                    style={{
-                        data: { stroke: "#c43a31" },
-                        parent: { border: "1px solid #ccc" }
-                    }}
-                    data={[
-                        { x: 1, y: 2 },
-                        { x: 2, y: 3 },
-                        { x: 3, y: 5 },
-                        { x: 4, y: 4 },
-                        { x: 5, y: 7 }
-                    ]}
-                    animate={{
-                        duration: 2000,
-                        onLoad: { duration: 1000 }
-                      }}
-                />
+                <VictoryBar
+                    alignment="start"
+                    data={seizureData}
+                    x="day"
+                    y="seizures"
+                    style = {{
+                        data: { fill: `#44C2B3` }
+                      }}/>
             </VictoryChart>
         </SafeAreaView>
     );
