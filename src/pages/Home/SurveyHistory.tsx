@@ -16,6 +16,7 @@ function RenderItem(props:RenderProps) {
         <View>
             <Text>ID: {props.log.seizure_id}</Text>
             <Text>Date: {props.log.date}</Text>
+            <Text>Time: {props.log.time}</Text>
             <Text>Location: {props.log.location}</Text>
             <Text>Notes: {props.log.notes}</Text>
         </View>
