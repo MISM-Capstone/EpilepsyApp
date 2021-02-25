@@ -33,7 +33,29 @@ const getChartDataDay = async () => {
     return data;
 }
 
+// Charting Seizure Events by Day of the Week
+const getChartDataTime = async () => {
+    const seizures: any[] = await SeizureHistoryDao.getLogs();
+    let data: any[] = new Array(6);
+    data[0] = { hour: "12am", seizures: 0 }; 
+    data[1] = { hour: "4am", seizures: 0 };
+    data[2] = { hour: "8am", seizures: 0 };
+    data[3] = { hour: "12pm", seizures: 0 };
+    data[4] = { hour: "4pm", seizures: 0 };
+    data[5] = { hour: "8pm", seizures: 0 };
+
+    seizures.forEach(seizure => {
+        let time = new Date("01/01/2021 " + seizure.time).getHours();
+        console.log('TIME: ', time);
+        let bucket = Math.ceil(time / 4) // 4 hour buckets
+        console.log('bucket: ', bucket);
+        data[bucket-1].seizures = +data[bucket-1].seizures + 1;
+    });
+    return data;
+}
+
 export default {
     getChartData,
-    getChartDataDay
+    getChartDataDay,
+    getChartDataTime
 }
