@@ -7,7 +7,7 @@ import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from "../../navigation/HomeNavigation";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import SurveyLogDao from '../../_services/database/dao/SurveyLogDao';
+import SurveyLogDao from '../../_services/database/dao/LogSurveyDao';
 import ButtonSet from '../../components/ButtonSet';
 
 type DailySurveyScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'DailySurvey'>;
