@@ -21,15 +21,10 @@ export default class SeizureHistoryDao extends Dao {
             FROM
                 seizure_log
             WHERE 
-                date = '${date}'
+                date = ?
         ;`;
         const db = await this.getDatabase();
-        const results = await db.executeSql(sql);
-        let len = results[0].rows.length;
-        let logs = [];
-        for (let i = 0; i < len; i++) {
-            logs.push(results[0].rows.item(i));
-        }
-        return logs;
+        const results = await db.executeSql(sql, [date]);
+        return this.SetResultsToList(results[0].rows);
     }
 }
