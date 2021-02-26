@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, StatusBar, Text, View } from 'react-native';
+import { Dimensions, FlatList, StatusBar, StyleSheet, Text, View } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
+import RNHTMLtoPDF, {Options} from "react-native-html-to-pdf";
+import Pdf from 'react-native-pdf';
+import { renderToString } from 'react-dom/server'
 
 import { ProfileStackParamList } from '../../navigation/ProfileNavigation';
 import ReportDao from '../../_services/database/dao/ReportDao';
@@ -29,47 +32,45 @@ type RenderProps = {
 
 function RenderSeizure(props:RenderProps) {
     return (
-        <View>
-            <Text>ID: {props.log.seizure_id}</Text>
-            <Text>Date: {props.log.date}</Text>
-            <Text>Time: {props.log.time}</Text>
-            <Text>Location: {props.log.location}</Text>
-            <Text>Notes: {props.log.notes}</Text>
-            <Text>------</Text>
-        </View>
+        <div>
+            <p>ID: {props.log.seizure_id}</p>
+            <p>Date: {props.log.date}</p>
+            <p>Time: {props.log.time}</p>
+            <p>Location: {props.log.location}</p>
+            <p>Notes: {props.log.notes}</p>
+            <p>------</p>
+        </div>
     )
 }
 
 function RenderSurvey(props:RenderProps) {
     return (
-        <View>
-            <Text>ID: {props.log.survey_entry_id}</Text>
-            <Text>Date: {props.log.date}</Text>
-            <Text>Sleep: {props.log.sleep}</Text>
-            <Text>Stress Level: {props.log.stress_level}</Text>
-            <Text>Illness: {props.log.illness}</Text>
-            <Text>Fever: {props.log.fever}</Text>
-            <Text>Missed Meal: {props.log.miss_meal}</Text>
-            <Text>Medication: {props.log.medication}</Text>
-            <Text>------</Text>
-        </View>
+        <div>
+            <p>ID: {props.log.survey_entry_id}</p>
+            <p>Date: {props.log.date}</p>
+            <p>Sleep: {props.log.sleep}</p>
+            <p>Stress Level: {props.log.stress_level}</p>
+            <p>Illness: {props.log.illness}</p>
+            <p>Fever: {props.log.fever}</p>
+            <p>Missed Meal: {props.log.miss_meal}</p>
+            <p>Medication: {props.log.medication}</p>
+            <p>------</p>
+        </div>
     )
 }
 
 function RenderMedication(props:RenderProps) {
     return (
-        <View>
-            <Text>ID: {props.log.medication_id}</Text>
-            <Text>------</Text>
-        </View>
+        <div>
+            <p>ID: {props.log.medication_id}</p>
+            <p>------</p>
+        </div>
     )
 }
 
 const ViewReport = (props:Props) => {
     console.log("View the report ------------------------")
-    const [seizures, setSeizures] = useState<any[]>([]);
-    const [surveys, setSurveys] = useState<any[]>([]);
-    const [medication, setMedication] = useState<any[]>([]);
+    const [pdf, setPDF] = useState<any>();
     const startDate = new Date(props.route.params.start);
     const endDate = new Date(props.route.params.end);
     useEffect(() => {
@@ -77,55 +78,74 @@ const ViewReport = (props:Props) => {
             const dbSeizures = await ReportDao.getSeizuresInDateRange(startDate, endDate);
             const dbSurveys = await ReportDao.getSurveysInDateRange(startDate, endDate);
             const dbMedication = await ReportDao.getMedicationInDateRange(startDate, endDate);
-            setSeizures(dbSeizures);
-            setSurveys(dbSurveys);
-            setMedication(dbMedication);
+            let html = "<h2>Seizures</h2>";
+            dbSeizures.forEach((seizure) => {
+                let test = <RenderSeizure log={seizure} />
+                html += renderToString(test);
+            });
+            html += "<h2>Surveys</h2>";
+            dbSurveys.forEach((survey) => {
+                let test = <RenderSurvey log={survey} />
+                html += renderToString(test);
+            });
+            html += "<h2>Medication</h2>";
+            dbMedication.forEach((medication) => {
+                let test = <RenderMedication log={medication} />
+                html += renderToString(test);
+            });
+            console.log()
+            let options:Options = {
+                html: `
+                        <div>
+                            <h1 style="text-align:center;font-size:2.5rem;">Report for ${startDate.toJSON().substring(0,10)} to ${endDate.toJSON().substring(0,10)}</h1>
+                            ${html}
+                        </div>
+                `,
+                directory: "pdf",
+                fileName: "report"
+            };
+            let file = await RNHTMLtoPDF.convert(options);
+            console.log(file.filePath)
+            const source = {uri:`${file.filePath}`,cache:false};
+            setPDF(source);
         })();
     
     },[props.route.params.start, props.route.params.end]);
-    
-    console.log("Seizures",seizures);
-    console.log("Surveys",surveys);
-    console.log("Medication",medication);
 
     return (
-        <SafeAreaView style={{ padding: 12 }}>
-            <StatusBar barStyle="dark-content" />
-            <View>
-                <Text>View Report</Text>
-            </View>
-            <View>
-                <Text>-------------------------</Text>
-                <Text>Survey</Text>
-                <Text>-------------------------</Text>
-            </View>
-            <FlatList 
-                data={surveys}
-                renderItem={({item}) => <RenderSurvey log={item} />}
-                keyExtractor={(item) => item.survey_entry_id.toString()}
-            />
-            <View>
-                <Text>-------------------------</Text>
-                <Text>Seizures</Text>
-                <Text>-------------------------</Text>
-            </View>
-            <FlatList 
-                data={seizures}
-                renderItem={({item}) => <RenderSeizure log={item} />}
-                keyExtractor={(item) => item.seizure_id.toString()}
-            />
-            <View>
-                <Text>-------------------------</Text>
-                <Text>Medication</Text>
-                <Text>-------------------------</Text>
-            </View>
-            <FlatList 
-                data={medication}
-                renderItem={({item}) => <RenderMedication log={item} />}
-                keyExtractor={(item) => item.medication_id.toString()}
-            />
-        </SafeAreaView>
+        <View style={styles.container}>
+            {pdf?
+            <Pdf
+                source={pdf}
+                onLoadComplete={(numberOfPages,filePath)=>{
+                    console.log(`number of pages: ${numberOfPages}`);
+                }}
+                onPageChanged={(page,numberOfPages)=>{
+                    console.log(`current page: ${page}`);
+                }}
+                onError={(error)=>{
+                    console.log(error);
+                }}
+                onPressLink={(uri)=>{
+                    console.log(`Link presse: ${uri}`)
+                }}
+                style={styles.pdf}
+            />:
+            <Text>Loading</Text>}
+        </View>
     );
 }
-
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginTop: 25,
+    },
+    pdf: {
+        flex:1,
+        width:Dimensions.get('window').width,
+        height:Dimensions.get('window').height,
+    }
+});
 export default ViewReport;
