@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StatusBar, Text, View } from 'react-native';
+import { Button, Pressable, StatusBar, Text, View } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -9,13 +9,13 @@ import ProfileStyles from "../../styles/ProfileStyles";
 
 import RadioButton from '../../components/RadioButton';
 
-type TrendsScreenNavigationProp = StackNavigationProp<
+type ExportScreenNavigationProp = StackNavigationProp<
   ProfileStackParamList,
   "ExportReport"
 >;
 
 type Props = {
-  navigation: TrendsScreenNavigationProp;
+  navigation: ExportScreenNavigationProp;
 };
 
 const dateOptions = {
@@ -24,11 +24,34 @@ const dateOptions = {
     threeMonths: 3,
     custom: 0,
 }
+
+function GetMonthsBeforeDate(numberOfMonths:number) {
+    let date = new Date();
+    const month = date.getMonth();
+    date.setMonth(date.getMonth() - numberOfMonths);
+    while (date.getMonth() === (month + 1 - numberOfMonths)) {
+        date.setDate(date.getDate() - 1);
+    }
+    date.setHours(0,0,0,0);
+    return date;
+}
   
 const ExportReport = (props:Props) => {
-    const [dateOption, setDateOption] = useState(dateOptions.oneMonth)
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
+    let start = GetMonthsBeforeDate(dateOptions.oneMonth);
+    let today = new Date();
+    today.setHours(23, 59, 59, 999);
+    const [dateOption, setDateOption] = useState(dateOptions.oneMonth);
+    const [startDate, setStartDate] = useState(start);
+    const [endDate, setEndDate] = useState(today);
+
+    console.log(startDate)
+    console.log(endDate)
+
+    function onPress(numberOfMonths:number) {
+        setDateOption(numberOfMonths);
+        setStartDate(GetMonthsBeforeDate(numberOfMonths));
+        setEndDate(today);
+    }
 
     return (
         <SafeAreaView style={{ padding: 12 }}>
@@ -37,53 +60,87 @@ const ExportReport = (props:Props) => {
                 <RadioButton
                     label="One Month"
                     selected={dateOption===dateOptions.oneMonth?true:false}
-                    onPress={() => setDateOption(dateOptions.oneMonth)}
+                    onPress={() => {
+                        onPress(dateOptions.oneMonth);
+                    }}
                 />
                 <RadioButton
                     label="Two Months"
                     selected={dateOption===dateOptions.twoMonths?true:false}
-                    onPress={() => setDateOption(dateOptions.twoMonths)}
+                    onPress={() => {
+                        onPress(dateOptions.twoMonths);
+                    }}
                 />
                 <RadioButton
                     label="Thee Months"
                     selected={dateOption===dateOptions.threeMonths?true:false}
-                    onPress={() => setDateOption(dateOptions.threeMonths)}
+                    onPress={() => {
+                        onPress(dateOptions.threeMonths);
+                    }}
                 />
                 <RadioButton
                     label="Custom"
                     selected={dateOption===dateOptions.custom?true:false}
-                    onPress={() => setDateOption(dateOptions.custom)}
+                    onPress={() => {
+                        setDateOption(dateOptions.custom);
+                    }}
                 />
             </View>
-            {dateOption===dateOptions.custom ? (
-                <View>
-                    <View style={ProfileStyles.dateWithLabel}>
-                        <Text>From:</Text>
-                        <DateTimePicker
-                            value={startDate}
-                            onChange={(_event, selectedDate) => {
-                                const currDate = selectedDate || startDate;
-                                setStartDate(currDate);
-                            }}
-                            style={ProfileStyles.date}
-                        />
+            {
+                dateOption===dateOptions.custom ? (
+                    <View style={ProfileStyles.customDateOptions}>
+                        <View style={ProfileStyles.dateWithLabel}>
+                            <Text
+                                style={ProfileStyles.dateLabel}
+                            >
+                                From:
+                            </Text>
+                            <DateTimePicker
+                                value={startDate}
+                                dateFormat="shortdate"
+                                onChange={(_event, selectedDate) => {
+                                    const currDate = selectedDate || startDate;
+                                    currDate.setHours(0,0,0,0);
+                                    setStartDate(currDate);
+                                }}
+                                style={ProfileStyles.date}
+                            />
+                        </View>
+                        <View style={ProfileStyles.dateWithLabel}>
+                            <Text
+                                style={ProfileStyles.dateLabel}
+                            >
+                                To:
+                            </Text>
+                            <DateTimePicker
+                                value={endDate}
+                                dateFormat="shortdate"
+                                onChange={(_event, selectedDate) => {
+                                    const currDate = selectedDate || endDate;
+                                    currDate.setHours(23,59,59,999);
+                                    setEndDate(currDate);
+                                }}
+                                style={ProfileStyles.date}
+                            />
+                        </View>
                     </View>
-                    <View style={ProfileStyles.dateWithLabel}>
-                        <Text>To:</Text>
-                        <DateTimePicker
-                            value={endDate}
-                            onChange={(_event, selectedDate) => {
-                                const currDate = selectedDate || endDate;
-                                setEndDate(currDate);
-                            }}
-                            style={ProfileStyles.date}
-                        />
-                    </View>
-                </View>
-            ) : (
-                null
-            )
+                ) : (
+                    null
+                )
             }
+            <Button
+                title="Cancel"
+                onPress={props.navigation.goBack}
+            />
+            <Button
+                title="Create Report"
+                onPress={() => {
+                    props.navigation.navigate(
+                        "ViewReport",
+                        {start: startDate.getTime(), end: endDate.getTime()}
+                    );
+                }}
+            />
         </SafeAreaView>
     );
 }

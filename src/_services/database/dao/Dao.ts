@@ -5,9 +5,8 @@
 // https://github.com/andpor/react-native-sqlite-storage
 
 import { AppState, AppStateStatus } from "react-native";
-import SQLite from 'react-native-sqlite-storage';
+import SQLite, { ResultSetRowList } from 'react-native-sqlite-storage';
 import {DatabaseInitialization} from "../DatabaseInitialization";
-import {DATABASE} from "../constants";
 
 export default abstract class DAO {
     private static databaseInstance: SQLite.SQLiteDatabase | undefined;
@@ -18,11 +17,19 @@ export default abstract class DAO {
     protected static async getDatabase(): Promise<SQLite.SQLiteDatabase>{
         let db:SQLite.SQLiteDatabase;
         if (DAO.databaseInstance !== undefined) {
-            db = DAO.databaseInstance
+            db = DAO.databaseInstance;
         } else {
-            db = await this.open()
+            db = await this.open();
         }
         return db;
+    }
+
+    protected static SetResultsToList(results:ResultSetRowList) {
+        let resultList:any[] = [];
+        for (let i = 0; i < results.length; i++) {
+            resultList.push(results.item(i));
+        }
+        return resultList;
     }
 
     // Open a connection to the database
@@ -40,13 +47,17 @@ export default abstract class DAO {
             console.log("[db] Database is already open: returning the existing instance");
         } else {
             console.log("Opening db")
+            let DATABASE:SQLite.DatabaseParams = {
+                name: "epilepsy.db",
+                location: "default",
+                createFromLocation: 1
+            };
             // Otherwise, create a new instance
-            const db = await SQLite.openDatabase(DATABASE);
+            let db = await SQLite.openDatabase(DATABASE);
             console.log("[db] Database open!");
         
             // Perform any database initialization or updates, if needed
             await DatabaseInitialization.updateDatabaseTables(db);
-        
             DAO.databaseInstance = db;
         }
         
@@ -59,7 +70,7 @@ export default abstract class DAO {
             console.log("[db] No need to close DB again - it's already closed");
             return;
         }
-        const status = await DAO.databaseInstance.close();
+        let status = await DAO.databaseInstance.close();
         console.log("Status:", status)
         console.log("[db] Database closed.");
         DAO.databaseInstance = undefined;
