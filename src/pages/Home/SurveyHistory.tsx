@@ -11,19 +11,21 @@ type RenderProps = {
     log: any;
 }
 
-function RenderItem(props:RenderProps) {
+function RenderItem(props: RenderProps) {
     return (
-        <View>
-            <Text>ID: {props.log.seizure_id}</Text>
-            <Text>Date: {props.log.date}</Text>
-            <Text>Time: {props.log.time}</Text>
-            <Text>Location: {props.log.location}</Text>
-            <Text>Notes: {props.log.notes}</Text>
+        <View style={{ backgroundColor: `#ccc`, padding: 12, borderColor: `#000`, margin: 16 }}>
+            <Text style={{ fontSize: 16, fontWeight: `bold` }}>ID: {props.log.seizure_id}</Text>
+            <View>
+                <Text>Date: {props.log.date}</Text>
+                <Text>Time: {props.log.time}</Text>
+                <Text>Location: {props.log.location}</Text>
+                <Text>Notes: {props.log.notes}</Text>
+            </View>
         </View>
     )
 }
 
-export default function SurveyHistory(props:Props) {
+export default function SurveyHistory(props: Props) {
     const [records, setRecords] = useState<any[]>([]);
 
     // Similar to class based componentDidMount This will run
@@ -33,17 +35,17 @@ export default function SurveyHistory(props:Props) {
             const results = await SeizureHistoryDao.getLogs();
             setRecords(results);
         })();
-    },[]); // These square brackets define when the effect should
-           // run again. If they are empty, it will only run when
-           // the component renders. If you pass a state variable
-           // (i.e. records) it will run each time records changes.
+    }, []); // These square brackets define when the effect should
+    // run again. If they are empty, it will only run when
+    // the component renders. If you pass a state variable
+    // (i.e. records) it will run each time records changes.
 
 
     return (
         <SafeAreaView>
-            <FlatList 
+            <FlatList
                 data={records}
-                renderItem={({item}) => <RenderItem log={item} />}
+                renderItem={({ item }) => <RenderItem log={item} />}
                 keyExtractor={(item) => item.seizure_id.toString()}
             />
         </SafeAreaView >
