@@ -4,7 +4,7 @@ import Dao from "./Dao";
 export default class LogSeizureDao extends Dao {
     static async insertSeizure(date: Date, time:Date, location: string, notes: string) {
         let date_string = date.toJSON().substring(0,10);
-        let time_string = time.toLocaleTimeString(); // TODO: get the time in a better format?
+        let time_string = time.toLocaleTimeString(); 
         console.log('TIME STRING: ', time_string)
         const sql = `
             INSERT INTO seizure_log (date, time, location, notes) 
