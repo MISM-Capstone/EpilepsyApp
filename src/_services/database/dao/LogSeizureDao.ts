@@ -1,7 +1,7 @@
 import { ResultSet } from "react-native-sqlite-storage";
 import Dao from "./Dao";
 
-export default class SeizureLogDao extends Dao {
+export default class LogSeizureDao extends Dao {
     static async insertSeizure(date: Date, time:Date, location: string, notes: string) {
         let date_string = date.toJSON().substring(0,10);
         let time_string = time.toLocaleTimeString(); 

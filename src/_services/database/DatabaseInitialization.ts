@@ -41,6 +41,7 @@ export class DatabaseInitialization {
             CREATE TABLE IF NOT EXISTS seizure_log(
                 seizure_id INTEGER PRIMARY KEY NOT NULL,
                 date DATE NOT NULL,
+                time TEXT NOT NULL,
                 location TEXT NOT NULL,
                 notes TEXT NOT NULL
             );
