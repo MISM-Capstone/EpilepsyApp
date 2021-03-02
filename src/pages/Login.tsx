@@ -28,7 +28,7 @@ export default function Login(props:Props) {
     return (
         <SafeAreaView style={mainStyle.container}>
             <StatusBar barStyle="dark-content" />
-            <View style={styles.surveyButtonContainer}>
+            <View style={styles.navigationButtonContainer}>
                 <Text>Login</Text>
                 <TextInput
                     placeholder="Username"
