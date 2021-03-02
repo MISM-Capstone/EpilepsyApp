@@ -4,7 +4,7 @@ const HomeStyles = StyleSheet.create({
     HomeContainer:{
         backgroundColor: "#2E4D9E",
         paddingTop: 40,
-        paddingBottom: 40
+        paddingBottom: 400
     }
 });
 

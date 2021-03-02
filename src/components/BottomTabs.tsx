@@ -17,15 +17,15 @@ export default function BottomTabs() {
         >
             <Tab.Screen name="Home" component={HomeNavigation} options={{
                 tabBarIcon: () => (
-                    <MaterialCommunityIcons name="home" size={25} color={'#2E4D9E'}/>
+                    <MaterialCommunityIcons name="home-outline" size={25} color={'#333'}/>
                 ) }} />
             <Tab.Screen name="Trends" component={TrendsNavigation} options={{
                 tabBarIcon: () => (
-                    <MaterialCommunityIcons name="calendar" size={25} color={'#2E4D9E'}/>
+                    <MaterialCommunityIcons name="calendar-outline" size={25} color={'#333'}/>
                 ) }} />
             <Tab.Screen name="Profile" component={ProfileNavigation} options={{
                 tabBarIcon: () => (
-                    <MaterialCommunityIcons name="account" size={25} color={'#2E4D9E'}/>
+                    <MaterialCommunityIcons name="account-outline" size={25} color={'#333'}/>
                 ) }} />
         </Tab.Navigator>
     );

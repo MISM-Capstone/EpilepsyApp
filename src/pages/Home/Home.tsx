@@ -23,18 +23,22 @@ const Home = (props:Props) => {
             <View style={HomeStyles.HomeContainer}>
                 <NavigationButton
                     title="Log a Seizure"
+                    icon="clipboard-pulse"
                     navigate={() => props.navigation.navigate("LogSeizure")}
                 />
                 <NavigationButton
                     title="Take Daily Survey"
+                    icon="comment"
                     navigate={() => props.navigation.navigate("DailySurvey")}
                 />
                 <NavigationButton
                     title="Record Medication"
+                    icon="pill"
                     navigate={() => props.navigation.navigate("RecordMedication")}
                 />
                 <NavigationButton
                     title="Survey History"
+                    icon="archive"
                     navigate={() => props.navigation.navigate("SurveyHistory")}
                 />
             </View>
