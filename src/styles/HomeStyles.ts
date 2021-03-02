@@ -3,8 +3,14 @@ import { StyleSheet } from "react-native";
 const HomeStyles = StyleSheet.create({
     HomeContainer:{
         backgroundColor: "#2E4D9E",
-        paddingTop: 40,
-        paddingBottom: 40
+        paddingBottom: 400
+    },
+    welcomeMessageContainer:{
+        marginHorizontal: 12,
+        paddingTop: 10
+    },
+    welcomeMessageText:{
+        fontSize: 45, fontWeight: '700', color: '#fff'
     }
 });
 

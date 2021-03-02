@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
 
@@ -21,20 +21,27 @@ const Home = (props:Props) => {
     return (
         <SafeAreaView style={mainStyle.container}>
             <View style={HomeStyles.HomeContainer}>
+                <View style={HomeStyles.welcomeMessageContainer}>
+                <Text style={HomeStyles.welcomeMessageText}>Hi, Username!</Text>
+                </View>
                 <NavigationButton
                     title="Log a Seizure"
+                    icon="clipboard-pulse"
                     navigate={() => props.navigation.navigate("LogSeizure")}
                 />
                 <NavigationButton
                     title="Take Daily Survey"
+                    icon="comment"
                     navigate={() => props.navigation.navigate("DailySurvey")}
                 />
                 <NavigationButton
                     title="Record Medication"
+                    icon="pill"
                     navigate={() => props.navigation.navigate("RecordMedication")}
                 />
                 <NavigationButton
                     title="Survey History"
+                    icon="archive"
                     navigate={() => props.navigation.navigate("SurveyHistory")}
                 />
             </View>

@@ -1,28 +1,53 @@
 import { StyleSheet } from "react-native";
 
 const ButtonStyles = StyleSheet.create({
-    surveyButtonContainer:{
-        backgroundColor: "#2E4D9E",
-        paddingTop: 40,
-        paddingBottom: 40
+    navigationButtonContainer:{
+        backgroundColor: "#2E4D9E"
     },
-    surveyButton:{
-        marginRight:40,
-        marginLeft:40,
-        marginTop:30,
-        marginBottom: 30,
+    navigationButton:{
+        marginRight:10,
+        marginLeft:10,
+        marginTop:10,
+        marginBottom:10,
+        paddingTop:25,
+        paddingBottom:25,
+        backgroundColor:"#FFFFFF",
+        borderRadius:10,
+        borderWidth: 1,
+        shadowColor: '#192e63',
+        shadowOffset: { width: 2, height: 2 },
+        shadowOpacity: 1,
+        shadowRadius: 2,
+    },
+    navigationButtonText:{
+        color:"#000000",
+        textAlign:"left",
+        paddingLeft : 10,
+        paddingRight : 10,
+        fontSize: 30,
+    },
+    navigationButtonRow:{
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
+        paddingHorizontal: 20
+    },
+    largeButton:{
+        marginRight:30,
+        marginLeft:30,
+        marginTop:20,
+        marginBottom:10,
         paddingTop:15,
         paddingBottom:15,
         backgroundColor:"#FFFFFF",
         borderRadius:10,
         borderWidth: 1,
     },
-    surveyButtonText:{
+    largeButtonText:{
         color:"#000000",
         textAlign:"center",
         paddingLeft : 10,
         paddingRight : 10,
-        fontSize: 30,
+        fontSize: 25,
     }
 });
 
