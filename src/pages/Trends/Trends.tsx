@@ -27,7 +27,8 @@ const Trends = (props: Props) => {
         (async () => {
             const seizures: any[] = await SeizureHistoryDao.getLogs();
             let marked_dates = seizures.reduce((c: any, v: any) => Object.assign(c, {[v.date]: {marked: true}}), {}); // TODO: this is putting quotes around marked when it shouldn't
-            console.log(marked_dates);
+            console.log("-----------------------------------------")
+            console.log("Dates Marked: ",marked_dates);
             setMarkedDates(marked_dates);
         })();
     }, []);
@@ -52,7 +53,7 @@ const Trends = (props: Props) => {
                         date: day
                     });
                 }}
-                markedDates={{ markedDates}}
+                markedDates={markedDates}
             />
         </SafeAreaView>
     );
