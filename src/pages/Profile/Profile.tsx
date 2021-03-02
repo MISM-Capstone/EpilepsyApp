@@ -24,12 +24,15 @@ const Profile = (props:Props) => {
         <SafeAreaView style={MainStyles.container}>
             <StatusBar barStyle="dark-content" />
             <View>
+                {/* TODO: Change these button types or add mat icons */}
                 <NavigationButton
                     title="Export Report"
+                    icon="home"
                     navigate={() => props.navigation.navigate("ExportReport")}
                 />
                 <NavigationButton
                     title="Log Out"
+                    icon="home"
                     navigate={signOut}
                 />
             </View>
