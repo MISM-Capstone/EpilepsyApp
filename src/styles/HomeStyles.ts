@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 const HomeStyles = StyleSheet.create({
     HomeContainer:{
         backgroundColor: "#2E4D9E",
-        paddingTop: 40,
+        paddingTop: 10,
         paddingBottom: 400
     }
 });

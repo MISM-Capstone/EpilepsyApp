@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
 
@@ -21,6 +21,9 @@ const Home = (props:Props) => {
     return (
         <SafeAreaView style={mainStyle.container}>
             <View style={HomeStyles.HomeContainer}>
+                <View style={{ marginHorizontal: 12}}>
+                <Text style={{ fontSize: 45, fontWeight: '700', color: '#edfaf5'}}>Hi, Username!</Text>
+                </View>
                 <NavigationButton
                     title="Log a Seizure"
                     icon="clipboard-pulse"

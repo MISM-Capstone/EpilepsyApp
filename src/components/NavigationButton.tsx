@@ -4,20 +4,20 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import ButtonStyles from "../styles/ButtonStyles";
 
 interface ButtonProps {
-    title:string;
-    icon:string;
-    navigate:() => void;
+    title: string;
+    icon: string;
+    navigate: () => void;
 }
 
-const NavigationButton = (props:ButtonProps) => {
+const NavigationButton = (props: ButtonProps) => {
     return (
         <Pressable
             style={ButtonStyles.surveyButton}
             onPress={props.navigate}
         >
-            <View style={{ flexDirection:'row', justifyContent: 'space-between', paddingHorizontal: 20 }}>
-            <Text style={ButtonStyles.surveyButtonText}>{props.title}</Text>
-            <MaterialCommunityIcons name={props.icon} size={40} color={'#2E4D9E'}/>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20 }}>
+                <Text style={ButtonStyles.surveyButtonText}>{props.title}</Text>
+                <MaterialCommunityIcons name={props.icon} size={40} color={'#44C2B3'} />
             </View>
         </Pressable>
     );

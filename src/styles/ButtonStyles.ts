@@ -7,7 +7,7 @@ const ButtonStyles = StyleSheet.create({
     surveyButton:{
         marginRight:10,
         marginLeft:10,
-        marginTop:5,
+        marginTop:10,
         marginBottom:10,
         paddingTop:25,
         paddingBottom:25,
