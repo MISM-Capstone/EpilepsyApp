@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { Pressable, StatusBar, Text, View, Button } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -21,17 +21,20 @@ type Props = {
 };
 
 const Trends = (props: Props) => {
-    const [markedDates, setMarkedDates] = useState<any>();
+    const [markedDates, setMarkedDates] = useState<any>({});
 
     useEffect(() => {
-        (async () => {
-            const seizures: any[] = await SeizureHistoryDao.getLogs();
-            let marked_dates = seizures.reduce((c: any, v: any) => Object.assign(c, {[v.date]: {marked: true}}), {}); // TODO: this is putting quotes around marked when it shouldn't
-            console.log("-----------------------------------------")
-            console.log("Dates Marked: ",marked_dates);
-            setMarkedDates(marked_dates);
-        })();
-    }, []);
+        async function getMarkedDates() {
+            let seizures: any[] = await SeizureHistoryDao.getLogs();
+            let marked = seizures.reduce((c: any, v: any) => Object.assign(c, {[v.date]: {marked: true}}), {});
+            setInterval(() => {
+                setMarkedDates(marked);
+            }, 10000);
+        }
+
+        getMarkedDates();
+    }, [markedDates]);
+
     return (
         <SafeAreaView style={mainStyle.container}>
             <View>

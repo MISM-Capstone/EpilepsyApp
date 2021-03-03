@@ -54,6 +54,7 @@ export default function LogSeizure(props: Props) {
                     mode="date"
                     display="default"
                     onChange={onChangeDate}
+                    maximumDate={new Date()}
                 />
                 <Text>Time of Seizure</Text>
                 <DateTimePicker
