@@ -26,9 +26,7 @@ const Trends = (props: Props) => {
     useEffect(() => {
         (async () => {
             const seizures: any[] = await SeizureHistoryDao.getLogs();
-            let marked_dates = seizures.reduce((c: any, v: any) => Object.assign(c, {[v.date]: {marked: true}}), {}); // TODO: this is putting quotes around marked when it shouldn't
-            console.log("-----------------------------------------")
-            console.log("Dates Marked: ",marked_dates);
+            let marked_dates = seizures.reduce((c: any, v: any) => Object.assign(c, {[v.date]: {marked: true}}), {});
             setMarkedDates(marked_dates);
         })();
     }, []);

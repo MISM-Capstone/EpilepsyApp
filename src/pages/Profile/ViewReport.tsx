@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Dimensions, FlatList, StatusBar, StyleSheet, Text, View } from 'react-native';
-import SafeAreaView from 'react-native-safe-area-view';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import RNHTMLtoPDF, {Options} from "react-native-html-to-pdf";
@@ -9,6 +8,8 @@ import { renderToString } from 'react-dom/server'
 
 import { ProfileStackParamList } from '../../navigation/ProfileNavigation';
 import ReportDao from '../../_services/database/dao/ReportDao';
+import { VictoryBar, VictoryChart, VictoryTheme } from 'victory-native';
+import chartsService from '../../_services/Charts/charts.service';
 
 type ViewReportScreenNavigationProp = StackNavigationProp<
     ProfileStackParamList,
@@ -29,6 +30,7 @@ type Props = {
 type RenderProps = {
     log: any;
 }
+
 
 function RenderSeizure(props:RenderProps) {
     return (
@@ -73,8 +75,12 @@ const ViewReport = (props:Props) => {
     const [pdf, setPDF] = useState<any>();
     const startDate = new Date(props.route.params.start);
     const endDate = new Date(props.route.params.end);
+    const [seizureDayData, setDayData] = useState<any[]>([]);
     useEffect(() => {
         (async () => {
+            const results = await chartsService.getChartDataDay();
+            setDayData(results);
+            
             const dbSeizures = await ReportDao.getSeizuresInDateRange(startDate, endDate);
             const dbSurveys = await ReportDao.getSurveysInDateRange(startDate, endDate);
             const dbMedication = await ReportDao.getMedicationInDateRange(startDate, endDate);
@@ -114,6 +120,17 @@ const ViewReport = (props:Props) => {
 
     return (
         <View style={styles.container}>
+            <Text>Seizures by Day of the Week</Text>
+            <VictoryChart width={350} theme={VictoryTheme.material}>
+                <VictoryBar
+                    alignment="start"
+                    data={seizureDayData}
+                    x="day"
+                    y="seizures"
+                    style={{
+                        data: { fill: `#44C2B3` }
+                    }} />
+            </VictoryChart>
             {pdf?
             <Pdf
                 source={pdf}
