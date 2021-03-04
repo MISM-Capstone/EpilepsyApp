@@ -27,13 +27,11 @@ const Trends = (props: Props) => {
         async function getMarkedDates() {
             let seizures: any[] = await SeizureHistoryDao.getLogs();
             let marked = seizures.reduce((c: any, v: any) => Object.assign(c, {[v.date]: {marked: true}}), {});
-            setInterval(() => {
-                setMarkedDates(marked);
-            }, 10000);
+            setMarkedDates(marked);
         }
 
         getMarkedDates();
-    }, [markedDates]);
+    }, []);
 
     return (
         <SafeAreaView style={mainStyle.container}>
