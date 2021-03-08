@@ -44,6 +44,11 @@ const Home = (props:Props) => {
                     icon="archive"
                     navigate={() => props.navigation.navigate("SurveyHistory")}
                 />
+                <NavigationButton
+                    title="Healthkit"
+                    icon="home"
+                    navigate={() => props.navigation.navigate("HealthKitTest")}
+                />
             </View>
 
         </SafeAreaView>
