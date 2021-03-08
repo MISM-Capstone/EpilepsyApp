@@ -60,10 +60,7 @@ const DateHistory = (props: Props) => {
 
     useEffect(() => {
         (async () => {
-            console.log('&&&&&&&&&&&&&&&&&');
-            console.log('DATE: ', date.dateString);
             const results = await HistoryDao.getAllLogsByDate(date.dateString);
-            console.log("RESULTS: ", results['seizures']);
             setSeizures(results['seizures']);
             setSurveys(results['surveys']);
             setMedications(results['medications']);

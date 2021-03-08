@@ -55,6 +55,7 @@ export default function DailySurvey(props: Props) {
                     mode="date"
                     display="default"
                     onChange={onChangeDate}
+                    maximumDate={new Date()}
                 />
                 <Text>How much sleep did you get last night?</Text>
                 <TextInput
