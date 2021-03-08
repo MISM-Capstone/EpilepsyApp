@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, SafeAreaView } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import HistoryStyles from '../../styles/HistoryStyles';
 import HistoryDao from '../../_services/database/dao/HistoryDao';
 
 type Props = {
@@ -9,11 +11,12 @@ type Props = {
 
 type RenderProps = {
     log: any;
+    key: number;
 }
 
 function SeizureCard(props: RenderProps) {
     return (
-        <View style={{ backgroundColor: `#ccc`, padding: 12, borderColor: `#000`, margin: 16 }}>
+        <View style={HistoryStyles.HistoryEventCard}>
             <View>
                 <Text>Time: {props.log.time}</Text>
                 <Text>Location: {props.log.location}</Text>
@@ -25,7 +28,7 @@ function SeizureCard(props: RenderProps) {
 
 function SurveyCard(props: RenderProps) {
     return (
-        <View style={{ backgroundColor: `#ccc`, padding: 12, borderColor: `#000`, margin: 16 }}>
+        <View style={HistoryStyles.HistoryEventCard}>
             <View>
                 <Text>Sleep: {props.log.sleep}</Text>
                 <Text>Stress Level: {props.log.stress_level}</Text>
@@ -40,7 +43,7 @@ function SurveyCard(props: RenderProps) {
 
 function MedicationCard(props: RenderProps) {
     return (
-        <View style={{ backgroundColor: `#ccc`, padding: 12, borderColor: `#000`, margin: 16 }}>
+        <View style={HistoryStyles.HistoryEventCard}>
             <View>
                 <Text>Time: {props.log.time}</Text>
                 <Text>Medication: {props.log.medication}</Text>
@@ -68,39 +71,33 @@ const DateHistory = (props: Props) => {
     }, []);
 
     return (
-        // TODO: can't use flat list inside of scroll view
         <SafeAreaView>
-            <Text style={{ fontSize: 24, fontWeight: `bold`, paddingTop: 10 }}>Seizures</Text>
-            {seizures.length > 0 ?
-                <FlatList
-                    data={seizures}
-                    renderItem={({ item }) => <SeizureCard log={item} />}
-                    keyExtractor={(item) => item.seizure_id.toString()}
-                />
-                :
-                <Text>No Seizure Events recorded for this date.</Text>
-            }
-            <Text style={{ fontSize: 24, fontWeight: `bold`, paddingTop: 10 }}>Surveys</Text>
-            {surveys.length > 0 ?
-                <FlatList
-                    data={surveys}
-                    renderItem={({ item }) => <SurveyCard log={item} />}
-                    keyExtractor={(item) => item.survey_entry_id.toString()}
-                />
-                :
-                <Text>No Surveys recorded for this date.</Text>}
-
-            <Text style={{ fontSize: 24, fontWeight: `bold`, paddingTop: 10 }}>Medications</Text>
-            {medications.length > 0 ?
-                <FlatList
-                    data={medications}
-                    renderItem={({ item }) => <MedicationCard log={item} />}
-                    keyExtractor={(item) => item.medication_id.toString()}
-                />
-                :
-                <Text>No Medications recorded for this date.</Text>
-            }
-
+            <ScrollView>
+                <Text style={HistoryStyles.SectionHeader}>Seizures</Text>
+                {seizures.length > 0 ?
+                    seizures.map(function (seizure, key) {
+                        return <SeizureCard log={seizure} key={key} />
+                    })
+                    :
+                    <Text>No Seizure Events recorded for this date.</Text>
+                }
+                <Text style={HistoryStyles.SectionHeader}>Surveys</Text>
+                {surveys.length > 0 ?
+                    surveys.map(function (survey, key) {
+                        return <SurveyCard log={survey} key={key} />
+                    })
+                    :
+                    <Text>No Surveys recorded for this date.</Text>
+                }
+                <Text style={HistoryStyles.SectionHeader}>Medications</Text>
+                {medications.length > 0 ?
+                    medications.map(function (medication, key) {
+                        return <MedicationCard log={medication} key={key} />
+                    })
+                    :
+                    <Text>No Medications recorded for this date.</Text>
+                }
+            </ScrollView>
         </SafeAreaView >
     )
 }
