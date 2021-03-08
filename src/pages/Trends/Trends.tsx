@@ -9,7 +9,7 @@ import styles from "../../styles/ButtonStyles";
 import { default as mainStyle } from "../../styles/MainStyles";
 import { CalendarList } from 'react-native-calendars';
 import calendarService from '../../_services/Calendar/calendar.service';
-import SeizureHistoryDao from '../../_services/database/dao/SeizureHistoryDao';
+import HistoryDao from '../../_services/database/dao/HistoryDao';
 
 type TrendsScreenNavigationProp = StackNavigationProp<
     TrendsStackParamList,
@@ -25,8 +25,8 @@ const Trends = (props: Props) => {
 
     useEffect(() => {
         async function getMarkedDates() {
-            let seizures: any[] = await SeizureHistoryDao.getLogs();
-            let marked = seizures.reduce((c: any, v: any) => Object.assign(c, {[v.date]: {marked: true}}), {});
+            let dates: any[] = await HistoryDao.getAllEventDates();
+            let marked = dates.reduce((c: any, v: any) => Object.assign(c, {[v.date]: {marked: true}}), {});
             setMarkedDates(marked);
         }
 

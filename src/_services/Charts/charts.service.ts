@@ -1,9 +1,9 @@
 import React from 'react';
-import SeizureHistoryDao from '../database/dao/SeizureHistoryDao';
+import HistoryDao from '../database/dao/HistoryDao';
 
 // Default structure for getting chart data
 const getChartData = async () => {
-    const seizures: any[] = await SeizureHistoryDao.getLogs();
+    const seizures: any[] = await HistoryDao.getSeizureLogs();
     let data: any[] = [];
 
     seizures.forEach(seizure => {
@@ -14,7 +14,7 @@ const getChartData = async () => {
 
 // Charting Seizure Events by Day of the Week
 const getChartDataDay = async () => {
-    const seizures: any[] = await SeizureHistoryDao.getLogs();
+    const seizures: any[] = await HistoryDao.getSeizureLogs();
     let data: any[] = new Array(7);
     data[0] = { day: "Sun", seizures: 0 };
     data[1] = { day: "Mon", seizures: 0 };
@@ -35,7 +35,7 @@ const getChartDataDay = async () => {
 
 // Charting Seizure Events by Day of the Week
 const getChartDataTime = async () => {
-    const seizures: any[] = await SeizureHistoryDao.getLogs();
+    const seizures: any[] = await HistoryDao.getSeizureLogs();
     let data: any[] = new Array(6);
     data[0] = { hour: "12am", seizures: 0 }; 
     data[1] = { hour: "4am", seizures: 0 };

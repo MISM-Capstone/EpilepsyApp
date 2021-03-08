@@ -19,8 +19,4 @@ export default class RecordMedicationDao extends Dao {
         });
         return results;
     }
-
-    static async get() {
-        
-    }
 }
