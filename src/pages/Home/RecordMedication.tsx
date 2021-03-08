@@ -7,72 +7,90 @@ import { TextInput } from 'react-native-gesture-handler';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from "../../navigation/HomeNavigation";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import RecordMedicationDao from '../../_services/database/dao/RecordMedication';
 
-type RecordMedicationScreenNavigationProp = StackNavigationProp<HomeStackParamList,'RecordMedication'>;
+type RecordMedicationScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'RecordMedication'>;
 
 type Props = {
-  navigation: RecordMedicationScreenNavigationProp;
+    navigation: RecordMedicationScreenNavigationProp;
 };
 
 
-export default function RecordMedication(props:Props) {
-    const [date, changeDate] = useState<Date>(new Date(Date.now()));
-    const [time, changeTime] = useState(new Date(Date.now()));
-    const [locationText, onChangeLocationText] = useState('');
-    const [detailsText, onChangeDetailsText] = useState('');
+export default function RecordMedication(props: Props) {
+    const [date, setDate] = useState<any>(new Date());
+    const [time, setTime] = useState<any>(new Date());
+    const [medicationText, setMedicationText] = useState('');
+    const [dosageText, setDosageText] = useState('');
+    const [notesText, setNotesText] = useState('');
 
-    const storeData = async () => {
-        try {
-            var arr = ["Date", date, "Time", time, "Location", locationText, "Details", detailsText]
-            
-            var json = JSON.stringify(arr);
-            console.log(json);
-            await AsyncStorage.setItem('@survey_resp', json);
-        } catch (e) {
-            console.error(e);
-        } finally {
-            props.navigation.navigate("Home")
-        }
+    const onChangeDate = (_event: Event, selectedDate: Date | undefined) => {
+        const currentDate = selectedDate || date;
+        setDate(currentDate);
+    };
+
+    const onChangeTime = (_event: Event, selectedDate: Date | undefined) => {
+        console.log(selectedDate);
+        setTime(selectedDate);
+    };
+
+    const onChangeMedicationText = (text: string) => {
+        setMedicationText(text);
     }
 
-    const navigateBack = () => {
-        props.navigation.navigate("Home")
+    const onChangeDosageText = (text: string) => {
+        setDosageText(text);
+    }
+
+    const onChangeNotesText = (text: string) => {
+        setNotesText(text);
+    }
+
+    const insertQuery = async (date: Date, time: Date, medication: string | any, dosage: string | any, notes: string | any) => {
+        let results = await RecordMedicationDao.insertMedication(date, time, medication, dosage, notes);
+        console.log('inserted: ', results);
+        props.navigation.goBack();
     }
 
     return (
         <SafeAreaView>
             <View style={{ padding: 12 }}>
-                <Text>Date of Seizure</Text>
+                <Text>Date of Medication</Text>
                 <DateTimePicker
                     testID="datePicker"
                     value={date}
                     mode="date"
                     display="default"
-                    onChange={() => changeDate}
+                    onChange={onChangeDate}
+                    maximumDate={new Date()}
                 />
-                <Text>Time of Seizure</Text>
+                <Text>Time of Medication</Text>
                 <DateTimePicker
                     testID="timePicker"
                     value={time}
                     mode="time"
                     display="default"
-                    onChange={() => changeTime}
+                    onChange={onChangeTime}
                 />
-                <Text>Location</Text>
+                <Text>Medication Name</Text>
                 <TextInput
                     style={{ height: 40, backgroundColor: 'lightgray' }}
-                    onChangeText={text => onChangeLocationText(text)}
-                    value={locationText} />
-                <Text>Details</Text>
+                    onChangeText={text => onChangeMedicationText(text)}
+                    value={medicationText} />
+                <Text>Dosage</Text>
+                <TextInput
+                    style={{ height: 40, backgroundColor: 'lightgray' }}
+                    onChangeText={text => onChangeDosageText(text)}
+                    value={dosageText} />
+                <Text>Notes</Text>
                 <TextInput
                     style={{ backgroundColor: 'lightgray', height: 100 }}
-                    onChangeText={text => onChangeDetailsText(text)}
-                    value={detailsText}
+                    onChangeText={text => onChangeNotesText(text)}
+                    value={notesText}
                     multiline
                     numberOfLines={5} />
             </View>
-            <Button title="Save" onPress={() => storeData()} />
-            <Button title="Cancel" onPress={navigateBack} />
+            <Button title="Save" onPress={() => insertQuery(date, time, medicationText, dosageText, notesText)} />
+            <Button title="Cancel" onPress={props.navigation.goBack} />
         </SafeAreaView>
     )
 }

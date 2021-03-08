@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, Text, View } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
-import SeizureHistoryDao from '../../_services/database/dao/SeizureHistoryDao';
+import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import HistoryDao from '../../_services/database/dao/HistoryDao';
 
 type Props = {
     navigation: any;
@@ -11,12 +11,11 @@ type RenderProps = {
     log: any;
 }
 
-function RenderItem(props: RenderProps) {
+function SeizureCard(props: RenderProps) {
     return (
         <View style={{ backgroundColor: `#ccc`, padding: 12, borderColor: `#000`, margin: 16 }}>
-            <Text style={{ fontSize: 16, fontWeight: `bold` }}>ID: {props.log.seizure_id}</Text>
+            <Text style={{ fontSize: 16, fontWeight: `bold` }}>{props.log.date}</Text>
             <View>
-                <Text>Date: {props.log.date}</Text>
                 <Text>Time: {props.log.time}</Text>
                 <Text>Location: {props.log.location}</Text>
                 <Text>Notes: {props.log.notes}</Text>
@@ -25,29 +24,86 @@ function RenderItem(props: RenderProps) {
     )
 }
 
-export default function SurveyHistory(props: Props) {
-    const [records, setRecords] = useState<any[]>([]);
+function SurveyCard(props: RenderProps) {
+    return (
+        <View style={{ backgroundColor: `#ccc`, padding: 12, borderColor: `#000`, margin: 16 }}>
+            <Text style={{ fontSize: 16, fontWeight: `bold` }}>{props.log.date}</Text>
+            <View>
+                <Text>Sleep: {props.log.sleep}</Text>
+                <Text>Stress Level: {props.log.stress_level}</Text>
+                <Text>Felt Illness: {props.log.illness ? 'Yes' : 'No'}</Text>
+                <Text>Had a Fever: {props.log.fever ? 'Yes' : 'No'}</Text>
+                <Text>Missed a Meal: {props.log.miss_meal ? 'Yes' : 'No'}</Text>
+                <Text>Took Medication: {props.log.medication ? 'Yes' : 'No'}</Text>
+            </View>
+        </View>
+    )
+}
 
-    // Similar to class based componentDidMount This will run
-    // when the component first renders.
+function MedicationCard(props: RenderProps) {
+    return (
+        <View style={{ backgroundColor: `#ccc`, padding: 12, borderColor: `#000`, margin: 16 }}>
+            <Text style={{ fontSize: 16, fontWeight: `bold` }}>{props.log.date}</Text>
+            <View>
+                <Text>Time: {props.log.time}</Text>
+                <Text>Medication: {props.log.medication}</Text>
+                <Text>Dosage: {props.log.dosage}</Text>
+                <Text>Notes: {props.log.notes}</Text>
+            </View>
+        </View>
+    )
+}
+
+export default function SurveyHistory(props: Props) {
+    const [seizures, setSeizures] = useState<any[]>([]);
+    const [surveys, setSurveys] = useState<any[]>([]);
+    const [medications, setMedications] = useState<any[]>([]);
+
     useEffect(() => {
         (async () => {
-            const results = await SeizureHistoryDao.getLogs();
-            setRecords(results);
+            const results = await HistoryDao.getAllLogs();
+            console.log(results);
+            setSeizures(results['seizures']);
+            setSurveys(results['surveys']);
+            setMedications(results['medications']);
         })();
-    }, []); // These square brackets define when the effect should
-    // run again. If they are empty, it will only run when
-    // the component renders. If you pass a state variable
-    // (i.e. records) it will run each time records changes.
+    }, []);
 
 
     return (
+        // TODO: can't use flat list inside of scroll view
         <SafeAreaView>
-            <FlatList
-                data={records}
-                renderItem={({ item }) => <RenderItem log={item} />}
-                keyExtractor={(item) => item.seizure_id.toString()}
-            />
+            <Text style={{ fontSize: 24, fontWeight: `bold`, paddingTop: 10}}>Seizures</Text>
+            {seizures.length > 0 ?
+                <FlatList
+                    data={seizures}
+                    renderItem={({ item }) => <SeizureCard log={item} />}
+                    keyExtractor={(item) => item.seizure_id.toString()}
+                />
+                :
+                <Text>No Seizure Events Recorded.</Text>
+            }
+            <Text style={{ fontSize: 24, fontWeight: `bold`, paddingTop: 10}}>Surveys</Text>
+            {surveys.length > 0 ?
+                <FlatList
+                    data={surveys}
+                    renderItem={({ item }) => <SurveyCard log={item} />}
+                    keyExtractor={(item) => item.survey_entry_id.toString()}
+                />
+                :
+                <Text>No Surveys Recorded.</Text>}
+
+            <Text style={{ fontSize: 24, fontWeight: `bold`, paddingTop: 10}}>Medications</Text>
+            {medications.length > 0 ?
+                <FlatList
+                    data={medications}
+                    renderItem={({ item }) => <MedicationCard log={item} />}
+                    keyExtractor={(item) => item.medication_id.toString()}
+                />
+                :
+                <Text>No Medications Recorded.</Text>
+            }
+
         </SafeAreaView >
     )
 }
