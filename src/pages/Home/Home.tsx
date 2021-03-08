@@ -46,7 +46,7 @@ const Home = (props:Props) => {
                 />
                 <NavigationButton
                     title="Healthkit"
-                    icon="home"
+                    icon="hospital-box"
                     navigate={() => props.navigation.navigate("HealthKitTest")}
                 />
             </View>
