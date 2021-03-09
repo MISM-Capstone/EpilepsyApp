@@ -38,6 +38,10 @@ export function RenderMedication(props: RenderProps) {
     return (
         <div>
             <p>ID: {props.log.medication_id}</p>
+            <p>Time: {props.log.time}</p>
+            <p>Medication: {props.log.medication}</p>
+            <p>Dosage: {props.log.dosage}</p>
+            <p>Notes: {props.log.notes}</p>
             <p>------</p>
         </div>
     );

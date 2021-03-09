@@ -32,6 +32,7 @@ export class DatabaseInitialization {
         if (dropAllTables) {
             transaction.executeSql("DROP TABLE IF EXISTS seizure_log;");
             transaction.executeSql("DROP TABLE IF EXISTS survey_log;");
+            transaction.executeSql("DROP TABLE IF EXISTS medication_log;");
             transaction.executeSql("DROP TABLE IF EXISTS Version;");
         }
       
@@ -55,6 +56,16 @@ export class DatabaseInitialization {
                 fever BOOLEAN NOT NULL,
                 miss_meal BOOLEAN NOT NULL,
                 medication BOOLEAN NOT NULL
+            );
+        `);
+        transaction.executeSql(`
+            CREATE TABLE IF NOT EXISTS medication_log (
+                medication_id INTEGER PRIMARY KEY,
+                date DATE NOT NULL,
+                time TEXT NOT NULL,
+                medication TEXT NOT NULL,
+                dosage TEXT NOT NULL,
+                notes TEXT NOT NULL
             );
         `);
 

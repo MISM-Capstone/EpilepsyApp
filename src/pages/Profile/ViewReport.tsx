@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import { CommonActions, RouteProp } from '@react-navigation/native';
+import { captureRef } from "react-native-view-shot";
 import Pdf from 'react-native-pdf';
 
 import { ProfileStackParamList } from '../../navigation/ProfileNavigation';
@@ -25,70 +26,25 @@ type Props = {
     navigation: ViewReportScreenNavigationProp;
 };
 
-
-type demo = {
-    pdf:object|null;
-    seizureDayData:any[];
-}
-
 const ViewReport = (props:Props) => {
-    const [state, setState] = useState<demo>({pdf:null, seizureDayData:[]});
-    const test = useRef<any>(null);
-    const startDate = new Date(props.route.params.start);
-    const endDate = new Date(props.route.params.end);
     useEffect(() => {
-        (async () => {
-            if (!state.pdf) {
-                const results = await chartsService.getChartDataDay();
-                const source = await getHTMLToConvert(startDate, endDate);
-                setState({
-                    pdf: source,
-                    seizureDayData: results
+        const unsubscribe = props.navigation.addListener("transitionEnd", () => {
+            props.navigation.dispatch(state => {
+                const routes = state.routes.filter(r => r.name !== "GenerateReport");
+                return CommonActions.reset({
+                    ...state,
+                    routes,
+                    index: routes.length - 1,
                 });
-
-            }
-        })();
-    
-    },[test.current]);
-
+            });
+        });
+        return unsubscribe
+    },[]);
     return (
         <ScrollView>
             <View style={styles.container}>
-                <VictoryChart
-                    containerComponent={
-                        <VictoryContainer
-                            containerRef={(ref) => {
-                                if (!test.current) {
-                                    test.current = ref
-                                    setTimeout(() => {
-                                        console.log("_*_*_*_*_*_*_*_**_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_**")
-                                        console.log(test.current?"It has a ref %%":"%% NO REF")
-                                        if (test.current) {
-                                            console.log(test.current.querySelector);
-                                        }
-                                    }, 500);
-                                }
-                                
-                            }}
-                        />
-                    }
-                >
-                <VictoryLine/>
-                </VictoryChart>
-                <Text>Seizures by Day of the Week</Text>
-                <VictoryChart width={350} theme={VictoryTheme.material}>
-                    <VictoryBar
-                        alignment="start"
-                        data={state.seizureDayData}
-                        x="day"
-                        y="seizures"
-                        style={{
-                            data: { fill: `#44C2B3` }
-                        }} />
-                </VictoryChart>
-                {state.pdf?
                 <Pdf
-                    source={state.pdf}
+                    source={props.route.params.pdf}
                     // onLoadComplete={(numberOfPages,filePath)=>{
                     //     console.log(`number of pages: ${numberOfPages}`);
                     // }}
@@ -102,8 +58,7 @@ const ViewReport = (props:Props) => {
                     //     console.log(`Link press: ${uri}`)
                     // }}
                     style={styles.pdf}
-                />:
-                <Text>Loading</Text>}
+                />
             </View>
         </ScrollView>
     );

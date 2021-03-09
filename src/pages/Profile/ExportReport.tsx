@@ -136,7 +136,7 @@ const ExportReport = (props:Props) => {
                 title="Create Report"
                 onPress={() => {
                     props.navigation.navigate(
-                        "ViewReport",
+                        "GenerateReport",
                         {start: startDate.getTime(), end: endDate.getTime()}
                     );
                 }}

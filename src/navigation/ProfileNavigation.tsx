@@ -6,16 +6,22 @@ import ViewReport from "../pages/Profile/ViewReport";
 
 import HeaderStyle from "../styles/HeaderStyle";
 import ExportReport from '../pages/Profile/ExportReport';
+import GenerateReport from '../pages/Profile/GenerateReport';
 
-export type ViewReportProps = {
+export type GenerateReportProps = {
     start:number;
     end:number;
+}
+
+export type ViewReportProps = {
+    pdf:object;
 }
 
 export type ProfileStackParamList = {
     Profile: undefined;
     ExportReport: undefined;
     ViewReport: ViewReportProps;
+    GenerateReport: GenerateReportProps;
 };
 
 export const ProfileNavOptions = {
@@ -41,6 +47,13 @@ const ProfileNavigation = () => {
                         component={ExportReport}
                         options={{
                             title: 'Export Report'
+                        }}
+                />
+                <Stack.Screen
+                        name="GenerateReport"
+                        component={GenerateReport}
+                        options={{
+                            title: 'Generating Report'
                         }}
                 />
                 <Stack.Screen
