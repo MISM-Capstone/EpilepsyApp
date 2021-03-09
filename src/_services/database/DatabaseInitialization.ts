@@ -9,7 +9,6 @@ export class DatabaseInitialization {
         console.log("Beginning database updates...");
   
         // First: create tables if they do not already exist
-        console.log("__________________Running____________________")
         await database.transaction(this.createTables)
         let version = await this.getDatabaseVersion(database);
         dbVersion = version;
