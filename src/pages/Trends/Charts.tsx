@@ -7,7 +7,7 @@ import { VictoryChart, VictoryTheme, VictoryBar } from "victory-native";
 import chartsService from '../../_services/Charts/charts.service';
 
 
-function Chart() {
+function Charts() {
     const [seizureDayData, setDayData] = useState<any[]>([]);
     const [seizureTimeData, setTimeData] = useState<any[]>([]);
 
@@ -25,7 +25,7 @@ function Chart() {
     }, []);
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{ paddingHorizontal: 12}}>
             <ScrollView>
                 <View>
                     <Text>Seizures by Day of the Week</Text>
@@ -58,4 +58,4 @@ function Chart() {
     );
 }
 
-export default Chart;
+export default Charts;

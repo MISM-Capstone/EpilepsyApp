@@ -9,7 +9,9 @@ import styles from "../../styles/ButtonStyles";
 import { default as mainStyle } from "../../styles/MainStyles";
 import { CalendarList } from 'react-native-calendars';
 import calendarService from '../../_services/Calendar/calendar.service';
-import SeizureHistoryDao from '../../_services/database/dao/SeizureHistoryDao';
+import HistoryDao from '../../_services/database/dao/HistoryDao';
+import ButtonStyles from '../../styles/ButtonStyles';
+import LargeButton from '../../components/LargeButton';
 
 type TrendsScreenNavigationProp = StackNavigationProp<
     TrendsStackParamList,
@@ -25,8 +27,8 @@ const Trends = (props: Props) => {
 
     useEffect(() => {
         async function getMarkedDates() {
-            let seizures: any[] = await SeizureHistoryDao.getLogs();
-            let marked = seizures.reduce((c: any, v: any) => Object.assign(c, {[v.date]: {marked: true}}), {});
+            let dates: any[] = await HistoryDao.getAllEventDates();
+            let marked = dates.reduce((c: any, v: any) => Object.assign(c, {[v.date]: {marked: true}}), {});
             setMarkedDates(marked);
         }
 
@@ -35,8 +37,8 @@ const Trends = (props: Props) => {
 
     return (
         <SafeAreaView style={mainStyle.container}>
-            <View>
-                <Button title="View Chart" onPress={() => props.navigation.navigate("Chart")} />
+            <View style={{paddingBottom: 20}}>
+                <LargeButton title="View Charts" navigate={() => props.navigation.navigate("Charts")} />
             </View>
             {/* Docs: https://github.com/wix/react-native-calendars */}
             <CalendarList

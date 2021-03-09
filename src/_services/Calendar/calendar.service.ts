@@ -1,9 +1,9 @@
 import React from 'react';
-import SeizureHistoryDao from '../database/dao/SeizureHistoryDao';
+import HistoryDao from '../database/dao/HistoryDao';
 
 // Default structure for getting chart data
 const getCalendarData = async () => {
-    const seizures: any[] = await SeizureHistoryDao.getLogs();
+    const seizures: any[] = await HistoryDao.getSeizureLogs();
     let days: any = [];
 
     seizures.forEach(seizure => {
