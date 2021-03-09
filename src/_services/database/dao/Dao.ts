@@ -34,19 +34,16 @@ export default abstract class DAO {
 
     // Open a connection to the database
     private static async open(): Promise<SQLite.SQLiteDatabase> {
-        SQLite.DEBUG(true);
+        // SQLite.DEBUG(true);
         SQLite.enablePromise(true);
         
         if (!DAO.didRegisterEventListener) {
-            console.log("[db] Adding listener to handle app state changes");
+            // Add listener to handle app state changes");
             AppState.removeEventListener("change", DAO.handleAppStateChange);
             AppState.addEventListener("change", DAO.handleAppStateChange);
         }
-        console.log("set listener")
-        if (DAO.databaseInstance) {
-            console.log("[db] Database is already open: returning the existing instance");
-        } else {
-            console.log("Opening db")
+        if (!DAO.databaseInstance) {
+            // Open DB
             let DATABASE:SQLite.DatabaseParams = {
                 name: "epilepsy.db",
                 location: "default",
@@ -54,7 +51,6 @@ export default abstract class DAO {
             };
             // Otherwise, create a new instance
             let db = await SQLite.openDatabase(DATABASE);
-            console.log("[db] Database open!");
         
             // Perform any database initialization or updates, if needed
             await DatabaseInitialization.updateDatabaseTables(db);
@@ -67,12 +63,10 @@ export default abstract class DAO {
     // Close the connection to the database
     private static async close(): Promise<void> {
         if (DAO.databaseInstance === undefined) {
-            console.log("[db] No need to close DB again - it's already closed");
+            // No need to close DB again - it's already closed
             return;
         }
         let status = await DAO.databaseInstance.close();
-        console.log("Status:", status)
-        console.log("[db] Database closed.");
         DAO.databaseInstance = undefined;
     }
 
@@ -81,7 +75,6 @@ export default abstract class DAO {
     private static handleAppStateChange(nextAppState: AppStateStatus) {
         if (DAO.appState === "active" && nextAppState.match(/inactive|background/)) {
             // App has moved from the foreground into the background (or become inactive)
-            console.log("[db] App has gone to the background - closing DB connection.");
             DAO.close().then(() => console.log("Finished closing"));
         }
         DAO.appState = nextAppState;
