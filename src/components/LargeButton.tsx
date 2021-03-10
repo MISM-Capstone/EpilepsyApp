@@ -8,7 +8,7 @@ interface ButtonProps {
     navigate: () => void;
 }
 
-const NavigationButton = (props: ButtonProps) => {
+const LargeButton = (props: ButtonProps) => {
     return (
         <Pressable
             style={ButtonStyles.largeButton}
@@ -19,4 +19,4 @@ const NavigationButton = (props: ButtonProps) => {
     );
 };
 
-export default NavigationButton;
+export default LargeButton;

@@ -5,10 +5,11 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 import {LoginStackParamList} from "../navigation/LoginNavigation";
 
-import styles from "../styles/ButtonStyles";
 import {default as mainStyle} from "../styles/MainStyles";
 import AuthContext from '../_services/Authentication/AuthContext';
 import { TextInput } from 'react-native-gesture-handler';
+import LoginStyles from '../styles/LoginStyles';
+import NavigationButton from '../components/NavigationButton';
 
 type LoginScreenNavigationProp = StackNavigationProp<
   LoginStackParamList,
@@ -28,19 +29,24 @@ export default function Login(props:Props) {
     return (
         <SafeAreaView style={mainStyle.container}>
             <StatusBar barStyle="dark-content" />
-            <View style={styles.navigationButtonContainer}>
-                <Text>Login</Text>
+            <View style={LoginStyles.mainContainer}>
                 <TextInput
                     placeholder="Username"
                     value={username}
                     onChangeText={setUsername}
+                    style={LoginStyles.input}
                 />
                 <TextInput
                     placeholder="Password"
                     value={password}
                     onChangeText={setPassword}
+                    style={LoginStyles.input}
                 />
-                <Button title="Login" onPress={() => signIn({username, password})} />
+                <NavigationButton
+                    title="Log In"
+                    icon="login"
+                    navigate={() => signIn({username, password})}
+                />
             </View>
         </SafeAreaView>
     );
