@@ -79,7 +79,7 @@ const DateHistory = (props: Props) => {
                         return <SeizureCard log={seizure} key={key} />
                     })
                     :
-                    <Text>No Seizure Events recorded for this date.</Text>
+                    <Text style={HistoryStyles.HistoryAlternateText}>No Seizure Events recorded for this date.</Text>
                 }
                 <Text style={HistoryStyles.SectionHeader}>Surveys</Text>
                 {surveys.length > 0 ?
@@ -87,7 +87,7 @@ const DateHistory = (props: Props) => {
                         return <SurveyCard log={survey} key={key} />
                     })
                     :
-                    <Text>No Surveys recorded for this date.</Text>
+                    <Text style={HistoryStyles.HistoryAlternateText}>No Surveys recorded for this date.</Text>
                 }
                 <Text style={HistoryStyles.SectionHeader}>Medications</Text>
                 {medications.length > 0 ?
@@ -95,7 +95,7 @@ const DateHistory = (props: Props) => {
                         return <MedicationCard log={medication} key={key} />
                     })
                     :
-                    <Text>No Medications recorded for this date.</Text>
+                    <Text style={HistoryStyles.HistoryAlternateText}>No Medications recorded for this date.</Text>
                 }
             </ScrollView>
         </SafeAreaView >
