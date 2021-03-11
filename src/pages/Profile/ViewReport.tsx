@@ -1,15 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { CommonActions, RouteProp } from '@react-navigation/native';
-import { captureRef } from "react-native-view-shot";
 import Pdf from 'react-native-pdf';
 
 import { ProfileStackParamList } from '../../navigation/ProfileNavigation';
-import { VictoryBar, VictoryChart, VictoryContainer, VictoryLine, VictoryTheme } from 'victory-native';
-import chartsService from '../../_services/Charts/charts.service';
 import { ScrollView } from 'react-native-gesture-handler';
-import { getHTMLToConvert } from './getHTMLToConvert';
+import PdfStyles from '../../styles/PdfStyles';
 
 type ViewReportScreenNavigationProp = StackNavigationProp<
     ProfileStackParamList,
@@ -42,8 +39,9 @@ const ViewReport = (props:Props) => {
     },[]);
     return (
         <ScrollView>
-            <View style={styles.container}>
+            <View style={PdfStyles.container}>
                 <Pdf
+                    style={PdfStyles.pdf}
                     source={props.route.params.pdf}
                     // onLoadComplete={(numberOfPages,filePath)=>{
                     //     console.log(`number of pages: ${numberOfPages}`);
@@ -57,24 +55,10 @@ const ViewReport = (props:Props) => {
                     // onPressLink={(uri)=>{
                     //     console.log(`Link press: ${uri}`)
                     // }}
-                    style={styles.pdf}
                 />
             </View>
         </ScrollView>
     );
 }
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        marginTop: 25,
-    },
-    pdf: {
-        flex:1,
-        width:Dimensions.get('window').width,
-        height:Dimensions.get('window').height,
-    }
-});
-export default ViewReport;
 
+export default ViewReport;

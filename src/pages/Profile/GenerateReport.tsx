@@ -1,14 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { CommonActions, RouteProp } from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native';
 import { captureRef } from "react-native-view-shot";
-import Pdf from 'react-native-pdf';
 
 import { ProfileStackParamList } from '../../navigation/ProfileNavigation';
-import { VictoryBar, VictoryChart, VictoryContainer, VictoryLine, VictoryTheme } from 'victory-native';
+import { VictoryBar, VictoryChart, VictoryTheme } from 'victory-native';
 import chartsService from '../../_services/Charts/charts.service';
-import { ScrollView } from 'react-native-gesture-handler';
 import { getHTMLToConvert } from './getHTMLToConvert';
 
 type GenerateReportScreenNavigationProp = StackNavigationProp<
@@ -35,6 +33,8 @@ const GenerateReport = (props:Props) => {
     const [state, setState] = useState<demo>({seizureDayData:[]});
     const graphRef = useRef<any>(null);
     const rendered = useRef(false);
+    const loadedData = useRef(false);
+    const generatingPDF = useRef(false);
     const startDate = new Date(props.route.params.start);
     const endDate = new Date(props.route.params.end);
 
@@ -48,23 +48,26 @@ const GenerateReport = (props:Props) => {
 
     useEffect(() => {
         (async () => {
-            const results = await chartsService.getChartDataDay();
+            const results = await chartsService.getChartDataDayInRange(startDate, endDate);
             setState({
                 seizureDayData: results
             });
+            loadedData.current = true;
         })();
     },[]);
 
     useEffect(() => {
         
         (async () => {
-            let imageLink = "";
-            if (graphRef.current && !rendered.current) {
-                imageLink = await capture();
+            let imageLinks:string[] = [];
+            if (graphRef.current && loadedData.current && !rendered.current) {
+                const imageLink = await capture();
+                imageLinks.push(imageLink);
                 rendered.current = true;
             }
-            if (rendered.current) {
-                const pdf = await getHTMLToConvert(startDate, endDate, imageLink);
+            if (rendered.current && !generatingPDF.current) {
+                generatingPDF.current = true;
+                const pdf = await getHTMLToConvert(startDate, endDate, imageLinks);
                 props.navigation.navigate(
                     "ViewReport",
                     {pdf}
@@ -77,11 +80,7 @@ const GenerateReport = (props:Props) => {
     return (
         <View>
             <View
-                ref={(ref) => {
-                    if (!graphRef.current) {
-                        graphRef.current = ref;
-                    }
-                }}
+                ref={graphRef}
                 style={{ position: "absolute", left: 3000, top: 0}}
             >
                 <Text>Seizures by Day of the Week</Text>
