@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Text, View, Button } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
@@ -12,6 +12,7 @@ type LogSeizureScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'L
 
 type Props = {
     navigation: LogSeizureScreenNavigationProp;
+    route: any;
 };
 
 export default function LogSeizure(props: Props) {
@@ -19,6 +20,13 @@ export default function LogSeizure(props: Props) {
     const [time, setTime] = useState<any>(new Date());
     const [location, setLocation] = useState<string>();
     const [notes, setNotes] = useState<string>();
+
+    useEffect(() => {
+        if (props.route.params) {
+            let date: any = props.route.params.date;
+            setDate(new Date(date.dateString.replace(/-/g, '\/')));
+        }
+    }, []);    
 
     const onChangeDate = (_event: Event, selectedDate: Date | undefined) => {
         const currentDate = selectedDate || date;
