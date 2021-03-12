@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, SafeAreaView } from 'react-native';
+import { View, Text, FlatList, SafeAreaView, Button } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import HistoryStyles from '../../styles/HistoryStyles';
 import HistoryDao from '../../_services/database/dao/HistoryDao';
@@ -68,7 +68,7 @@ const DateHistory = (props: Props) => {
             setSurveys(results['surveys']);
             setMedications(results['medications']);
         })();
-    }, []);
+    }, [date]);
 
     return (
         <SafeAreaView>
@@ -79,7 +79,14 @@ const DateHistory = (props: Props) => {
                         return <SeizureCard log={seizure} key={key} />
                     })
                     :
-                    <Text style={HistoryStyles.HistoryAlternateText}>No Seizure Events recorded for this date.</Text>
+                    <View>
+                        <Text style={HistoryStyles.HistoryAlternateText}>No Seizure Events recorded for this date.</Text>
+                        { }
+                        <Button
+                            title="Record Seizure for this date."
+                            onPress={() => props.navigation.navigate('LogSeizure', { date: date })}
+                        ></Button>
+                    </View>
                 }
                 <Text style={HistoryStyles.SectionHeader}>Surveys</Text>
                 {surveys.length > 0 ?
@@ -87,7 +94,13 @@ const DateHistory = (props: Props) => {
                         return <SurveyCard log={survey} key={key} />
                     })
                     :
-                    <Text style={HistoryStyles.HistoryAlternateText}>No Surveys recorded for this date.</Text>
+                    <View>
+                        <Text style={HistoryStyles.HistoryAlternateText}>No Surveys recorded for this date.</Text>
+                        <Button
+                            title="Record Survey for this date."
+                            onPress={() => props.navigation.navigate('DailySurvey', { date: date })}
+                        ></Button>
+                    </View>
                 }
                 <Text style={HistoryStyles.SectionHeader}>Medications</Text>
                 {medications.length > 0 ?
@@ -95,7 +108,14 @@ const DateHistory = (props: Props) => {
                         return <MedicationCard log={medication} key={key} />
                     })
                     :
-                    <Text style={HistoryStyles.HistoryAlternateText}>No Medications recorded for this date.</Text>
+                    <View>
+                        <Text style={HistoryStyles.HistoryAlternateText}>No Medications recorded for this date.</Text>
+                        <Button
+                            title="Record Medications for this date."
+                            onPress={() => props.navigation.navigate('DailySurvey', { date: date })}
+                        ></Button>
+                    </View>
+                    
                 }
             </ScrollView>
         </SafeAreaView >
