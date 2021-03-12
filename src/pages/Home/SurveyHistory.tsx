@@ -15,7 +15,7 @@ type RenderProps = {
 function SeizureCard(props: RenderProps) {
     return (
         <View style={HistoryStyles.HistoryEventCard}>
-            <Text style={{ fontSize: 16, fontWeight: `bold` }}>{props.log.date}</Text>
+            <Text style={HistoryStyles.HistoryCardTitle}>{props.log.date}</Text>
             <View>
                 <Text>Time: {props.log.time}</Text>
                 <Text>Location: {props.log.location}</Text>
@@ -80,7 +80,7 @@ export default function SurveyHistory(props: Props) {
                         return <SeizureCard log={seizure} key={key} />
                     })
                     :
-                    <Text>No Seizure Events recorded for this date.</Text>
+                    <Text style={HistoryStyles.HistoryAlternateText}>No Seizure Events recorded for this date.</Text>
                 }
                 <Text style={HistoryStyles.SectionHeader}>Surveys</Text>
                 {surveys.length > 0 ?
@@ -88,7 +88,7 @@ export default function SurveyHistory(props: Props) {
                         return <SurveyCard log={survey} key={key} />
                     })
                     :
-                    <Text>No Surveys recorded for this date.</Text>
+                    <Text style={HistoryStyles.HistoryAlternateText}>No Surveys recorded for this date.</Text>
                 }
                 <Text style={HistoryStyles.SectionHeader}>Medications</Text>
                 {medications.length > 0 ?
@@ -96,7 +96,7 @@ export default function SurveyHistory(props: Props) {
                         return <MedicationCard log={medication} key={key} />
                     })
                     :
-                    <Text>No Medications recorded for this date.</Text>
+                    <Text style={HistoryStyles.HistoryAlternateText}>No Medications recorded for this date.</Text>
                 }
             </ScrollView>
         </SafeAreaView >
