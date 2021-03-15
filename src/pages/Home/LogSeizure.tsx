@@ -15,11 +15,18 @@ type Props = {
     route: any;
 };
 
+type ErrorObject = {
+    location?: string;
+    notes?: string;
+}
+
 export default function LogSeizure(props: Props) {
     const [date, setDate] = useState<any>(new Date());
     const [time, setTime] = useState<any>(new Date());
     const [location, setLocation] = useState<string>();
     const [notes, setNotes] = useState<string>();
+
+    const errors: ErrorObject = {};
 
     useEffect(() => {
         if (props.route.params) {
@@ -44,6 +51,18 @@ export default function LogSeizure(props: Props) {
 
     const onChangeNotesText = (text: string) => {
         setNotes(text);
+    }
+
+    // TODO: find way for errors to be displayed
+    const checkErrors = (date: Date, time: Date, location: string | any, notes: string | any) => {
+        location === undefined ?  errors.location = "Please Add a Location." : null;
+        notes === undefined ?  errors.notes = "Please Add Notes about the Seizure." : null;
+
+        console.log(errors);
+
+        if (Object.keys(errors).length == 0) {
+            insertQuery(date,time,location,notes);
+        }
     }
 
     const insertQuery = async (date: Date, time: Date, location: string | any, notes: string | any) => {
@@ -85,8 +104,12 @@ export default function LogSeizure(props: Props) {
                     multiline
                     numberOfLines={5} />
             </View>
-            <Button title="Save" onPress={() => insertQuery(date, time, location, notes)} />
+            <Button title="Save" onPress={() => checkErrors(date, time, location, notes)} />
             <Button title="Cancel" onPress={props.navigation.goBack} />
+            <View>
+                {errors.location && <Text>{errors.location}</Text> }
+                {errors.notes && <Text>{errors.notes}</Text>}
+            </View>
         </SafeAreaView>
     )
 }
