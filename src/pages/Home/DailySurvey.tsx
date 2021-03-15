@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Text, View, Button, Platform } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
@@ -14,6 +14,7 @@ type DailySurveyScreenNavigationProp = StackNavigationProp<HomeStackParamList, '
 
 type Props = {
     navigation: DailySurveyScreenNavigationProp;
+    route: any;
 };
 
 export default function DailySurvey(props: Props) {
@@ -24,6 +25,13 @@ export default function DailySurvey(props: Props) {
     const [fever, setFever] = useState<boolean>();
     const [miss_meal, setMissMeal] = useState<boolean>();
     const [medication, setMedication] = useState<boolean>();
+
+    useEffect(() => {
+        if (props.route.params) {
+            let date: any = props.route.params.date;
+            setDate(new Date(date.dateString.replace(/-/g, '\/')));
+        }
+    }, []);   
 
     const onChangeDate = (_event: Event, selectedDate: Date | undefined) => {
         const currentDate = selectedDate || date;

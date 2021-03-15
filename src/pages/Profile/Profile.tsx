@@ -6,9 +6,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { ProfileStackParamList } from '../../navigation/ProfileNavigation';
 
 import MainStyles from "../../styles/MainStyles";
-import NavigationButton from '../../components/NavigationButton';
 import AuthContext from '../../_services/Authentication/AuthContext';
-import LargeButton from '../../components/LargeButton';
+import NavigationButton from '../../components/NavigationButton';
 
 type TrendsScreenNavigationProp = StackNavigationProp<
   ProfileStackParamList,
@@ -25,12 +24,14 @@ const Profile = (props:Props) => {
         <SafeAreaView style={MainStyles.container}>
             <StatusBar barStyle="dark-content" />
             <View>
-                <LargeButton
+                <NavigationButton
                     title="Export Report"
+                    icon="archive"
                     navigate={() => props.navigation.navigate("ExportReport")}
                 />
-                <LargeButton
+                <NavigationButton
                     title="Log Out"
+                    icon="archive"
                     navigate={signOut}
                 />
             </View>

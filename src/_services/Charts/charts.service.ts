@@ -25,7 +25,7 @@ const getChartDataDay = async () => {
     data[6] = { day: "Sat", seizures: 0 };
 
     seizures.forEach(seizure => {
-        let day = new Date(seizure.date).getDay();
+        let day = new Date(seizure.date).getUTCDay();
         console.log(data[day]);
         data[day].seizures = +data[day].seizures + 1;
 

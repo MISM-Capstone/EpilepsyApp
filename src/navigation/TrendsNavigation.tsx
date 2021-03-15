@@ -6,12 +6,12 @@ import Trends from "../pages/Trends/Trends";
 import HeaderStyle from "../styles/HeaderStyle";
 import DateHistory from '../pages/Trends/DateHistory';
 import { DateObject } from 'react-native-calendars';
-import Chart from '../pages/Trends/Chart';
+import Charts from '../pages/Trends/Charts';
 
 export type TrendsStackParamList = {
     Trends: undefined;
     DateHistory: { date: DateObject };
-    Chart: undefined;
+    Charts: undefined;
 };
 
 const Stack = createStackNavigator<TrendsStackParamList>();
@@ -34,8 +34,8 @@ const HomeNavigation = () => {
                     options={({ route }) => ({title: route.params.date.dateString})}
                 />
                 <Stack.Screen
-                    name="Chart"
-                    component={Chart}
+                    name="Charts"
+                    component={Charts}
                 />
             </Stack.Navigator>
         </>

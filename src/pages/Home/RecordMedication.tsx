@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Text, View, Button, Platform } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
@@ -13,6 +13,7 @@ type RecordMedicationScreenNavigationProp = StackNavigationProp<HomeStackParamLi
 
 type Props = {
     navigation: RecordMedicationScreenNavigationProp;
+    route: any;
 };
 
 
@@ -22,6 +23,13 @@ export default function RecordMedication(props: Props) {
     const [medicationText, setMedicationText] = useState('');
     const [dosageText, setDosageText] = useState('');
     const [notesText, setNotesText] = useState('');
+
+    useEffect(() => {
+        if (props.route.params) {
+            let date: any = props.route.params.date;
+            setDate(new Date(date.dateString.replace(/-/g, '\/')));
+        }
+    }, []);  
 
     const onChangeDate = (_event: Event, selectedDate: Date | undefined) => {
         const currentDate = selectedDate || date;
