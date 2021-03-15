@@ -29,7 +29,7 @@ export default function HealthKitTest(props: Props) {
     const options: any = { startDate: (new Date(2020, 1, 1)).toISOString() }
     const [sleep, setSleep] = useState<HealthValue>();
     const [sleepLoaded, setSleepLoaded] = useState<boolean>(false);
-    const [weight, setWeight] = useState<HealthValue>();
+    const [weight, setWeight] = useState<HealthValue | string>();
     const [weightLoaded, setWeightLoaded] = useState<boolean>(false);
     const [energyBurned, setEnergyBurned] = useState<HealthValue[]>();
     const [energyLoaded, setEnergyLoaded] = useState<boolean>(false);
@@ -57,7 +57,12 @@ export default function HealthKitTest(props: Props) {
         AppleHealthKit.getLatestWeight(options, (err: string, results: HealthValue) => {
             try {
                 console.log(results);
-                setWeight(results);
+                if (results !== undefined){
+
+                    setWeight(results);
+                } else {
+                    setWeight("No weight recorded");
+                }
                 setWeightLoaded(true);
             } catch {
                 console.error(err);
