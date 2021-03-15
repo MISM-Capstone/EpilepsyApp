@@ -52,6 +52,8 @@ export default function LogSeizure(props: Props) {
     const onChangeNotesText = (text: string) => {
         setNotes(text);
     }
+
+    // TODO: find way for errors to be displayed
     const checkErrors = (date: Date, time: Date, location: string | any, notes: string | any) => {
         location === undefined ?  errors.location = "Please Add a Location." : null;
         notes === undefined ?  errors.notes = "Please Add Notes about the Seizure." : null;
