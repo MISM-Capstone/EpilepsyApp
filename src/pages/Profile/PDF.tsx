@@ -16,9 +16,9 @@ export default class PDF {
                 showAppsSuggestions: true,
                 onDismiss: () => {
                     RNFS.unlink(pdfURI)
-                        .catch(error => {
-                            console.log("ERROR DELETING FILE:", error);
-                        });
+                    .catch(error => {
+                        console.log("ERROR DELETING FILE:", error);
+                    });
                 }
             };
             FileViewer.open(pdfURI, options)
