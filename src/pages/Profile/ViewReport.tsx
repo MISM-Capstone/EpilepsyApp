@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View } from 'react-native';
+import { Button, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { CommonActions, RouteProp } from '@react-navigation/native';
 import Pdf from 'react-native-pdf';
@@ -39,6 +39,7 @@ const ViewReport = (props:Props) => {
     },[]);
     return (
         <ScrollView>
+            <Button title="Print" onPress={() => {}}/>
             <View style={PdfStyles.container}>
                 <Pdf
                     style={PdfStyles.pdf}
