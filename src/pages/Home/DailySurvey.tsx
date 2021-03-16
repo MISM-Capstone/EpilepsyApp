@@ -9,6 +9,7 @@ import { HomeStackParamList } from "../../navigation/HomeNavigation";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SurveyLogDao from '../../_services/database/dao/LogSurveyDao';
 import ButtonSet from '../../components/ButtonSet';
+import AppleHealthKit, { HealthValue, HealthKitPermissions, HealthInputOptions, HealthUnit } from 'react-native-health';
 
 type DailySurveyScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'DailySurvey'>;
 
@@ -31,6 +32,30 @@ export default function DailySurvey(props: Props) {
             let date: any = props.route.params.date;
             setDate(new Date(date.dateString.replace(/-/g, '\/')));
         }
+
+        // Getting data from HealthKit and putting it in the sleep section
+        // TODO: move this to a service
+        // - Separate out minutes and hours
+        // - How to handle errors if there are no values
+        // - Add note that this information comes from Apple
+        let prev_day = new Date();
+        prev_day.setDate(date.getDate() - 1);
+        const options: any = { startDate: prev_day.toISOString(), limit: 1 }
+        AppleHealthKit.getSleepSamples(options, (err: string, results: any) => {
+            console.log('Sleep sample: ', results);
+            try {
+                const start = new Date(results[0]['startDate']).getTime();
+                const end = new Date(results[0]['endDate']).getTime();
+                console.log('start: ', start);
+                console.log('end: ', end);
+                const sleep_time: string = ((end - start) / 1000 / 60 / 60).toString();
+                console.log('sleep time: ', sleep_time);
+                setSleep(sleep_time);
+            } catch (err: unknown) {
+                console.error(err)
+            }
+        });
+        
     }, []);   
 
     const onChangeDate = (_event: Event, selectedDate: Date | undefined) => {
