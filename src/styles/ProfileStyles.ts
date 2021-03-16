@@ -1,9 +1,10 @@
 
 import { Dimensions, StyleSheet } from "react-native";
+import { COLORS } from "../constants";
 
 const ProfileStyles = StyleSheet.create({
     ProfileContainer:{
-        backgroundColor: "#2E4D9E",
+        backgroundColor: COLORS.darkBlue,
         height:Dimensions.get('window').height,
         padding: 30,
     },

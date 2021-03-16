@@ -1,8 +1,9 @@
 import { StyleSheet } from "react-native";
+import { COLORS } from "../constants";
 
 const HomeStyles = StyleSheet.create({
     HomeContainer:{
-        backgroundColor: "#2E4D9E",
+        backgroundColor: COLORS.darkBlue,
         paddingBottom: 400
     },
     welcomeMessageContainer:{
