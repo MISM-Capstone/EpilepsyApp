@@ -34,11 +34,10 @@ export async function getHTMLToConvert(startDate: Date, endDate: Date, imageLink
                 ${html}
             </div>
         `,
-        directory: "pdf",
+        directory: "Documents",
         fileName: "report"
     };
     let file = await RNHTMLtoPDF.convert(options);
-    console.log("File:", file)
-    const source = { uri: `${file.filePath}`, cache: false };
-    return source;
+    console.log("File:", file);
+    return file.filePath!;
 }

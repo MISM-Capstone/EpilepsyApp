@@ -22,6 +22,7 @@
     "react-dom": "^17.0.1",
     "react-native": "0.63.4",
     "react-native-calendars": "^1.1249.0",
+    "react-native-file-viewer": "^2.1.4",
     "react-native-gesture-handler": "^1.9.0",
     "react-native-health": "^1.4.0",
     "react-native-html-to-pdf": "^0.9.1",

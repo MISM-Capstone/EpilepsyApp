@@ -1,13 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Text, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import { CommonActions, RouteProp } from '@react-navigation/native';
 import { captureRef } from "react-native-view-shot";
+import FileViewer from 'react-native-file-viewer';
 
 import { ProfileStackParamList } from '../../navigation/ProfileNavigation';
 import { VictoryBar, VictoryChart, VictoryTheme } from 'victory-native';
 import chartsService from '../../_services/Charts/charts.service';
 import { getHTMLToConvert } from './getHTMLToConvert';
+import Loader from '../../components/Loader';
 
 type GenerateReportScreenNavigationProp = StackNavigationProp<
     ProfileStackParamList,
@@ -35,6 +37,7 @@ const GenerateReport = (props:Props) => {
     const rendered = useRef(false);
     const loadedData = useRef(false);
     const generatingPDF = useRef(false);
+    const wasShown = useRef(false);
     const startDate = new Date(props.route.params.start);
     const endDate = new Date(props.route.params.end);
 
@@ -67,11 +70,24 @@ const GenerateReport = (props:Props) => {
             }
             if (rendered.current && !generatingPDF.current) {
                 generatingPDF.current = true;
-                const pdf = await getHTMLToConvert(startDate, endDate, imageLinks);
-                props.navigation.navigate(
-                    "ViewReport",
-                    {pdf}
-                );
+                const pdfURI = await getHTMLToConvert(startDate, endDate, imageLinks);
+                if (!wasShown.current) {
+                    FileViewer.open(pdfURI)
+                    .then(() => {
+                        props.navigation.dispatch(state => {
+                            const routes = state.routes.filter(r => r.name !== "GenerateReport");
+                            return CommonActions.reset({
+                                ...state,
+                                routes,
+                                index: routes.length - 1,
+                            });
+                        });
+                    })
+                    .catch(error => {
+                        // error
+                    });
+                    wasShown.current = true;
+                }
             }
         })();
     
@@ -79,6 +95,7 @@ const GenerateReport = (props:Props) => {
 
     return (
         <View>
+            <Loader isLoading={!wasShown.current} />
             <View
                 ref={graphRef}
                 style={{ position: "absolute", left: 3000, top: 0}}
