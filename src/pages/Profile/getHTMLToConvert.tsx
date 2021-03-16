@@ -4,12 +4,14 @@ import { renderToString } from 'react-dom/server';
 import ReportDao from '../../_services/database/dao/ReportDao';
 import { RenderSeizure, RenderSurvey, RenderMedication } from "./RenderData";
 
-export async function getHTMLToConvert(startDate: Date, endDate: Date, imageLink:string) {
+export async function getHTMLToConvert(startDate: Date, endDate: Date, imageLinks:string[]) {
     const dbSeizures = await ReportDao.getSeizuresInDateRange(startDate, endDate);
     const dbSurveys = await ReportDao.getSurveysInDateRange(startDate, endDate);
     const dbMedication = await ReportDao.getMedicationInDateRange(startDate, endDate);
     let html = "";
-    html += `<img src="${imageLink}" />`;
+    imageLinks.forEach((image) => {
+        html += `<img src="${image}" />`;
+    });
     html += "<h2>Seizures</h2>";
     dbSeizures.forEach((seizure) => {
         let test = <RenderSeizure log={seizure} />;
@@ -25,7 +27,6 @@ export async function getHTMLToConvert(startDate: Date, endDate: Date, imageLink
         let test = <RenderMedication log={medication} />;
         html += renderToString(test);
     });
-    console.log(imageLink)
     let options: Options = {
         html: `
             <div>
@@ -33,11 +34,10 @@ export async function getHTMLToConvert(startDate: Date, endDate: Date, imageLink
                 ${html}
             </div>
         `,
-        directory: "pdf",
+        directory: "Documents",
         fileName: "report"
     };
     let file = await RNHTMLtoPDF.convert(options);
-    console.log("File:", file)
-    const source = { uri: `${file.filePath}`, cache: false };
-    return source;
+    console.log("File:", file);
+    return file.filePath!;
 }
