@@ -1,15 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Text, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { CommonActions, RouteProp } from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native';
 import { captureRef } from "react-native-view-shot";
-import FileViewer from 'react-native-file-viewer';
 
 import { ProfileStackParamList } from '../../navigation/ProfileNavigation';
 import { VictoryBar, VictoryChart, VictoryTheme } from 'victory-native';
 import chartsService from '../../_services/Charts/charts.service';
-import { getHTMLToConvert } from './getHTMLToConvert';
 import Loader from '../../components/Loader';
+import PDF from "./PDF";
+import { COLORS } from '../../constants';
 
 type GenerateReportScreenNavigationProp = StackNavigationProp<
     ProfileStackParamList,
@@ -21,7 +21,7 @@ type GenerateReportScreenRouteProp = RouteProp<
     "GenerateReport"
 >;
 
-type Props = {
+export type GenerateReportProps = {
     route: GenerateReportScreenRouteProp;
     navigation: GenerateReportScreenNavigationProp;
 };
@@ -31,7 +31,7 @@ type demo = {
     seizureDayData:any[];
 }
 
-const GenerateReport = (props:Props) => {
+const GenerateReport = (props:GenerateReportProps) => {
     const [state, setState] = useState<demo>({seizureDayData:[]});
     const graphRef = useRef<any>(null);
     const rendered = useRef(false);
@@ -70,24 +70,8 @@ const GenerateReport = (props:Props) => {
             }
             if (rendered.current && !generatingPDF.current) {
                 generatingPDF.current = true;
-                const pdfURI = await getHTMLToConvert(startDate, endDate, imageLinks);
-                if (!wasShown.current) {
-                    FileViewer.open(pdfURI)
-                    .then(() => {
-                        props.navigation.dispatch(state => {
-                            const routes = state.routes.filter(r => r.name !== "GenerateReport");
-                            return CommonActions.reset({
-                                ...state,
-                                routes,
-                                index: routes.length - 1,
-                            });
-                        });
-                    })
-                    .catch(error => {
-                        // error
-                    });
-                    wasShown.current = true;
-                }
+                const pdfURI = await PDF.generatePDF(startDate, endDate, imageLinks);
+                PDF.displayPDF(wasShown, pdfURI, props);
             }
         })();
     
@@ -101,13 +85,14 @@ const GenerateReport = (props:Props) => {
                 style={{ position: "absolute", left: 3000, top: 0}}
             >
                 <Text>Seizures by Day of the Week</Text>
-                <VictoryChart width={560} theme={VictoryTheme.material} domainPadding={14}>
+                <VictoryChart width={560} theme={VictoryTheme.material} domainPadding={45}>
                     <VictoryBar
                         data={state.seizureDayData}
                         x="day"
                         y="seizures"
+                        barWidth={50}
                         style={{
-                            data: { fill: `#44C2B3` }
+                            data: { fill: COLORS.darkBlue }
                         }} />
                 </VictoryChart>
             </View>
@@ -116,3 +101,5 @@ const GenerateReport = (props:Props) => {
 }
 
 export default GenerateReport;
+
+

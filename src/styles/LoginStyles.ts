@@ -1,8 +1,9 @@
 import { Dimensions, StyleSheet } from "react-native";
+import { COLORS } from "../constants";
 
 const LoginStyles = StyleSheet.create({
     mainContainer:{
-        backgroundColor: "#2E4D9E",
+        backgroundColor: COLORS.darkBlue,
         height:Dimensions.get('window').height,
         padding: 40,
     },

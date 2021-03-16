@@ -1,9 +1,21 @@
 import React from 'react';
 
+type ListRenderProps ={
+    logs:any[];
+    jsxElement:React.ReactNode;
+}
+
 type RenderProps = {
     log: any;
 };
 
+// export function listToHTML(props:ListRenderProps) {
+//     html += "<h2>Seizures</h2>";
+//     dbSeizures.forEach((seizure) => {
+//         let test = props.jsxElement() log={seizure} />;
+//         html += renderToString(test);
+//     });
+// }
 
 export function RenderSeizure(props: RenderProps) {
     return (
