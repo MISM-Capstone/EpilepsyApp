@@ -18,7 +18,8 @@ CREATE TABLE medication_log (
 CREATE TABLE survey_log(
     survey_entry_id INTEGER PRIMARY KEY NOT NULL,
     date DATE NOT NULL,
-    sleep REAL NOT NULL,
+    sleep_start_date DATE NOT NULL,
+    sleep_end_date DATE NOT NULL,
     stress_level INTEGER NOT NULL,
     illness BOOLEAN NOT NULL,
     fever BOOLEAN NOT NULL,
