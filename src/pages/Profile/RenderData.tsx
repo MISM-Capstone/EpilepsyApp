@@ -1,4 +1,5 @@
 import React from 'react';
+import sleepDatesService from '../../_services/helpers/sleepDates.service';
 
 type ListRenderProps ={
     logs:any[];
@@ -31,11 +32,12 @@ export function RenderSeizure(props: RenderProps) {
 }
 
 export function RenderSurvey(props: RenderProps) {
+    const sleepTime = sleepDatesService.getSleepTime(props.log.sleep_start_date, props.log.sleep_end_date);
     return (
         <div>
             <p>ID: {props.log.survey_entry_id}</p>
             <p>Date: {props.log.date}</p>
-            <p>Sleep: {props.log.sleep}</p>
+            <p>Sleep Time: {sleepTime.hours} hours {sleepTime.minutes} minutes</p>
             <p>Stress Level: {props.log.stress_level}</p>
             <p>Illness: {props.log.illness}</p>
             <p>Fever: {props.log.fever}</p>

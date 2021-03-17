@@ -3,6 +3,7 @@ import { SafeAreaView, Text, View } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import HistoryStyles from '../../styles/HistoryStyles';
 import HistoryDao from '../../_services/database/dao/HistoryDao';
+import sleepDatesService from '../../_services/helpers/sleepDates.service';
 
 type Props = {
     navigation: any;
@@ -26,11 +27,12 @@ function SeizureCard(props: RenderProps) {
 }
 
 function SurveyCard(props: RenderProps) {
+    const sleepTime = sleepDatesService.getSleepTime(props.log.sleep_start_date, props.log.sleep_end_date);
     return (
         <View style={HistoryStyles.HistoryEventCard}>
             <Text style={{ fontSize: 16, fontWeight: `bold` }}>{props.log.date}</Text>
             <View>
-                <Text>Sleep: {props.log.sleep}</Text>
+                <Text>Sleep Time: {sleepTime.hours} hours {sleepTime.minutes} minutes</Text>
                 <Text>Stress Level: {props.log.stress_level}</Text>
                 <Text>Felt Illness: {props.log.illness ? 'Yes' : 'No'}</Text>
                 <Text>Had a Fever: {props.log.fever ? 'Yes' : 'No'}</Text>
