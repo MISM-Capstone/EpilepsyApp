@@ -1,27 +1,37 @@
 import HistoryDao from '../database/dao/HistoryDao';
 import ReportDao from '../database/dao/ReportDao';
 
+type ChartData = {
+    data: any;
+    numSeizures: number;
+}
+
 // Default structure for getting chart data
 const getChartData = async () => {
     const seizures: any[] = await HistoryDao.getSeizureLogs();
     let data: any[] = [];
-
+    
     seizures.forEach(seizure => {
-        data.push({ x: seizure.date, y: 1 }) // What information is needed here to make a good chart?
+        data.push({ x: seizure.date, y: 1 }); // What information is needed here to make a good chart?
     });
+
     return data;
 }
 
 // Charting Seizure Events by Day of the Week
-const getChartDataDay = async () => {
+const getChartDataDay = async (): Promise<ChartData> => {
     const seizures: any[] = await HistoryDao.getSeizureLogs();
     let data = getDaysInWeekArray();
+    let numSeizures: number = 0;
 
     seizures.forEach(seizure => {
         let day = new Date(seizure.date).getUTCDay();
         data[day].seizures = +data[day].seizures + 1;
+        numSeizures = numSeizures + 1;
     });
-    return data;
+
+    const chartData: ChartData = {data,numSeizures}
+    return chartData;
 }
 
 // Charting Seizure Events by Day of the Week in a certain range
@@ -37,7 +47,7 @@ const getChartDataDayInRange = async (startDate:Date, endDate:Date) => {
 }
 
 // Charting Seizure Events by Day of the Week
-const getChartDataTime = async () => {
+const getChartDataTime = async (): Promise<ChartData> => {
     const seizures: any[] = await HistoryDao.getSeizureLogs();
     let data: any[] = new Array(6);
     data[0] = { hour: "12am", seizures: 0 }; 
@@ -46,6 +56,7 @@ const getChartDataTime = async () => {
     data[3] = { hour: "12pm", seizures: 0 };
     data[4] = { hour: "4pm", seizures: 0 };
     data[5] = { hour: "8pm", seizures: 0 };
+    let numSeizures = 0;
 
     seizures.forEach(seizure => {
         let time = new Date("01/01/2021 " + seizure.time).getHours();
@@ -53,8 +64,12 @@ const getChartDataTime = async () => {
         let bucket = Math.ceil(time / 4) // 4 hour buckets
         console.log('bucket: ', bucket);
         data[bucket-1].seizures = +data[bucket-1].seizures + 1;
+        numSeizures = numSeizures + 1;
     });
-    return data;
+
+    const chartData: ChartData = {data, numSeizures}
+
+    return chartData;
 }
 
 function getDaysInWeekArray() {

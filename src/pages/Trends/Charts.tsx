@@ -8,8 +8,8 @@ import chartsService from '../../_services/Charts/charts.service';
 
 
 function Charts() {
-    const [seizureDayData, setDayData] = useState<any[]>([]);
-    const [seizureTimeData, setTimeData] = useState<any[]>([]);
+    const [seizureDayData, setDayData] = useState<any>([]);
+    const [seizureTimeData, setTimeData] = useState<any>([]);
 
     useEffect(() => {
         (async () => {
@@ -25,34 +25,46 @@ function Charts() {
     }, []);
 
     return (
-        <SafeAreaView style={{ paddingHorizontal: 12}}>
+        <SafeAreaView style={{ paddingHorizontal: 12 }}>
             <ScrollView>
-                <View>
-                    <Text>Seizures by Day of the Week</Text>
-                    <VictoryChart width={350} theme={VictoryTheme.material}>
-                        <VictoryBar
-                            alignment="start"
-                            data={seizureDayData}
-                            x="day"
-                            y="seizures"
-                            style={{
-                                data: { fill: `#44C2B3` }
-                            }} />
-                    </VictoryChart>
-                </View>
-                <View>
-                    <Text>Seizures by Time of Day</Text>
-                    <VictoryChart width={350} theme={VictoryTheme.material}>
-                        <VictoryBar
-                            alignment="start"
-                            data={seizureTimeData}
-                            x="hour"
-                            y="seizures"
-                            style={{
-                                data: { fill: `#44C2B3` }
-                            }} />
-                    </VictoryChart>
-                </View>
+                <Text>Seizures by Day of the Week</Text>
+                {seizureDayData.numSeizures > 0 ?
+                    <View>
+                        <VictoryChart width={350} theme={VictoryTheme.material}>
+                            <VictoryBar
+                                alignment="start"
+                                data={seizureDayData.data}
+                                x="day"
+                                y="seizures"
+                                style={{
+                                    data: { fill: `#44C2B3` }
+                                }} />
+                        </VictoryChart>
+                    </View>
+                    :
+                    <View>
+                        <Text>No seizure events recorded.</Text>
+                    </View>
+                }
+                <Text>Seizures by Time of Day</Text>
+                {seizureTimeData.numSeizures > 0 ?
+                    <View>
+                        <VictoryChart width={350} theme={VictoryTheme.material}>
+                            <VictoryBar
+                                alignment="start"
+                                data={seizureTimeData.data}
+                                x="hour"
+                                y="seizures"
+                                style={{
+                                    data: { fill: `#44C2B3` }
+                                }} />
+                        </VictoryChart>
+                    </View>
+                    :
+                    <View>
+                        <Text>No seizures events recorded.</Text>
+                    </View>
+                }
             </ScrollView>
         </SafeAreaView>
     );
