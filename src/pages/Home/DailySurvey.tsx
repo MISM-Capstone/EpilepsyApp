@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
-import { Text, View, Button, Platform } from 'react-native';
+import { Text, View, Button } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import { TextInput } from 'react-native-gesture-handler';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from "../../navigation/HomeNavigation";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import SurveyLogDao from '../../_services/database/dao/LogSurveyDao';
 import ButtonSet from '../../components/ButtonSet';
-import AppleHealthKit, { HealthValue, HealthKitPermissions, HealthInputOptions, HealthUnit } from 'react-native-health';
+import AppleHealthKit, {  } from 'react-native-health';
 
 type DailySurveyScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'DailySurvey'>;
 
@@ -36,7 +35,6 @@ export default function DailySurvey(props: Props) {
 
         // Getting data from HealthKit and putting it in the sleep section
         // TODO: move this to a service
-        // - Separate out minutes and hours
         // - How to handle errors if there are no values
         // - Add note that this information comes from Apple
         let prev_day = new Date();
@@ -55,8 +53,8 @@ export default function DailySurvey(props: Props) {
                 console.log(err)
             }
         });
-        
-    }, []);   
+
+    }, []);
 
     const onChangeDate = (_event: Event, selectedDate: Date | undefined) => {
         const currentDate = selectedDate || date;

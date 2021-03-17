@@ -1,16 +1,13 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { Pressable, StatusBar, Text, View, Button } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import { TrendsStackParamList } from "../../navigation/TrendsNavigation";
 
-import styles from "../../styles/ButtonStyles";
 import { default as mainStyle } from "../../styles/MainStyles";
 import { CalendarList } from 'react-native-calendars';
-import calendarService from '../../_services/Calendar/calendar.service';
 import HistoryDao from '../../_services/database/dao/HistoryDao';
-import ButtonStyles from '../../styles/ButtonStyles';
 import LargeButton from '../../components/LargeButton';
 
 type TrendsScreenNavigationProp = StackNavigationProp<

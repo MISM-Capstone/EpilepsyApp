@@ -3,7 +3,7 @@ import { View, Text, FlatList, SafeAreaView, Button } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import HistoryStyles from '../../styles/HistoryStyles';
 import HistoryDao from '../../_services/database/dao/HistoryDao';
-import sleepDatesService from '../../_services/sleepDates.service';
+import sleepDatesService from '../../_services/helpers/sleepDates.service';
 
 type Props = {
     navigation: any;

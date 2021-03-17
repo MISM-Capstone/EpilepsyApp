@@ -1,5 +1,5 @@
 import React from 'react';
-import sleepDatesService from '../../_services/sleepDates.service';
+import sleepDatesService from '../../_services/helpers/sleepDates.service';
 
 type ListRenderProps ={
     logs:any[];
