@@ -2,7 +2,6 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Profile from "../pages/Profile/Profile";
-import ViewReport from "../pages/Profile/ViewReport";
 
 import HeaderStyle from "../styles/HeaderStyle";
 import ExportReport from '../pages/Profile/ExportReport';
@@ -13,14 +12,9 @@ export type GenerateReportProps = {
     end:number;
 }
 
-export type ViewReportProps = {
-    pdf:object;
-}
-
 export type ProfileStackParamList = {
     Profile: undefined;
     ExportReport: undefined;
-    ViewReport: ViewReportProps;
     GenerateReport: GenerateReportProps;
 };
 
@@ -54,13 +48,6 @@ const ProfileNavigation = () => {
                         component={GenerateReport}
                         options={{
                             title: 'Generating Report'
-                        }}
-                />
-                <Stack.Screen
-                        name="ViewReport"
-                        component={ViewReport}
-                        options={{
-                            title: 'View Report'
                         }}
                 />
             </Stack.Navigator>

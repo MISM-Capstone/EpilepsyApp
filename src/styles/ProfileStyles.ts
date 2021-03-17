@@ -1,7 +1,14 @@
 
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
+import { COLORS } from "../constants";
 
 const ProfileStyles = StyleSheet.create({
+    ProfileContainer:{
+        backgroundColor: COLORS.darkBlue,
+        height:Dimensions.get('window').height,
+        padding: 30,
+    },
+    
     customDateOptions: {
         display: "flex",
         flexDirection: "row",

@@ -1,5 +1,5 @@
-import React from 'react';
 import HistoryDao from '../database/dao/HistoryDao';
+import ReportDao from '../database/dao/ReportDao';
 
 // Default structure for getting chart data
 const getChartData = async () => {
@@ -15,20 +15,23 @@ const getChartData = async () => {
 // Charting Seizure Events by Day of the Week
 const getChartDataDay = async () => {
     const seizures: any[] = await HistoryDao.getSeizureLogs();
-    let data: any[] = new Array(7);
-    data[0] = { day: "Sun", seizures: 0 };
-    data[1] = { day: "Mon", seizures: 0 };
-    data[2] = { day: "Tue", seizures: 0 };
-    data[3] = { day: "Wed", seizures: 0 };
-    data[4] = { day: "Thu", seizures: 0 };
-    data[5] = { day: "Fri", seizures: 0 };
-    data[6] = { day: "Sat", seizures: 0 };
+    let data = getDaysInWeekArray();
 
     seizures.forEach(seizure => {
         let day = new Date(seizure.date).getUTCDay();
-        console.log(data[day]);
         data[day].seizures = +data[day].seizures + 1;
+    });
+    return data;
+}
 
+// Charting Seizure Events by Day of the Week in a certain range
+const getChartDataDayInRange = async (startDate:Date, endDate:Date) => {
+    const seizures: any[] = await ReportDao.getSeizuresInDateRange(startDate, endDate);
+    let data = getDaysInWeekArray();
+
+    seizures.forEach(seizure => {
+        let day = new Date(seizure.date).getUTCDay();
+        data[day].seizures = +data[day].seizures + 1;
     });
     return data;
 }
@@ -54,8 +57,21 @@ const getChartDataTime = async () => {
     return data;
 }
 
+function getDaysInWeekArray() {
+    return [
+        { day: "Sun", seizures: 0 },
+        { day: "Mon", seizures: 0 },
+        { day: "Tue", seizures: 0 },
+        { day: "Wed", seizures: 0 },
+        { day: "Thu", seizures: 0 },
+        { day: "Fri", seizures: 0 },
+        { day: "Sat", seizures: 0 },
+    ];
+}
+
 export default {
     getChartData,
     getChartDataDay,
-    getChartDataTime
+    getChartDataDayInRange,
+    getChartDataTime,
 }

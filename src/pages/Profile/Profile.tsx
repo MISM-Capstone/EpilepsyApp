@@ -8,6 +8,7 @@ import { ProfileStackParamList } from '../../navigation/ProfileNavigation';
 import MainStyles from "../../styles/MainStyles";
 import AuthContext from '../../_services/Authentication/AuthContext';
 import NavigationButton from '../../components/NavigationButton';
+import ProfileStyles from '../../styles/ProfileStyles';
 
 type TrendsScreenNavigationProp = StackNavigationProp<
   ProfileStackParamList,
@@ -23,15 +24,15 @@ const Profile = (props:Props) => {
     return (
         <SafeAreaView style={MainStyles.container}>
             <StatusBar barStyle="dark-content" />
-            <View>
+            <View style={ProfileStyles.ProfileContainer}>
                 <NavigationButton
                     title="Export Report"
-                    icon="archive"
+                    icon="file-pdf"
                     navigate={() => props.navigation.navigate("ExportReport")}
                 />
                 <NavigationButton
                     title="Log Out"
-                    icon="archive"
+                    icon="logout"
                     navigate={signOut}
                 />
             </View>

@@ -1,8 +1,9 @@
 import { StyleSheet } from "react-native";
+import { COLORS } from "../constants";
 
 const ButtonStyles = StyleSheet.create({
     navigationButtonContainer:{
-        backgroundColor: "#2E4D9E"
+        backgroundColor: COLORS.darkBlue
     },
     navigationButton:{
         marginRight:10,
