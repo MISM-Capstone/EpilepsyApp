@@ -4,6 +4,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { VictoryChart, VictoryTheme, VictoryBar } from "victory-native";
+import MainStyles from '../../styles/MainStyles';
 import chartsService from '../../_services/Charts/charts.service';
 
 
@@ -27,7 +28,7 @@ function Charts() {
     return (
         <SafeAreaView style={{ paddingHorizontal: 12 }}>
             <ScrollView>
-                <Text>Seizures by Day of the Week</Text>
+                <Text style={MainStyles.subheadingStyle}>Seizures by Day of the Week</Text>
                 {seizureDayData.numSeizures > 0 ?
                     <View>
                         <VictoryChart width={350} theme={VictoryTheme.material}>
@@ -46,7 +47,7 @@ function Charts() {
                         <Text>No seizure events recorded.</Text>
                     </View>
                 }
-                <Text>Seizures by Time of Day</Text>
+                <Text style={MainStyles.subheadingStyle}>Seizures by Time of Day</Text>
                 {seizureTimeData.numSeizures > 0 ?
                     <View>
                         <VictoryChart width={350} theme={VictoryTheme.material}>
