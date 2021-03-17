@@ -30,7 +30,7 @@ function SurveyCard(props: RenderProps) {
     const sleepTime = sleepDatesService.getSleepTime(props.log.sleep_start_date, props.log.sleep_end_date);
     return (
         <View style={HistoryStyles.HistoryEventCard}>
-            <Text style={{ fontSize: 16, fontWeight: `bold` }}>{props.log.date}</Text>
+            <Text style={HistoryStyles.HistoryCardTitle}>{props.log.date}</Text>
             <View>
                 <Text>Sleep Time: {sleepTime.hours} hours {sleepTime.minutes} minutes</Text>
                 <Text>Stress Level: {props.log.stress_level}</Text>
@@ -46,7 +46,7 @@ function SurveyCard(props: RenderProps) {
 function MedicationCard(props: RenderProps) {
     return (
         <View style={HistoryStyles.HistoryEventCard}>
-            <Text style={{ fontSize: 16, fontWeight: `bold` }}>{props.log.date}</Text>
+            <Text style={HistoryStyles.HistoryCardTitle}>{props.log.date}</Text>
             <View>
                 <Text>Time: {props.log.time}</Text>
                 <Text>Medication: {props.log.medication}</Text>
