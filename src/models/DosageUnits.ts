@@ -1,5 +1,6 @@
-export default class DosageUnit {
-    id?:number;
+import Db, { DbFields } from "./Db";
+
+export default class DosageUnit extends Db {
     name:string = "";
     description:string = "";
     is_default:boolean = false;
@@ -8,7 +9,7 @@ export default class DosageUnit {
 export const DosageUnitDb = {
     table: "dosage_unit",
     fields: {
-        id:"id",
+        ...DbFields,
         name: "name",
         description: "description",
         is_default: "is_default",

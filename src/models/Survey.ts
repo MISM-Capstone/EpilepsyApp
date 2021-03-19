@@ -1,12 +1,12 @@
 import Db, { DbFields } from "./Db";
 
-export default class EpilepsyType extends Db {
+export default class Survey extends Db {
     name: string = "";
     description: string = "";
 }
 
-export const EpilepsyTypeDb = {
-    table: "epilepsy_type",
+export const SurveyDb = {
+    table: "survey",
     fields: {
         ...DbFields,
         name: "name",

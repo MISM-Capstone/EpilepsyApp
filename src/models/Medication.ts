@@ -1,21 +1,22 @@
+import Db, { DbFields } from "./Db";
 import DosageUnit from "./DosageUnits";
 
-export default class Medication {
-    id?:number;
+export default class Medication extends Db {
     name:string = "";
     description:string = "";
     dosage:number = 0;
     should_receive_reminders:boolean = false;
     dosage_unit_id: number;
     constructor(dosageUnit:DosageUnit) {
+        super()
         this.dosage_unit_id = dosageUnit.id!;
     }
 }
 
-export const SeizureDb = {
+export const MedicationDb = {
     table: "seizure_log",
     fields: {
-        id:"id",
+        ...DbFields,
         name: "name",
         description: "description",
         dosage: "dosage",

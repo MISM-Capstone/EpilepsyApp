@@ -1,13 +1,14 @@
-export default class User {
-    id?:number;
+import Db, { DbFields } from "./Db";
+
+export default class User extends Db {
     first_name: string = "";
     last_name: string = "";
 }
 
-export const SeizureDb = {
+export const UserDb = {
     table: "user",
     fields: {
-        id:"id",
+        ...DbFields,
         first_name: "first_name",
         last_name: "last_name",
     }
