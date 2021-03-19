@@ -1,14 +1,14 @@
 export default class User {
     id?:number;
-    email: string = "";
-    passwordHash?: string = "";
+    first_name: string = "";
+    last_name: string = "";
 }
 
 export const SeizureDb = {
     table: "user",
     fields: {
         id:"id",
-        email: "email",
-        passwordHash: "passwordHash",
+        first_name: "first_name",
+        last_name: "last_name",
     }
 }
