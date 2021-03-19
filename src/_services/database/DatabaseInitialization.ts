@@ -28,6 +28,12 @@ export class DatabaseInitialization {
     // Perform initial setup of the database tables
     private static createTables(transaction: SQLite.Transaction) {
         // DANGER! For dev only
+        // const dropOldTables = true;
+        // if (dropOldTables) {
+        //     transaction.executeSql("DROP TABLE IF EXISTS seizure_log;");
+        //     transaction.executeSql("DROP TABLE IF EXISTS survey_log;");
+        //     transaction.executeSql("DROP TABLE IF EXISTS medication_log;");
+        // }
         const dropAllTables = false;
         if (dropAllTables) {
             transaction.executeSql("DROP TABLE IF EXISTS seizure_log;");
