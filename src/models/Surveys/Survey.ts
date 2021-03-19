@@ -1,4 +1,4 @@
-import Db, { DbFields } from "./Db";
+import Db, { DbFields } from "../AbstractClasses/Db";
 
 export default class Survey extends Db {
     name: string = "";

@@ -1,6 +1,6 @@
-import Log, { LogFields } from "./Log";
+import Log, { LogFields } from "../AbstractClasses/Log";
 import Medication from "./Medication";
-import User from "./User";
+import User from "../User";
 
 export default class MedicationLog extends Log {
     dosage: number;

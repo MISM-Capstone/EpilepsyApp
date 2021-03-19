@@ -1,5 +1,5 @@
 import Db, { DbFields } from "./Db";
-import User from "./User";
+import User from "../User";
 
 export default abstract class Log extends Db {
     date_recorded: Date = new Date();

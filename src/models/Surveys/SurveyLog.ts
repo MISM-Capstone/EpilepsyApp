@@ -1,6 +1,6 @@
-import Log, { LogFields } from "./Log";
+import Log, { LogFields } from "../AbstractClasses/Log";
 import Survey from "./Survey";
-import User from "./User";
+import User from "../User";
 
 export default class SurveyLog extends Log {
     survey_id: number;
@@ -10,8 +10,8 @@ export default class SurveyLog extends Log {
     }
 }
 
-export const MedicationLogDb = {
-    table: "medication_log",
+export const SurveyLogDb = {
+    table: "survey_log",
     fields: {
         ...LogFields,
         survey_id: "survey_id",
