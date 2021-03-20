@@ -1,4 +1,5 @@
 import SQLite from 'react-native-sqlite-storage';
+import CreateTableQuery from './queries/CreateTableQuery';
 
 
 export class DatabaseInitialization {
@@ -28,12 +29,12 @@ export class DatabaseInitialization {
     // Perform initial setup of the database tables
     private static createTables(transaction: SQLite.Transaction) {
         // DANGER! For dev only
-        // const dropOldTables = true;
-        // if (dropOldTables) {
-        //     transaction.executeSql("DROP TABLE IF EXISTS seizure_log;");
-        //     transaction.executeSql("DROP TABLE IF EXISTS survey_log;");
-        //     transaction.executeSql("DROP TABLE IF EXISTS medication_log;");
-        // }
+        const dropOldTables = true;
+        if (dropOldTables) {
+            transaction.executeSql("DROP TABLE IF EXISTS seizure_log;");
+            transaction.executeSql("DROP TABLE IF EXISTS survey_log;");
+            transaction.executeSql("DROP TABLE IF EXISTS medication_log;");
+        }
         const dropAllTables = false;
         if (dropAllTables) {
             transaction.executeSql("DROP TABLE IF EXISTS seizure_log;");
@@ -42,39 +43,18 @@ export class DatabaseInitialization {
             transaction.executeSql("DROP TABLE IF EXISTS Version;");
         }
       
-        // List table
-        transaction.executeSql(`
-            CREATE TABLE IF NOT EXISTS seizure_log(
-                seizure_id INTEGER PRIMARY KEY NOT NULL,
-                date DATE NOT NULL,
-                time TEXT NOT NULL,
-                location TEXT NOT NULL,
-                notes TEXT NOT NULL
-            );
-        `);
-        transaction.executeSql(`
-            CREATE TABLE IF NOT EXISTS survey_log(
-                survey_entry_id INTEGER PRIMARY KEY NOT NULL,
-                date DATE NOT NULL,
-                sleep_start_date DATE NOT NULL,
-                sleep_end_date DATE NOT NULL,
-                stress_level INTEGER NOT NULL,
-                illness BOOLEAN NOT NULL,
-                fever BOOLEAN NOT NULL,
-                miss_meal BOOLEAN NOT NULL,
-                medication BOOLEAN NOT NULL
-            );
-        `);
-        transaction.executeSql(`
-            CREATE TABLE IF NOT EXISTS medication_log (
-                medication_id INTEGER PRIMARY KEY,
-                date DATE NOT NULL,
-                time TEXT NOT NULL,
-                medication TEXT NOT NULL,
-                dosage TEXT NOT NULL,
-                notes TEXT NOT NULL
-            );
-        `);
+        // Tables
+        transaction.executeSql(CreateTableQuery.user);
+        transaction.executeSql(CreateTableQuery.epilepsy_type);
+        transaction.executeSql(CreateTableQuery.epilepsy_type_user);
+        transaction.executeSql(CreateTableQuery.location);
+        transaction.executeSql(CreateTableQuery.seizure_log);
+        transaction.executeSql(CreateTableQuery.survey);
+        transaction.executeSql(CreateTableQuery.survey_field);
+        transaction.executeSql(CreateTableQuery.survey_log);
+        transaction.executeSql(CreateTableQuery.survey_answer);
+        transaction.executeSql(CreateTableQuery.dosage_unit);
+
 
         // Version table
         transaction.executeSql(`

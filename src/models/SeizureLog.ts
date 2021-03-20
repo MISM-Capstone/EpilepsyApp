@@ -4,6 +4,7 @@ import User from "./User";
 
 export default class SeizureLog extends Log {
     details: string = "";
+    notes: string = "";
     location_id: number;
     constructor(user:User, location:Location) {
         super(user);
