@@ -54,6 +54,17 @@ export default function LogSeizure(props: Props) {
         setNotes(text);
     }
 
+    // Optional way to validate form -> do we want to require every field?
+    // const validateForm = () => {
+    //     const validArray = [date,time,location, notes];
+    //     for (var i = 0; i < validArray.length; i++){ 
+    //         if (validArray[i] === undefined) {
+    //             return setValidForm(false);
+    //         }
+    //     }
+    //     return setValidForm(true);
+    // }
+
     // TODO: find way for errors to be displayed
     const checkErrors = (date: Date, time: Date, location: string | any, notes: string | any) => {
         location === undefined ? errors.location = "Please Add a Location." : null;
