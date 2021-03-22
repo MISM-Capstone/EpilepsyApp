@@ -25,6 +25,7 @@ type TrendsScreenNavigationProp = StackNavigationProp<
 >;
 
 function SeizureCard(props: RenderProps) {
+    console.log(props.log.seizure_id );
     return (
         <View style={HistoryStyles.HistoryEventCard}>
             <View>
