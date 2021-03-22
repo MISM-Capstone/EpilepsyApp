@@ -30,6 +30,16 @@ export default class HistoryDao extends Dao {
         return this.SetResultsToList(results[0].rows);
     }
 
+    static async deleteSeizureLog(id: number | string) {
+        const sql = `
+            DELETE FROM seizure_log
+            WHERE seizure_id = ?
+        ;`;
+        const db = await this.getDatabase();
+        const results = await db.executeSql(sql, [id]);
+        return this.SetResultsToList(results[0].rows);
+    }
+
     // SURVEY LOGS
     static async getSurveyLogs() {
         const sql = `
@@ -57,6 +67,16 @@ export default class HistoryDao extends Dao {
         return this.SetResultsToList(results[0].rows);
     }
 
+    static async deleteSurveyLog(id: number | string) {
+        const sql = `
+            DELETE FROM survey_log
+            WHERE survey_id = ?
+        ;`;
+        const db = await this.getDatabase();
+        const results = await db.executeSql(sql, [id]);
+        return this.SetResultsToList(results[0].rows);
+    }
+
     // MEDICATION LOGS
     static async getMedicationLogs() {
         const sql = `
@@ -81,6 +101,16 @@ export default class HistoryDao extends Dao {
         ;`;
         const db = await this.getDatabase();
         const results = await db.executeSql(sql, [date]);
+        return this.SetResultsToList(results[0].rows);
+    }
+
+    static async deleteMedicationLog(id: number | string) {
+        const sql = `
+            DELETE FROM medication_log
+            WHERE medication_id = ?
+        ;`;
+        const db = await this.getDatabase();
+        const results = await db.executeSql(sql, [id]);
         return this.SetResultsToList(results[0].rows);
     }
 
