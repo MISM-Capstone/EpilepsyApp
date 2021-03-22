@@ -10,6 +10,7 @@ import SurveyLogDao from '../../_services/database/dao/LogSurveyDao';
 import ButtonSet from '../../components/ButtonSet';
 import AppleHealthKit, { } from 'react-native-health';
 import SurveyStyles from '../../styles/SurveyStyles';
+import Slider from '@react-native-community/slider';
 
 type DailySurveyScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'DailySurvey'>;
 
@@ -24,7 +25,7 @@ export default function DailySurvey(props: Props) {
     prev_date.setDate(date.getDate() - 1);
     const [sleepStartDate, setSleepStartDate] = useState<Date>(date);
     const [sleepEndDate, setSleepEndDate] = useState<Date>(date);
-    const [stress_level, setStressLevel] = useState<string>();
+    const [stress_level, setStressLevel] = useState<any>();
     const [illness, setIllness] = useState<boolean>();
     const [fever, setFever] = useState<boolean>();
     const [miss_meal, setMissMeal] = useState<boolean>();
@@ -62,7 +63,7 @@ export default function DailySurvey(props: Props) {
         setSleepEndDate(currentDate);
     };
 
-    const onChangeStress = (stress: string) => {
+    const onChangeStress = (stress: number) => {
         setStressLevel(stress);
     }
 
@@ -103,11 +104,17 @@ export default function DailySurvey(props: Props) {
                 </View>
                 <View style={SurveyStyles.questionSection}>
                     <Text style={SurveyStyles.questionHeading}>How stressed do you feel? (Scale of 1-10)</Text>
-                    <TextInput
-                        style={{ height: 40, backgroundColor: 'lightgray' }}
-                        keyboardType='numeric'
-                        onChangeText={text => onChangeStress(text)}
-                        value={stress_level} />
+                    <View style={{display: `flex`, flexDirection: `row`}}>
+                    <Slider
+                        style={{width: 250, height: 40}}
+                        minimumValue={1}
+                        maximumValue={10}
+                        step={1}
+                        value={1}
+                        onValueChange={value => onChangeStress(value)}
+                    />
+                    <Text style={{ fontSize: 24, paddingTop: 4, marginLeft: 10}}>{stress_level}</Text>
+                    </View>
                 </View>
                 <View style={SurveyStyles.questionSection}>
                     <Text style={SurveyStyles.questionHeading}>Have you felt sick lately?</Text>
