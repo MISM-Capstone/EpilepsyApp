@@ -8,7 +8,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from "../../navigation/HomeNavigation";
 import SurveyLogDao from '../../_services/database/dao/LogSurveyDao';
 import ButtonSet from '../../components/ButtonSet';
-import AppleHealthKit, {  } from 'react-native-health';
+import AppleHealthKit, { } from 'react-native-health';
+import SurveyStyles from '../../styles/SurveyStyles';
 
 type DailySurveyScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'DailySurvey'>;
 
@@ -18,28 +19,23 @@ type Props = {
 };
 
 export default function DailySurvey(props: Props) {
-    const [date, setDate] = useState<Date>(new Date());
-    const [sleepStartDate, setSleepStartDate] = useState<Date>(new Date());
-    const [sleepEndDate, setSleepEndDate] = useState<Date>(new Date());
+    const date = new Date();
+    const prev_date = new Date();
+    prev_date.setDate(date.getDate() - 1);
+    const [sleepStartDate, setSleepStartDate] = useState<Date>(date);
+    const [sleepEndDate, setSleepEndDate] = useState<Date>(date);
     const [stress_level, setStressLevel] = useState<string>();
     const [illness, setIllness] = useState<boolean>();
     const [fever, setFever] = useState<boolean>();
     const [miss_meal, setMissMeal] = useState<boolean>();
     const [medication, setMedication] = useState<boolean>();
 
-    useEffect(() => {
-        if (props.route.params) {
-            let date: any = props.route.params.date;
-            setDate(new Date(date.dateString.replace(/-/g, '\/')));
-        }
-
+    useEffect(() => {        
         // Getting data from HealthKit and putting it in the sleep section
         // TODO: move this to a service
         // - How to handle errors if there are no values
         // - Add note that this information comes from Apple
-        let prev_day = new Date();
-        prev_day.setDate(date.getDate() - 1);
-        const options: any = { startDate: prev_day.toISOString(), limit: 1 }
+        const options: any = { startDate: prev_date.toISOString(), limit: 1 }
         AppleHealthKit.getSleepSamples(options, (err: string, results: any) => {
             console.log('Sleep sample: ', results);
             try {
@@ -55,11 +51,6 @@ export default function DailySurvey(props: Props) {
         });
 
     }, []);
-
-    const onChangeDate = (_event: Event, selectedDate: Date | undefined) => {
-        const currentDate = selectedDate || date;
-        setDate(currentDate);
-    };
 
     const onChangeSleepStartDate = (_event: Event, selectedDate: Date | undefined) => {
         const currentDate = selectedDate || date;
@@ -84,49 +75,56 @@ export default function DailySurvey(props: Props) {
 
     return (
         <SafeAreaView>
-            <View style={{ padding: 12 }}>
-                <Text>Date</Text>
-                {/* TODO: Maybe we don't need to have them enter a date? */}
-                <DateTimePicker
-                    testID="datePicker"
-                    value={date}
-                    mode="date"
-                    display="default"
-                    onChange={onChangeDate}
-                    maximumDate={new Date()}
-                />
-                <Text>What time did you go to sleep last night?</Text>
-                <DateTimePicker
-                    testID="datePicker"
-                    value={sleepStartDate}
-                    mode="datetime"
-                    display="default"
-                    onChange={onChangeSleepStartDate}
-                    maximumDate={new Date()}
-                />
-                <Text>What time did you wake up today?</Text>
-                <DateTimePicker
-                    testID="datePicker"
-                    value={sleepEndDate}
-                    mode="datetime"
-                    display="default"
-                    onChange={onChangeSleepEndDate}
-                    maximumDate={new Date()}
-                />
-                <Text>How stressed do you feel on a scale of 1-10?</Text>
-                <TextInput
-                    style={{ height: 40, backgroundColor: 'lightgray' }}
-                    keyboardType='numeric'
-                    onChangeText={text => onChangeStress(text)}
-                    value={stress_level} />
-                <Text>Have you felt sick lately?</Text>
-                <ButtonSet onChange={setIllness} />
-                <Text>Have you had a fever?</Text>
-                <ButtonSet onChange={setFever} />
-                <Text>Have you missed any meals?</Text>
-                <ButtonSet onChange={setMissMeal} />
-                <Text>Have you taken proper medications?</Text>
-                <ButtonSet onChange={setMedication} />
+            <View style={SurveyStyles.surveyContainer}>
+                <Text style={SurveyStyles.dailySurveyHeading}>Daily Survey for {date.toLocaleDateString()}</Text>
+                <View style={SurveyStyles.questionSection}>
+                    <Text style={SurveyStyles.questionHeading}>What time did you go to sleep last night?</Text>
+                    <DateTimePicker
+                        testID="datePicker"
+                        value={sleepStartDate}
+                        mode="datetime"
+                        display="default"
+                        onChange={onChangeSleepStartDate}
+                        maximumDate={date}
+                        minimumDate={prev_date}
+                    />
+                </View>
+                <View style={SurveyStyles.questionSection}>
+                    <Text style={SurveyStyles.questionHeading}>What time did you wake up date?</Text>
+                    <DateTimePicker
+                        testID="datePicker"
+                        value={sleepEndDate}
+                        mode="datetime"
+                        display="default"
+                        onChange={onChangeSleepEndDate}
+                        maximumDate={date}
+                        minimumDate={prev_date}
+                    />
+                </View>
+                <View style={SurveyStyles.questionSection}>
+                    <Text style={SurveyStyles.questionHeading}>How stressed do you feel? (Scale of 1-10)</Text>
+                    <TextInput
+                        style={{ height: 40, backgroundColor: 'lightgray' }}
+                        keyboardType='numeric'
+                        onChangeText={text => onChangeStress(text)}
+                        value={stress_level} />
+                </View>
+                <View style={SurveyStyles.questionSection}>
+                    <Text style={SurveyStyles.questionHeading}>Have you felt sick lately?</Text>
+                    <ButtonSet onChange={setIllness} />
+                </View>
+                <View style={SurveyStyles.questionSection}>
+                    <Text style={SurveyStyles.questionHeading}>Have you had a fever?</Text>
+                    <ButtonSet onChange={setFever} />
+                </View>
+                <View style={SurveyStyles.questionSection}>
+                    <Text style={SurveyStyles.questionHeading}>Have you missed any meals?</Text>
+                    <ButtonSet onChange={setMissMeal} />
+                </View>
+                <View style={SurveyStyles.questionSection}>
+                    <Text style={SurveyStyles.questionHeading}>Have you taken proper medications?</Text>
+                    <ButtonSet onChange={setMedication} />
+                </View>
             </View>
             <Button title="Save" onPress={() => insertQuery(date, sleepStartDate, sleepEndDate, stress_level, illness, fever, miss_meal, medication)} />
             <Button title="Cancel" onPress={props.navigation.goBack} />

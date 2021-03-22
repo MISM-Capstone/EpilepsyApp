@@ -7,6 +7,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from "../../navigation/HomeNavigation";
 import LogSeizureDao from '../../_services/database/dao/LogSeizureDao';
+import SurveyStyles from '../../styles/SurveyStyles';
 
 type LogSeizureScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'LogSeizure'>;
 
@@ -33,7 +34,7 @@ export default function LogSeizure(props: Props) {
             let date: any = props.route.params.date;
             setDate(new Date(date.dateString.replace(/-/g, '\/')));
         }
-    }, []);    
+    }, []);
 
     const onChangeDate = (_event: Event, selectedDate: Date | undefined) => {
         const currentDate = selectedDate || date;
@@ -55,59 +56,67 @@ export default function LogSeizure(props: Props) {
 
     // TODO: find way for errors to be displayed
     const checkErrors = (date: Date, time: Date, location: string | any, notes: string | any) => {
-        location === undefined ?  errors.location = "Please Add a Location." : null;
-        notes === undefined ?  errors.notes = "Please Add Notes about the Seizure." : null;
+        location === undefined ? errors.location = "Please Add a Location." : null;
+        notes === undefined ? errors.notes = "Please Add Notes about the Seizure." : null;
 
         console.log(errors);
 
         if (Object.keys(errors).length == 0) {
-            insertQuery(date,time,location,notes);
+            insertQuery(date, time, location, notes);
         }
     }
 
     const insertQuery = async (date: Date, time: Date, location: string | any, notes: string | any) => {
-        let results = await LogSeizureDao.insertSeizure(date,time,location,notes);
-        console.log('inserted: ',results);
+        let results = await LogSeizureDao.insertSeizure(date, time, location, notes);
+        console.log('inserted: ', results);
         props.navigation.goBack();
     }
 
     return (
         <SafeAreaView>
             <View style={{ padding: 12 }}>
-                <Text>Date of Seizure</Text>
-                <DateTimePicker
-                    testID="datePicker"
-                    value={date}
-                    mode="date"
-                    display="default"
-                    onChange={onChangeDate}
-                    maximumDate={new Date()}
-                />
-                <Text>Time of Seizure</Text>
-                <DateTimePicker
-                    testID="timePicker"
-                    value={time}
-                    mode="time"
-                    display="default"
-                    onChange={onChangeTime}
-                />
-                <Text>Location</Text>
-                <TextInput
-                    style={{ height: 40, backgroundColor: 'lightgray' }}
-                    onChangeText={text => onChangeLocationText(text)}
-                    value={location} />
-                <Text>Details</Text>
-                <TextInput
-                    style={{ backgroundColor: 'lightgray', height: 100 }}
-                    onChangeText={text => onChangeNotesText(text)}
-                    value={notes}
-                    multiline
-                    numberOfLines={5} />
+                <View style={SurveyStyles.questionSection}>
+                    <Text style={SurveyStyles.questionHeading}>Date of Seizure</Text>
+                    <DateTimePicker
+                        testID="datePicker"
+                        value={date}
+                        mode="date"
+                        display="default"
+                        onChange={onChangeDate}
+                        maximumDate={new Date()}
+                    />
+                </View>
+                <View style={SurveyStyles.questionSection}>
+                    <Text style={SurveyStyles.questionHeading}>Time of Seizure</Text>
+                    <DateTimePicker
+                        testID="timePicker"
+                        value={time}
+                        mode="time"
+                        display="default"
+                        onChange={onChangeTime}
+                    />
+                </View>
+                <View style={SurveyStyles.questionSection}>
+                    <Text style={SurveyStyles.questionHeading}>Location</Text>
+                    <TextInput
+                        style={{ height: 40, backgroundColor: 'lightgray' }}
+                        onChangeText={text => onChangeLocationText(text)}
+                        value={location} />
+                </View>
+                <View style={SurveyStyles.questionSection}>
+                    <Text style={SurveyStyles.questionHeading}>Details</Text>
+                    <TextInput
+                        style={{ backgroundColor: 'lightgray', height: 100 }}
+                        onChangeText={text => onChangeNotesText(text)}
+                        value={notes}
+                        multiline
+                        numberOfLines={5} />
+                </View>
             </View>
             <Button title="Save" onPress={() => checkErrors(date, time, location, notes)} />
             <Button title="Cancel" onPress={props.navigation.goBack} />
             <View>
-                {errors.location && <Text>{errors.location}</Text> }
+                {errors.location && <Text>{errors.location}</Text>}
                 {errors.notes && <Text>{errors.notes}</Text>}
             </View>
         </SafeAreaView>
