@@ -1,9 +1,12 @@
+import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, SafeAreaView, Button } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { View, Text, FlatList, SafeAreaView, Button, Pressable } from 'react-native';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { TrendsStackParamList } from '../../navigation/TrendsNavigation';
 import HistoryStyles from '../../styles/HistoryStyles';
 import HistoryDao from '../../_services/database/dao/HistoryDao';
 import sleepDatesService from '../../_services/helpers/sleepDates.service';
+import UpdateSeizureLog from './UpdateLogs/UpdateSeizureLog';
 
 type Props = {
     navigation: any;
@@ -13,9 +16,16 @@ type Props = {
 type RenderProps = {
     log: any;
     key: number;
+    navigation: TrendsScreenNavigationProp;
 }
 
+type TrendsScreenNavigationProp = StackNavigationProp<
+    TrendsStackParamList,
+    'Trends'
+>;
+
 function SeizureCard(props: RenderProps) {
+    console.log(props.log.seizure_id );
     return (
         <View style={HistoryStyles.HistoryEventCard}>
             <View>
@@ -23,6 +33,10 @@ function SeizureCard(props: RenderProps) {
                 <Text>Location: {props.log.location}</Text>
                 <Text>Notes: {props.log.notes}</Text>
             </View>
+            <Button
+                title="Update"
+                onPress={() => props.navigation.navigate("UpdateSeizureLog", { seizure_id: props.log.seizure_id })}
+            />
         </View>
     )
 }
@@ -78,7 +92,7 @@ const DateHistory = (props: Props) => {
                 <Text style={HistoryStyles.SectionHeader}>Seizures</Text>
                 {seizures.length > 0 ?
                     seizures.map(function (seizure, key) {
-                        return <SeizureCard log={seizure} key={key} />
+                        return <SeizureCard log={seizure} key={key} navigation={props.navigation}/>
                     })
                     :
                     <View>
@@ -93,7 +107,7 @@ const DateHistory = (props: Props) => {
                 <Text style={HistoryStyles.SectionHeader}>Surveys</Text>
                 {surveys.length > 0 ?
                     surveys.map(function (survey, key) {
-                        return <SurveyCard log={survey} key={key} />
+                        return <SurveyCard log={survey} key={key} navigation={props.navigation}/>
                     })
                     :
                     <View>
@@ -107,7 +121,7 @@ const DateHistory = (props: Props) => {
                 <Text style={HistoryStyles.SectionHeader}>Medications</Text>
                 {medications.length > 0 ?
                     medications.map(function (medication, key) {
-                        return <MedicationCard log={medication} key={key} />
+                        return <MedicationCard log={medication} key={key} navigation={props.navigation} />
                     })
                     :
                     <View>
@@ -117,7 +131,7 @@ const DateHistory = (props: Props) => {
                             onPress={() => props.navigation.navigate('DailySurvey', { date: date })}
                         ></Button>
                     </View>
-                    
+
                 }
             </ScrollView>
         </SafeAreaView >

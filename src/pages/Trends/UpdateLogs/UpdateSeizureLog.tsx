@@ -1,39 +1,37 @@
 import React, { useEffect, useState } from 'react';
-
-import { Text, View, Button } from 'react-native';
-import SafeAreaView from 'react-native-safe-area-view';
+import { Button, SafeAreaView, Text, TextInput, View } from 'react-native';
+import SurveyStyles from '../../../styles/SurveyStyles';
+import HistoryDao from '../../../_services/database/dao/HistoryDao';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { TextInput } from 'react-native-gesture-handler';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { HomeStackParamList } from "../../navigation/HomeNavigation";
-import LogSeizureDao from '../../_services/database/dao/LogSeizureDao';
-import SurveyStyles from '../../styles/SurveyStyles';
-
-type LogSeizureScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'LogSeizure'>;
+import calendarService from '../../../_services/helpers/calendar.service';
 
 type Props = {
-    navigation: LogSeizureScreenNavigationProp;
+    navigation: any;
     route: any;
 };
 
-type ErrorObject = {
-    location?: string;
-    notes?: string;
-}
-
-export default function LogSeizure(props: Props) {
+const UpdateSeizureLog = (props: Props) => {
+    const seizure_id = props.route.params.seizure_id;
+    const [seizureLog, setSeizureLog] = useState<any>();
+    const [seizureId, setSeizureId] = useState<any>();
     const [date, setDate] = useState<any>(new Date());
     const [time, setTime] = useState<any>(new Date());
-    const [location, setLocation] = useState<string>();
-    const [notes, setNotes] = useState<string>();
-
-    const errors: ErrorObject = {};
+    const [location, setLocation] = useState<any>();
+    const [notes, setNotes] = useState<any>();
 
     useEffect(() => {
-        if (props.route.params) {
-            let date: any = props.route.params.date;
-            setDate(new Date(date.dateString.replace(/-/g, '\/')));
+        async function getSeizure() {
+            let seizure: any = await HistoryDao.getSeizureLogById(seizure_id);
+            setSeizureLog(seizure[0]);
+            setSeizureId(seizure[0]['seizure_id']);
+            setDate(new Date(seizure[0]['date']));
+            const timeDate: Date = calendarService.createDateFromTime(seizure[0]['time']);
+            setTime(timeDate);
+            setLocation(seizure[0]['location']);
+            setNotes(seizure[0]['notes']);
         }
+
+        getSeizure();        
     }, []);
 
     const onChangeDate = (_event: Event, selectedDate: Date | undefined) => {
@@ -54,38 +52,22 @@ export default function LogSeizure(props: Props) {
         setNotes(text);
     }
 
-    // Optional way to validate form -> do we want to require every field?
-    // const validateForm = () => {
-    //     const validArray = [date,time,location, notes];
-    //     for (var i = 0; i < validArray.length; i++){ 
-    //         if (validArray[i] === undefined) {
-    //             return setValidForm(false);
-    //         }
-    //     }
-    //     return setValidForm(true);
-    // }
-
-    // TODO: find way for errors to be displayed
-    const checkErrors = (date: Date, time: Date, location: string | any, notes: string | any) => {
-        location === undefined ? errors.location = "Please Add a Location." : null;
-        notes === undefined ? errors.notes = "Please Add Notes about the Seizure." : null;
-
-        console.log(errors);
-
-        if (Object.keys(errors).length == 0) {
-            insertQuery(date, time, location, notes);
-        }
+    const updateSeizure = async (seizure_id: any, date: any, time: any, location: any, notes: any) => {
+        let updated = await HistoryDao.updateSeizureLog(seizure_id,date,time,location,notes);
+        console.log('Updated: ', updated);
+        return props.navigation.goBack();
     }
 
-    const insertQuery = async (date: Date, time: Date, location: string | any, notes: string | any) => {
-        let results = await LogSeizureDao.insertSeizure(date, time, location, notes);
-        console.log('inserted: ', results);
-        props.navigation.goBack();
+    const deleteSeizure = async (seizure_id: any) => {
+        let deleted = await HistoryDao.deleteSeizureLog(seizure_id);
+        console.log('Deleted: ', deleted);
+        return props.navigation.goBack();
     }
 
     return (
         <SafeAreaView>
             <View style={{ padding: 12 }}>
+            <Text>{JSON.stringify(seizureLog)}</Text>
                 <View style={SurveyStyles.questionSection}>
                     <Text style={SurveyStyles.questionHeading}>Date of Seizure</Text>
                     <DateTimePicker
@@ -124,12 +106,11 @@ export default function LogSeizure(props: Props) {
                         numberOfLines={5} />
                 </View>
             </View>
-            <Button title="Save" onPress={() => checkErrors(date, time, location, notes)} />
+            <Button title="Save" onPress={() => updateSeizure(seizureId,date,time,location,notes)} />
             <Button title="Cancel" onPress={props.navigation.goBack} />
-            <View>
-                {errors.location && <Text>{errors.location}</Text>}
-                {errors.notes && <Text>{errors.notes}</Text>}
-            </View>
+            <Button title="Delete" color="red" onPress={() => deleteSeizure(seizureId)} />
         </SafeAreaView>
     )
 }
+
+export default UpdateSeizureLog;

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-import { Text, View, Button, Platform } from 'react-native';
+import { Text, View, Button } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { TextInput } from 'react-native-gesture-handler';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from "../../navigation/HomeNavigation";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import RecordMedicationDao from '../../_services/database/dao/RecordMedication';
+import SurveyStyles from '../../styles/SurveyStyles';
 
 type RecordMedicationScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'RecordMedication'>;
 
@@ -29,7 +29,7 @@ export default function RecordMedication(props: Props) {
             let date: any = props.route.params.date;
             setDate(new Date(date.dateString.replace(/-/g, '\/')));
         }
-    }, []);  
+    }, []);
 
     const onChangeDate = (_event: Event, selectedDate: Date | undefined) => {
         const currentDate = selectedDate || date;
@@ -61,41 +61,51 @@ export default function RecordMedication(props: Props) {
 
     return (
         <SafeAreaView>
-            <View style={{ padding: 12 }}>
-                <Text>Date of Medication</Text>
-                <DateTimePicker
-                    testID="datePicker"
-                    value={date}
-                    mode="date"
-                    display="default"
-                    onChange={onChangeDate}
-                    maximumDate={new Date()}
-                />
-                <Text>Time of Medication</Text>
-                <DateTimePicker
-                    testID="timePicker"
-                    value={time}
-                    mode="time"
-                    display="default"
-                    onChange={onChangeTime}
-                />
-                <Text>Medication Name</Text>
-                <TextInput
-                    style={{ height: 40, backgroundColor: 'lightgray' }}
-                    onChangeText={text => onChangeMedicationText(text)}
-                    value={medicationText} />
-                <Text>Dosage</Text>
-                <TextInput
-                    style={{ height: 40, backgroundColor: 'lightgray' }}
-                    onChangeText={text => onChangeDosageText(text)}
-                    value={dosageText} />
-                <Text>Notes</Text>
-                <TextInput
-                    style={{ backgroundColor: 'lightgray', height: 100 }}
-                    onChangeText={text => onChangeNotesText(text)}
-                    value={notesText}
-                    multiline
-                    numberOfLines={5} />
+            <View style={SurveyStyles.surveyContainer}>
+                <View style={SurveyStyles.questionSection}>
+                    <Text style={SurveyStyles.questionHeading}>Date of Medication</Text>
+                    <DateTimePicker
+                        testID="datePicker"
+                        value={date}
+                        mode="date"
+                        display="default"
+                        onChange={onChangeDate}
+                        maximumDate={new Date()}
+                    />
+                </View>
+                <View style={SurveyStyles.questionSection}>
+                    <Text style={SurveyStyles.questionHeading}>Time of Medication</Text>
+                    <DateTimePicker
+                        testID="timePicker"
+                        value={time}
+                        mode="time"
+                        display="default"
+                        onChange={onChangeTime}
+                    />
+                </View>
+                <View style={SurveyStyles.questionSection}>
+                    <Text style={SurveyStyles.questionHeading}>Medication Name</Text>
+                    <TextInput
+                        style={{ height: 40, backgroundColor: 'lightgray' }}
+                        onChangeText={text => onChangeMedicationText(text)}
+                        value={medicationText} />
+                </View>
+                <View style={SurveyStyles.questionSection}>
+                    <Text style={SurveyStyles.questionHeading}>Dosage</Text>
+                    <TextInput
+                        style={{ height: 40, backgroundColor: 'lightgray' }}
+                        onChangeText={text => onChangeDosageText(text)}
+                        value={dosageText} />
+                </View>
+                <View style={SurveyStyles.questionSection}>
+                    <Text style={SurveyStyles.questionHeading}>Notes</Text>
+                    <TextInput
+                        style={{ backgroundColor: 'lightgray', height: 100 }}
+                        onChangeText={text => onChangeNotesText(text)}
+                        value={notesText}
+                        multiline
+                        numberOfLines={5} />
+                </View>
             </View>
             <Button title="Save" onPress={() => insertQuery(date, time, medicationText, dosageText, notesText)} />
             <Button title="Cancel" onPress={props.navigation.goBack} />
