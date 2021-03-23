@@ -54,6 +54,8 @@ export class DatabaseInitialization {
         transaction.executeSql(CreateTableQuery.survey_log);
         transaction.executeSql(CreateTableQuery.survey_answer);
         transaction.executeSql(CreateTableQuery.dosage_unit);
+        transaction.executeSql(CreateTableQuery.medication);
+        transaction.executeSql(CreateTableQuery.medication_log);
 
 
         // Version table

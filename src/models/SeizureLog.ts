@@ -17,6 +17,7 @@ export const SeizureLogDb = {
     fields: {
         ...LogFields,
         details: "details",
+        notes: "notes",
         location_id: "location_id",
     }
 }

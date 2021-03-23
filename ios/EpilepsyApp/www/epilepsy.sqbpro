@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="/Users/student/Desktop/demo/EpilepsyApp/ios/EpilepsyApp/www/epilepsy.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="2841"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,13:mainepilepsy_type"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="SQL 1">CREATE TABLE &quot;medication_log&quot; (
+            &quot;id&quot;	INTEGER NOT NULL UNIQUE,
+            &quot;date_recorded&quot;	TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            &quot;date_modified&quot;	DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            &quot;date&quot;	DATE NOT NULL,
+			&quot;dosage&quot; INTEGER NOT NULL,
+            &quot;dosage_unit_id&quot;	INTEGER NOT NULL,
+			&quot;medication_id&quot; INTEGER NOT NULL,
+            &quot;user_id&quot;	INTEGER NOT NULL,
+            FOREIGN KEY(&quot;dosage_unit_id&quot;) REFERENCES &quot;dosage_unit&quot;(&quot;id&quot;),
+            FOREIGN KEY(&quot;medication_id&quot;) REFERENCES &quot;medication&quot;(&quot;id&quot;),
+            FOREIGN KEY(&quot;user_id&quot;) REFERENCES &quot;user&quot;(&quot;id&quot;),
+            PRIMARY KEY(&quot;id&quot; AUTOINCREMENT)
+        );</sql><current_tab id="0"/></tab_sql></sqlb_project>

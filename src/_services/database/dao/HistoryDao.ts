@@ -1,5 +1,5 @@
+import SeizureLog, { SeizureLogDb } from "../../../models/SeizureLog";
 import Dao from "./Dao";
-// import SQLite from "react-native-sqlite-storage";
 
 export default class HistoryDao extends Dao {
 
@@ -9,11 +9,11 @@ export default class HistoryDao extends Dao {
             SELECT
                 *
             FROM
-                seizure_log
+                ${SeizureLogDb.table}
         ;`;
         const db = await this.getDatabase();
         const results = await db.executeSql(sql);
-        return this.SetResultsToList(results[0].rows);
+        return this.SetResultsToList(results[0].rows) as SeizureLog[];
     }
 
     static async getSeizureLogsByDate(date: string) {
@@ -21,13 +21,13 @@ export default class HistoryDao extends Dao {
             SELECT
                 *
             FROM
-                seizure_log
+                ${SeizureLogDb.table}
             WHERE 
-                date = ?
+                ${SeizureLogDb.fields.date} = ?
         ;`;
         const db = await this.getDatabase();
         const results = await db.executeSql(sql, [date]);
-        return this.SetResultsToList(results[0].rows);
+        return this.SetResultsToList(results[0].rows) as SeizureLog[];
     }
 
     // SURVEY LOGS
