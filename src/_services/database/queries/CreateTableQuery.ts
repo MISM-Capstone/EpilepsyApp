@@ -117,6 +117,7 @@ export default class CreateTableQuery {
             "date_recorded"	TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
             "date_modified"	DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
             "date"	DATE NOT NULL,
+            "time"	TEXT NOT NULL,
             "dosage" INTEGER NOT NULL,
             "dosage_unit_id"	INTEGER NOT NULL,
             "medication_id" INTEGER NOT NULL,

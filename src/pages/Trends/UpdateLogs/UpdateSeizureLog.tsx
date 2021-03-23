@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Button, SafeAreaView, Text, TextInput, View } from 'react-native';
 import SurveyStyles from '../../../styles/SurveyStyles';
-import HistoryDao from '../../../_services/database/dao/HistoryDao';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import calendarService from '../../../_services/helpers/calendar.service';
+import SeizureLogDao from '../../../_services/database/dao/SeizureLogDao';
 
 type Props = {
     navigation: any;
@@ -21,7 +21,7 @@ const UpdateSeizureLog = (props: Props) => {
 
     useEffect(() => {
         async function getSeizure() {
-            let seizure: any = await HistoryDao.getSeizureLogById(seizure_id);
+            let seizure: any = await SeizureLogDao.getSeizureLogById(seizure_id);
             setSeizureLog(seizure[0]);
             setSeizureId(seizure[0]['seizure_id']);
             setDate(new Date(seizure[0]['date']));
@@ -53,13 +53,13 @@ const UpdateSeizureLog = (props: Props) => {
     }
 
     const updateSeizure = async (seizure_id: any, date: any, time: any, location: any, notes: any) => {
-        let updated = await HistoryDao.updateSeizureLog(seizure_id,date,time,location,notes);
+        let updated = await SeizureLogDao.updateSeizureLog(seizure_id,date,time,location,notes);
         console.log('Updated: ', updated);
         return props.navigation.goBack();
     }
 
     const deleteSeizure = async (seizure_id: any) => {
-        let deleted = await HistoryDao.deleteSeizureLog(seizure_id);
+        let deleted = await SeizureLogDao.deleteSeizureLog(seizure_id);
         console.log('Deleted: ', deleted);
         return props.navigation.goBack();
     }

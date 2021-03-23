@@ -1,5 +1,4 @@
-import HistoryDao from '../database/dao/HistoryDao';
-import ReportDao from '../database/dao/ReportDao';
+import SeizureLogDao from '../database/dao/SeizureLogDao';
 
 type ChartData = {
     data: any;
@@ -8,7 +7,7 @@ type ChartData = {
 
 // Default structure for getting chart data
 const getChartData = async () => {
-    const seizures: any[] = await HistoryDao.getSeizureLogs();
+    const seizures: any[] = await SeizureLogDao.getSeizureLogs();
     let data: any[] = [];
     
     seizures.forEach(seizure => {
@@ -20,7 +19,7 @@ const getChartData = async () => {
 
 // Charting Seizure Events by Day of the Week
 const getChartDataDay = async (): Promise<ChartData> => {
-    const seizures: any[] = await HistoryDao.getSeizureLogs();
+    const seizures: any[] = await SeizureLogDao.getSeizureLogs();
     let data = getDaysInWeekArray();
     let numSeizures: number = 0;
 
@@ -36,7 +35,7 @@ const getChartDataDay = async (): Promise<ChartData> => {
 
 // Charting Seizure Events by Day of the Week in a certain range
 const getChartDataDayInRange = async (startDate:Date, endDate:Date) => {
-    const seizures: any[] = await ReportDao.getSeizuresInDateRange(startDate, endDate);
+    const seizures: any[] = await SeizureLogDao.getSeizuresInDateRange(startDate, endDate);
     let data = getDaysInWeekArray();
 
     seizures.forEach(seizure => {
@@ -48,7 +47,7 @@ const getChartDataDayInRange = async (startDate:Date, endDate:Date) => {
 
 // Charting Seizure Events by Day of the Week
 const getChartDataTime = async (): Promise<ChartData> => {
-    const seizures: any[] = await HistoryDao.getSeizureLogs();
+    const seizures: any[] = await SeizureLogDao.getSeizureLogs();
     let data: any[] = new Array(6);
     data[0] = { hour: "12am", seizures: 0 }; 
     data[1] = { hour: "4am", seizures: 0 };

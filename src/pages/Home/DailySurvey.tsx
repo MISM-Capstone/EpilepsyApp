@@ -6,7 +6,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { TextInput } from 'react-native-gesture-handler';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from "../../navigation/HomeNavigation";
-import SurveyLogDao from '../../_services/database/dao/LogSurveyDao';
+import SurveyLogDao from '../../_services/database/dao/SurveyLogDao';
 import ButtonSet from '../../components/ButtonSet';
 import AppleHealthKit, { } from 'react-native-health';
 import SurveyStyles from '../../styles/SurveyStyles';
@@ -69,7 +69,7 @@ export default function DailySurvey(props: Props) {
 
     const insertQuery = async (date: Date, sleepStartDate: Date, sleepEndDate: Date, stress_level: string | any, illness: boolean | any, fever: boolean | any, miss_meal: boolean | any, medication: boolean | any) => {
         console.log('sleep dates: ', sleepStartDate, sleepEndDate)
-        let results = await SurveyLogDao.insertSurveyEntry(date, sleepStartDate, sleepEndDate, stress_level, illness, fever, miss_meal, medication);
+        let results = await SurveyLogDao.insertSurveyLog(date, sleepStartDate, sleepEndDate, stress_level, illness, fever, miss_meal, medication);
         console.log('inserted:', results);
         props.navigation.goBack();
     }

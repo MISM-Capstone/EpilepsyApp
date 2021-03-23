@@ -6,7 +6,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { TextInput } from 'react-native-gesture-handler';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from "../../navigation/HomeNavigation";
-import RecordMedicationDao from '../../_services/database/dao/RecordMedication';
+import MedicationLogDao from '../../_services/database/dao/MedicationLogDao';
 import SurveyStyles from '../../styles/SurveyStyles';
 
 type RecordMedicationScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'RecordMedication'>;
@@ -54,7 +54,7 @@ export default function RecordMedication(props: Props) {
     }
 
     const insertQuery = async (date: Date, time: Date, medication: string | any, dosage: string | any, notes: string | any) => {
-        let results = await RecordMedicationDao.insertMedication(date, time, medication, dosage, notes);
+        let results = await MedicationLogDao.insertMedicationLog(date, time, medication, dosage, notes);
         console.log('inserted: ', results);
         props.navigation.goBack();
     }

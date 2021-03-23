@@ -3,6 +3,7 @@ import Medication from "./Medication";
 import User from "../User";
 
 export default class MedicationLog extends Log {
+    time: string = "";
     dosage: number;
     dosage_unit_id: number;
     medication_id: number;
@@ -18,6 +19,7 @@ export const MedicationLogDb = {
     table: "medication_log",
     fields: {
         ...LogFields,
+        time: "time",
         dosage: "dosage",
         dosage_unit_id: "dosage_unit_id",
         medication_id: "medication_id",
