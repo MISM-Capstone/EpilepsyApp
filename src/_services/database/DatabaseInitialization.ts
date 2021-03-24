@@ -29,7 +29,7 @@ export class DatabaseInitialization {
     // Perform initial setup of the database tables
     private static createTables(transaction: SQLite.Transaction) {
         // DANGER! For dev only
-        const dropOldTables = true;
+        const dropOldTables = false;
         if (dropOldTables) {
             transaction.executeSql("DROP TABLE IF EXISTS seizure_log;");
             transaction.executeSql("DROP TABLE IF EXISTS survey_log;");
@@ -37,9 +37,18 @@ export class DatabaseInitialization {
         }
         const dropAllTables = false;
         if (dropAllTables) {
-            transaction.executeSql("DROP TABLE IF EXISTS seizure_log;");
-            transaction.executeSql("DROP TABLE IF EXISTS survey_log;");
             transaction.executeSql("DROP TABLE IF EXISTS medication_log;");
+            transaction.executeSql("DROP TABLE IF EXISTS medication;");
+            transaction.executeSql("DROP TABLE IF EXISTS dosage_unit;");
+            transaction.executeSql("DROP TABLE IF EXISTS survey_answer;");
+            transaction.executeSql("DROP TABLE IF EXISTS survey_log;");
+            transaction.executeSql("DROP TABLE IF EXISTS survey_field;");
+            transaction.executeSql("DROP TABLE IF EXISTS survey;");
+            transaction.executeSql("DROP TABLE IF EXISTS seizure_log;");
+            transaction.executeSql("DROP TABLE IF EXISTS location;");
+            transaction.executeSql("DROP TABLE IF EXISTS epilepsy_type_user;");
+            transaction.executeSql("DROP TABLE IF EXISTS epilepsy_type;");
+            transaction.executeSql("DROP TABLE IF EXISTS user;");
             transaction.executeSql("DROP TABLE IF EXISTS Version;");
         }
       

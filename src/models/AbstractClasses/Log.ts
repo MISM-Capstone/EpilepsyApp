@@ -7,7 +7,7 @@ export default abstract class Log extends Db {
     date: Date = new Date();
     user_id: number;
     constructor(user: User) {
-        super()
+        super();
         this.user_id = user.id!;
     }
 }

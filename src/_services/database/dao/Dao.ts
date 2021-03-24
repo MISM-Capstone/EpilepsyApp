@@ -6,6 +6,7 @@
 
 import { AppState, AppStateStatus } from "react-native";
 import SQLite, { ResultSetRowList } from 'react-native-sqlite-storage';
+import { IterateThroughKeys } from "../../../functions";
 import {DatabaseInitialization} from "../DatabaseInitialization";
 
 export default abstract class DAO {
@@ -31,6 +32,49 @@ export default abstract class DAO {
         }
         return resultList;
     }
+
+    protected static getObjParamsForInsert(obj:any) {
+        let statement = {
+            attributes:"",
+            values:"",
+            params:[] as any[],
+        };
+        IterateThroughKeys(obj, (key, value) => {
+            if (key !== "id") {
+                statement.attributes += (key + ",");
+                statement.values += "?,";
+                // TODO - Convert value to string
+                console.log("Value:",value);
+                statement.params.push(value);
+            }
+        });
+        statement.attributes = statement.attributes.slice(0, -1);
+        statement.values = statement.values.slice(0, -1);
+        return statement;
+    }
+
+    protected static getObjAttributesAsString(obj:any) {
+        let attributes = "";
+        IterateThroughKeys(obj, (key, value) => {
+            if (key !== "id") {
+                attributes += (key + ",");
+            }
+        });
+        attributes = attributes.slice(0, -1);
+        return attributes;
+    }
+
+    static PrepareObjectForInsert(fields:any, queryObj:any) {
+        let valueList:any[] = [];
+        IterateThroughKeys(fields, (key, value) => {
+            if (key !== "id") {
+                valueList.push(queryObj[value]);
+            }
+        })
+        return valueList
+    }
+
+
 
     // Open a connection to the database
     private static async open(): Promise<SQLite.SQLiteDatabase> {

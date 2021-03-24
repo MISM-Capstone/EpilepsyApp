@@ -1,20 +1,19 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { CONTEXT_OPTIONS, STORAGE_KEYS } from "../../constants";
+import { AuthAction, REDUCER_OPTIONS } from "../reducers/LoginReducer";
+import User from "../../models/User";
+import UserDao from "../database/dao/UserDao";
 
-export async function GetAuthToken(dispatch:React.Dispatch<any>) {
-    let userToken;
+export async function getUser(dispatch:React.Dispatch<AuthAction>) {
+    let user: User | undefined;
     try {
-        userToken = await AsyncStorage.getItem(STORAGE_KEYS.userToken);
+        user = await UserDao.getUser();
     } catch (e) {
         console.log("Error getting token");
     }
-    dispatch({type: CONTEXT_OPTIONS.restoreToke, token: userToken});
+    dispatch({type: REDUCER_OPTIONS.setUser, user: user});
 }
 
-export async function AddAuthToken(userToken:string) {
-    await AsyncStorage.setItem(STORAGE_KEYS.userToken, userToken);
-}
-
-export async function RemoveAuthToken() {
-    await AsyncStorage.removeItem(STORAGE_KEYS.userToken);
+export async function registerUser(user:User, dispatch:React.Dispatch<AuthAction>) {
+    const result = await UserDao.insertUser(user);
+    const newUser = await UserDao.getUser();
+    dispatch({type: REDUCER_OPTIONS.setUser, user: newUser});
 }

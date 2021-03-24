@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { Text, View, Button } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { TextInput } from 'react-native-gesture-handler';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from "../../navigation/HomeNavigation";
 import SurveyLogDao from '../../_services/database/dao/SurveyLogDao';

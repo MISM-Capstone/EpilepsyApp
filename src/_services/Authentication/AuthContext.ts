@@ -1,9 +1,10 @@
 import { createContext } from "react";
+import User from "../../models/User";
 
 export interface AuthProviderContext {
-    signIn: (data:any) => void;
-    signOut: () => void;
-    signUp: (data:any) => void;
+    isLoading: boolean;
+    user?: User;
+    register: (data:any) => void;
 }
 
 const AuthContext = createContext<AuthProviderContext>({} as AuthProviderContext);

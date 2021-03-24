@@ -8,6 +8,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from "../../navigation/HomeNavigation";
 import SeizureLogDao from '../../_services/database/dao/SeizureLogDao';
 import SurveyStyles from '../../styles/SurveyStyles';
+import SeizureLog from '../../models/SeizureLog';
 
 type LogSeizureScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'LogSeizure'>;
 
@@ -22,6 +23,7 @@ type ErrorObject = {
 }
 
 export default function LogSeizure(props: Props) {
+    const [seizureLog, setSeizureLog] = useState<SeizureLog>(new SeizureLog());
     const [date, setDate] = useState<any>(new Date());
     const [time, setTime] = useState<any>(new Date());
     const [location, setLocation] = useState<string>();
