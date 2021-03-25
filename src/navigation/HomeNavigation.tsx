@@ -10,11 +10,15 @@ import RecordMedication from "../pages/Home/RecordMedication";
 import HeaderStyle from "../styles/HeaderStyle";
 import HealthKitTest from '../pages/Home/HealthKitTest';
 
+export type EditSeizureProps = {
+    date?:Date;
+}
+
 export type HomeStackParamList = {
     Home: undefined;
     DailySurvey: undefined;
     SurveyHistory: undefined;
-    LogSeizure: undefined;
+    LogSeizure: EditSeizureProps;
     RecordMedication: undefined;
     HealthKitTest: undefined;
 };

@@ -7,7 +7,9 @@ export default class LocationDao extends DAO {
             SELECT
                 *
             FROM
-                ${LocationDb.table};
+                ${LocationDb.table}
+            ORDER BY
+                ${LocationDb.fields.name};
         `;
         const resultLocation = await this.runQuery(sql);
         return this.convertQueryResultToObj(resultLocation, Location);

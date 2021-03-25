@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, Text, View } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import SeizureLog from '../../models/SeizureLog';
 import HistoryStyles from '../../styles/HistoryStyles';
 import HistoryDao from '../../_services/database/dao/HistoryDao';
 import sleepDatesService from '../../_services/helpers/sleepDates.service';
@@ -58,7 +59,7 @@ function MedicationCard(props: RenderProps) {
 }
 
 export default function SurveyHistory(props: Props) {
-    const [seizures, setSeizures] = useState<any[]>([]);
+    const [seizures, setSeizures] = useState<SeizureLog[]>([]);
     const [surveys, setSurveys] = useState<any[]>([]);
     const [medications, setMedications] = useState<any[]>([]);
 
@@ -66,9 +67,9 @@ export default function SurveyHistory(props: Props) {
         (async () => {
             const results = await HistoryDao.getAllLogs();
             console.log(results);
-            setSeizures(results['seizures']);
-            setSurveys(results['surveys']);
-            setMedications(results['medications']);
+            setSeizures(results.seizures);
+            setSurveys(results.surveys);
+            setMedications(results.medications);
         })();
     }, []);
 

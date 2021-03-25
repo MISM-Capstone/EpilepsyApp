@@ -9,7 +9,7 @@ import { MedicationLogDb } from "../../../models/Medication/MedicationLog";
 export default class HistoryDao extends Dao {
     // COMBINED LOGS
     static async getAllLogs() {
-        const seizures = await SeizureLogDao.getSeizureLogs();
+        const seizures = await SeizureLogDao.getAll();
         const surveys = await SurveyLogDao.getSurveyLogs();
         const medications = await MedicationLogDao.getMedicationLogs();
         const data = {
@@ -43,7 +43,7 @@ export default class HistoryDao extends Dao {
     }
 
     static async getAllLogsByDate(date: string) {
-        const seizures = await SeizureLogDao.getSeizureLogsByDate(date);
+        const seizures = await SeizureLogDao.getByDate(date);
         const surveys = await SurveyLogDao.getSurveyLogsByDate(date);
         const medications = await MedicationLogDao.getMedicationLogsByDate(date);
         const data = {

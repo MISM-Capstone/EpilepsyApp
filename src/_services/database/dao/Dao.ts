@@ -82,14 +82,19 @@ export default abstract class DAO {
     }
 
     private static async runTrueFalseQuery(sql:string, params?:any[]) {
-        let wasSuccessful = false;
         try {
-            await this.runQuery(sql, params);
-            wasSuccessful = true;
+            const db = await this.getDatabase();
+            let results:ResultSet[] = [];
+            await db.transaction(async tx => {
+                let [, result] = await tx.executeSql(sql, params);
+                results.push(result);
+            });
+            return results[0];
+
         } catch (error) {
             console.log("Error:",error);
         }
-        return wasSuccessful;
+        return false;
     }
 
 
