@@ -1,5 +1,4 @@
-import Db, { DbFields } from "../AbstractClasses/Db";
-import Survey from "./Survey";
+import Db, { DbFields, DBObj } from "../AbstractClasses/Db";
 
 export enum FieldType {
     bool = "boolean",
@@ -12,13 +11,13 @@ export default class SurveyField extends Db {
     question: string = "";
     field_type: FieldType = FieldType.bool;
     survey_id: number;
-    constructor(survey:Survey) {
+    constructor(surveyId:number = 0) {
         super();
-        this.survey_id = survey.id!;
+        this.survey_id = surveyId;
     }
 }
 
-export const SurveyFieldDb = {
+export const SurveyFieldDb:DBObj = {
     table: "survey_field",
     fields: {
         ...DbFields,

@@ -1,19 +1,17 @@
-import Db, { DbFields } from "../AbstractClasses/Db";
-import SurveyLog from "./SurveyLog";
-import SurveyField from "./SurveyField";
+import Db, { DbFields, DBObj } from "../AbstractClasses/Db";
 
 export default class SurveyAnswer extends Db {
     answer: string = "";
     survey_log_id: number;
     survey_field_id: number;
-    constructor(surveyLog: SurveyLog, surveyField: SurveyField) {
+    constructor(surveyLogId:number = 0, surveyFieldId:number = 0) {
         super();
-        this.survey_log_id = surveyLog.id!;
-        this.survey_field_id = surveyField.id!;
+        this.survey_log_id = surveyLogId;
+        this.survey_field_id = surveyFieldId;
     }
 }
 
-export const SurveyAnswerDb = {
+export const SurveyAnswerDb:DBObj = {
     table: "survey_answer",
     fields: {
         ...DbFields,

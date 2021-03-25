@@ -11,9 +11,11 @@ export default abstract class Db {
     }
 }
 
+export type DBObjFields = {[k:string]:string}
+
 export type DBObj = {
     table:string;
-    fields: {[k:string]:string}
+    fields: DBObjFields;
 }
 
 export const DbFields = {

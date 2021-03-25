@@ -1,19 +1,18 @@
+import { DBObj } from "./AbstractClasses/Db";
 import Log, { LogFields } from "./AbstractClasses/Log";
-import Location from "./Location";
-import User from "./User";
 
 export default class SeizureLog extends Log {
     time: string = "";
     details: string = "";
     notes: string = "";
     location_id: number;
-    constructor(user:User, location:Location) {
+    constructor(user:number=0, locationId:number=0) {
         super(user);
-        this.location_id = location.id!;
+        this.location_id = locationId;
     }
 }
 
-export const SeizureLogDb = {
+export const SeizureLogDb:DBObj = {
     table: "seizure_log",
     fields: {
         ...LogFields,

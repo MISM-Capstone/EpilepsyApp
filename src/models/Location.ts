@@ -1,11 +1,11 @@
-import Db, { DbFields } from "./AbstractClasses/Db";
+import Db, { DbFields, DBObj } from "./AbstractClasses/Db";
 
 export default class Location extends Db {
     name: string = "";
     description: string = "";
 }
 
-export const LocationDb = {
+export const LocationDb:DBObj = {
     table: "location",
     fields: {
         ...DbFields,
