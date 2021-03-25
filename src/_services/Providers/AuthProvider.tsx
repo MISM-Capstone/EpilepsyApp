@@ -4,7 +4,7 @@ import React, { useReducer, useEffect, useMemo } from 'react';
 
 import LoginReducer, { initialReducerState } from '../reducers/LoginReducer';
 import AuthContext, { AuthProviderContext } from '../Authentication/AuthContext';
-import { registerUser, getUser } from '../Authentication/AuthFunctions';
+import { registerUser, getUser, updateUser } from '../Authentication/AuthFunctions';
 import User from '../../models/User';
 
 type AuthProviderProps = {
@@ -16,7 +16,6 @@ export default function AuthProvider(props:AuthProviderProps) {
     useEffect(() => {
         getUser(dispatch);
     }, []);
-
     const authContext:AuthProviderContext = useMemo(
         () => ({
             isLoading:state.isLoading,
@@ -24,6 +23,9 @@ export default function AuthProvider(props:AuthProviderProps) {
             register: async (user: User) => {
                 await registerUser(user, dispatch);
             },
+            update: async (user: User) => {
+                await updateUser(user, dispatch);
+            }
         }),
         [state.user, state.isLoading, dispatch]
     );

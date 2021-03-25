@@ -1,4 +1,4 @@
-import Db, { DbFields } from "./AbstractClasses/Db";
+import Db, { DbFields, DBObj } from "./AbstractClasses/Db";
 
 export default class DosageUnit extends Db {
     name:string = "";

@@ -17,8 +17,7 @@ export class DatabaseInitialization {
         // Perform DB updates based on this version
         // This is included as an example of how you make database schema changes once the app has been shipped
         if (dbVersion < 1) {
-            // Uncomment the next line, and the referenced function below, to enable this
-            // return database.transaction(this.preVersion1Inserts);
+            return database.transaction(this.preVersion1Inserts);
         }
         if (dbVersion < 2) {
             // Uncomment the next line, and the referenced function below, to enable this
@@ -104,14 +103,27 @@ export class DatabaseInitialization {
     }
   
     // Once the app has shipped, use the following functions as a template for updating the database:
-    /*
       // This function should be called when the version of the db is < 1
-      private preVersion1Inserts(transaction: SQLite.Transaction) {
-          console.log("Running pre-version 1 DB inserts");
-          // Make schema changes
-          transaction.executeSql("ALTER TABLE ...");
-          // Lastly, update the database version
-          transaction.executeSql("INSERT INTO Version (version) VALUES (1);");
+      private static preVersion1Inserts(transaction: SQLite.Transaction) {
+            console.log("Running pre-version 1 DB inserts");
+            // Make schema changes
+            transaction.executeSql(`
+                INSERT INTO epilepsy_type
+                    (name, description)
+                VALUES
+                    ('Focal Epilepsy, Type Unknown', ''),
+                    ('Focal Seizure with Loss of Awareness', ''),
+                    ('Generalized Epilepsy, Type Unknown', ''),
+                    ('Absence', 'Blank Staring, Spacing Out'),
+                    ('Atonic', 'Drop Attacks'),
+                    ('Myoclonic', 'Brief Muscle Jerking'),
+                    ('Tonic Clonic', 'Convulsion or Grande Mal'),
+                    ('Rare Epilepsy Subtype', ''),
+                    ('No Specific Diagnosis', ''),
+                    ('Not Sure', '');
+            `);
+            // Lastly, update the database version
+            transaction.executeSql("INSERT INTO Version (version) VALUES (1);");
       }
       // This function should be called when the version of the db is < 2
       private preVersion2Inserts(transaction: SQLite.Transaction) {
@@ -122,5 +134,4 @@ export class DatabaseInitialization {
           // Lastly, update the database version
           transaction.executeSql("INSERT INTO Version (version) VALUES (2);");
       }
-      */
   }

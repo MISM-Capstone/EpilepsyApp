@@ -6,7 +6,8 @@
 
 import { AppState, AppStateStatus } from "react-native";
 import SQLite, { ResultSetRowList } from 'react-native-sqlite-storage';
-import { IterateThroughKeys } from "../../../functions";
+import { CopyObjAttributes, IterateThroughKeys } from "../../../functions";
+import Db, { DBObj } from "../../../models/AbstractClasses/Db";
 import {DatabaseInitialization} from "../DatabaseInitialization";
 
 export default abstract class DAO {
@@ -24,6 +25,59 @@ export default abstract class DAO {
         }
         return db;
     }
+
+    protected static async runQuery(sql:string, params?:any[]) {
+        const db = await this.getDatabase();
+        const results = await db.executeSql(sql, params);
+        return this.SetResultsToList(results[0].rows);
+    }
+
+    protected static convertQueryResultToObj<T extends Db>(queryResult:any[], type: (new (...args: any[]) => T), ...args: any[]) {
+        let convertedResults:T[] = [];
+        queryResult.forEach((result) => {
+            const converted = new type(...args);
+            CopyObjAttributes(result, converted);
+            convertedResults.push(converted);
+        });
+        return convertedResults;
+    }
+
+    protected static async insertObject(obj:Db, dbObj:DBObj) {
+        const tableAttributes = this.getObjParamsForInsert(obj);
+        const sql = `
+            INSERT INTO ${dbObj.table}
+                (${tableAttributes.attributes})
+            VALUES
+                (${tableAttributes.values});
+        `;
+        return await this.runTrueFalseQuery(sql, tableAttributes.params);
+    }
+
+    protected static async updateObject(obj:Db, dbObj:DBObj) {
+        const tableAttributes = this.getObjParamsForUpdate(obj);
+        tableAttributes.params.push(obj.id);
+        const sql = `
+            UPDATE ${dbObj.table}
+            SET ${tableAttributes.setSQL}
+            WHERE ${dbObj.fields.id} = ?;
+        `;
+        return await this.runTrueFalseQuery(sql, tableAttributes.params);
+    }
+
+    private static async runTrueFalseQuery(sql:string, params?:any[]) {
+        let wasSuccessful = false;
+        try {
+            await this.runQuery(sql, params);
+            wasSuccessful = true;
+        } catch (error) {
+            console.log("Error",error);
+        }
+        return wasSuccessful;
+    }
+
+
+
+
 
     protected static SetResultsToList(results:ResultSetRowList) {
         let resultList:any[] = [];
@@ -53,25 +107,21 @@ export default abstract class DAO {
         return statement;
     }
 
-    protected static getObjAttributesAsString(obj:any) {
-        let attributes = "";
+    protected static getObjParamsForUpdate(obj:any) {
+        let statement = {
+            setSQL: "",
+            params:[] as any[],
+        };
         IterateThroughKeys(obj, (key, value) => {
             if (key !== "id") {
-                attributes += (key + ",");
+                statement.setSQL += ` ${key}=?,`;
+                // TODO - Convert value to string
+                console.log("Value:",value);
+                statement.params.push(value);
             }
         });
-        attributes = attributes.slice(0, -1);
-        return attributes;
-    }
-
-    static PrepareObjectForInsert(fields:any, queryObj:any) {
-        let valueList:any[] = [];
-        IterateThroughKeys(fields, (key, value) => {
-            if (key !== "id") {
-                valueList.push(queryObj[value]);
-            }
-        })
-        return valueList
+        statement.setSQL = statement.setSQL.slice(0, -1);
+        return statement;
     }
 
 

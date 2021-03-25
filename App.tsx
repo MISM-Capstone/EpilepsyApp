@@ -10,8 +10,6 @@ import LoadingOptions from './src/navigation/LoadingOptions';
 
 
 const App = () => {
-    const {user, isLoading} = GetAuthContext()
-    console.log("User In App", user);
     return (
         <AuthProvider>
             <SafeAreaProvider>

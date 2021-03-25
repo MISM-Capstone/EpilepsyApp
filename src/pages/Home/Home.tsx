@@ -9,6 +9,7 @@ import NavigationButton from "../../components/NavigationButton";
 
 import HomeStyles from "../../styles/HomeStyles";
 import {default as mainStyle} from "../../styles/MainStyles";
+import { GetAuthContext } from '../../_services/Providers/AuthProvider';
 
 type HomeScreenNavigationProp = StackNavigationProp<HomeStackParamList,'Home'>;
 
@@ -18,11 +19,13 @@ type Props = {
 
 
 const Home = (props:Props) => {
+    const {user} = GetAuthContext();
+
     return (
         <SafeAreaView style={mainStyle.container}>
             <View style={HomeStyles.HomeContainer}>
                 <View style={HomeStyles.welcomeMessageContainer}>
-                <Text style={HomeStyles.welcomeMessageText}>Hi, Username!</Text>
+                <Text style={HomeStyles.welcomeMessageText}>Hi, {user!.first_name}!</Text>
                 </View>
                 <NavigationButton
                     title="Log a Seizure"
