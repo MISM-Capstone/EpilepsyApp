@@ -1,4 +1,3 @@
-import { DBObj } from "../AbstractClasses/Db";
 import Log, { LogFields } from "../AbstractClasses/Log";
 
 export default class SurveyLog extends Log {
@@ -9,7 +8,7 @@ export default class SurveyLog extends Log {
     }
 }
 
-export const SurveyLogDb:DBObj = {
+export const SurveyLogDb = {
     table: "survey_log",
     fields: {
         ...LogFields,

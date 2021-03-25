@@ -40,7 +40,6 @@ export default class CreateTableQuery {
             "date_modified"	DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
             "date"	DATE NOT NULL,
             "time"	TEXT NOT NULL,
-            "details"	TEXT NOT NULL,
             "notes"	TEXT,
             "location_id"	INTEGER NOT NULL,
             "user_id"	INTEGER NOT NULL,

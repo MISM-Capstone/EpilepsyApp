@@ -17,7 +17,7 @@ export default class MedicationLog extends Log {
     }
 }
 
-export const MedicationLogDb:DBObj = {
+export const MedicationLogDb = {
     table: "medication_log",
     fields: {
         ...LogFields,

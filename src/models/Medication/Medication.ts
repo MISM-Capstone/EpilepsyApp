@@ -11,7 +11,7 @@ export default class Medication extends Db {
     }
 }
 
-export const MedicationDb:DBObj = {
+export const MedicationDb = {
     table: "medication",
     fields: {
         ...DbFields,

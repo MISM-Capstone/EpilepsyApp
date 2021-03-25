@@ -8,7 +8,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from "../../navigation/HomeNavigation";
 import SeizureLogDao from '../../_services/database/dao/SeizureLogDao';
 import SurveyStyles from '../../styles/SurveyStyles';
-import SeizureLog from '../../models/SeizureLog';
+import SeizureLog, { SeizureLogDb } from '../../models/SeizureLog';
+import { CopyAndSetKey } from '../../functions';
+import { GetAuthContext } from '../../_services/Providers/AuthProvider';
 
 type LogSeizureScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'LogSeizure'>;
 
@@ -23,38 +25,35 @@ type ErrorObject = {
 }
 
 export default function LogSeizure(props: Props) {
-    const [seizureLog, setSeizureLog] = useState<SeizureLog>(new SeizureLog());
-    const [date, setDate] = useState<any>(new Date());
-    const [time, setTime] = useState<any>(new Date());
-    const [location, setLocation] = useState<string>();
-    const [notes, setNotes] = useState<string>();
+    const {user} = GetAuthContext();
+    const [seizureLog, setSeizureLog] = useState<SeizureLog>(new SeizureLog(user!.id!));
 
+    function updateValue(key:string, value:any){
+        const newUser = CopyAndSetKey(seizureLog, key, value) as SeizureLog;
+        setSeizureLog(newUser);
+    }
+    
     const errors: ErrorObject = {};
 
     useEffect(() => {
         if (props.route.params) {
             let date: any = props.route.params.date;
-            setDate(new Date(date.dateString.replace(/-/g, '\/')));
+            let paramDate = new Date(date.dateString.replace(/-/g, '\/'));
+            updateValue(SeizureLogDb.fields.date, paramDate);
         }
     }, []);
 
     const onChangeDate = (_event: Event, selectedDate: Date | undefined) => {
-        const currentDate = selectedDate || date;
-        setDate(currentDate);
+        const currentDate = selectedDate || seizureLog.date;
+        updateValue(SeizureLogDb.fields.date, currentDate);
     };
 
     const onChangeTime = (_event: Event, selectedDate: Date | undefined) => {
+        const currentTime = selectedDate || seizureLog.date;
         console.log(selectedDate);
-        setTime(selectedDate);
+        updateValue(SeizureLogDb.fields.time, currentTime.toLocaleTimeString());
+        console.log(seizureLog);
     };
-
-    const onChangeLocationText = (text: string) => {
-        setLocation(text);
-    }
-
-    const onChangeNotesText = (text: string) => {
-        setNotes(text);
-    }
 
     // Optional way to validate form -> do we want to require every field?
     // const validateForm = () => {
@@ -68,19 +67,19 @@ export default function LogSeizure(props: Props) {
     // }
 
     // TODO: find way for errors to be displayed
-    const checkErrors = (date: Date, time: Date, location: string | any, notes: string | any) => {
-        location === undefined ? errors.location = "Please Add a Location." : null;
-        notes === undefined ? errors.notes = "Please Add Notes about the Seizure." : null;
+    const checkErrors = () => {
+        seizureLog.location_id === 0 ? errors.location = "Please Add a Location." : null;
+        seizureLog.notes === "" ? errors.notes = "Please Add Notes about the Seizure." : null;
 
         console.log(errors);
 
         if (Object.keys(errors).length == 0) {
-            insertQuery(date, time, location, notes);
+            insertQuery();
         }
     }
 
-    const insertQuery = async (date: Date, time: Date, location: string | any, notes: string | any) => {
-        let results = await SeizureLogDao.insertSeizureLog(date, time, location, notes);
+    const insertQuery = async () => {
+        let results = await SeizureLogDao.insert(seizureLog);
         console.log('inserted: ', results);
         props.navigation.goBack();
     }
@@ -92,7 +91,7 @@ export default function LogSeizure(props: Props) {
                     <Text style={SurveyStyles.questionHeading}>Date of Seizure</Text>
                     <DateTimePicker
                         testID="datePicker"
-                        value={date}
+                        value={seizureLog.date}
                         mode="date"
                         display="default"
                         onChange={onChangeDate}
@@ -103,7 +102,7 @@ export default function LogSeizure(props: Props) {
                     <Text style={SurveyStyles.questionHeading}>Time of Seizure</Text>
                     <DateTimePicker
                         testID="timePicker"
-                        value={time}
+                        value={seizureLog.date}
                         mode="time"
                         display="default"
                         onChange={onChangeTime}
@@ -113,20 +112,24 @@ export default function LogSeizure(props: Props) {
                     <Text style={SurveyStyles.questionHeading}>Location</Text>
                     <TextInput
                         style={{ height: 40, backgroundColor: 'lightgray' }}
-                        onChangeText={text => onChangeLocationText(text)}
-                        value={location} />
+                        onChangeText={(value) => {
+                            updateValue(SeizureLogDb.fields.location_id, value);
+                        }}
+                        value={seizureLog.location_id.toString()} />
                 </View>
                 <View style={SurveyStyles.questionSection}>
                     <Text style={SurveyStyles.questionHeading}>Details</Text>
                     <TextInput
                         style={{ backgroundColor: 'lightgray', height: 100 }}
-                        onChangeText={text => onChangeNotesText(text)}
-                        value={notes}
+                        onChangeText={(value) => {
+                            updateValue(SeizureLogDb.fields.notes, value);
+                        }}
+                        value={seizureLog.notes}
                         multiline
                         numberOfLines={5} />
                 </View>
             </View>
-            <Button title="Save" onPress={() => checkErrors(date, time, location, notes)} />
+            <Button title="Save" onPress={() => checkErrors()} />
             <Button title="Cancel" onPress={props.navigation.goBack} />
             <View>
                 {errors.location && <Text>{errors.location}</Text>}

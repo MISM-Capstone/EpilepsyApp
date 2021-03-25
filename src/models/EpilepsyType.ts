@@ -5,7 +5,7 @@ export default class EpilepsyType extends Db {
     description: string = "";
 }
 
-export const EpilepsyTypeDb:DBObj = {
+export const EpilepsyTypeDb = {
     table: "epilepsy_type",
     fields: {
         ...DbFields,

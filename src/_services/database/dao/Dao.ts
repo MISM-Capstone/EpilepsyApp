@@ -5,7 +5,7 @@
 // https://github.com/andpor/react-native-sqlite-storage
 
 import { AppState, AppStateStatus } from "react-native";
-import SQLite, { ResultSetRowList } from 'react-native-sqlite-storage';
+import SQLite, { ResultSet, ResultSetRowList } from 'react-native-sqlite-storage';
 import { CopyObjAttributes, IterateThroughKeys } from "../../../functions";
 import Db, { DBObj } from "../../../models/AbstractClasses/Db";
 import {DatabaseInitialization} from "../DatabaseInitialization";
@@ -28,7 +28,16 @@ export default abstract class DAO {
 
     protected static async runQuery(sql:string, params?:any[]) {
         const db = await this.getDatabase();
-        const results = await db.executeSql(sql, params);
+        let results:ResultSet[] = [];
+        try {
+            await db.transaction(async tx => {
+                let [, result] = await tx.executeSql(sql, params);
+                results.push(result);
+            });
+        } catch (err) {
+            console.log("SQL Error:", err);
+            throw err;
+        }
         return this.SetResultsToList(results[0].rows);
     }
 
@@ -42,7 +51,7 @@ export default abstract class DAO {
         return convertedResults;
     }
 
-    protected static async insertObject(obj:Db, dbObj:DBObj) {
+    protected static async insertObj(obj:Db, dbObj:DBObj) {
         const tableAttributes = this.getObjParamsForInsert(obj);
         const sql = `
             INSERT INTO ${dbObj.table}
@@ -53,7 +62,7 @@ export default abstract class DAO {
         return await this.runTrueFalseQuery(sql, tableAttributes.params);
     }
 
-    protected static async updateObject(obj:Db, dbObj:DBObj) {
+    protected static async updateObj(obj:Db, dbObj:DBObj) {
         const tableAttributes = this.getObjParamsForUpdate(obj);
         tableAttributes.params.push(obj.id);
         const sql = `
@@ -64,13 +73,21 @@ export default abstract class DAO {
         return await this.runTrueFalseQuery(sql, tableAttributes.params);
     }
 
+    protected static async deleteObj(id:number | string, dbObj:DBObj) {
+        const sql = `
+            DELETE FROM ${dbObj.table}
+            WHERE ${dbObj.fields.id} = ?
+        ;`;
+        return await this.runTrueFalseQuery(sql, [id])
+    }
+
     private static async runTrueFalseQuery(sql:string, params?:any[]) {
         let wasSuccessful = false;
         try {
             await this.runQuery(sql, params);
             wasSuccessful = true;
         } catch (error) {
-            console.log("Error",error);
+            console.log("Error:",error);
         }
         return wasSuccessful;
     }
@@ -87,7 +104,7 @@ export default abstract class DAO {
         return resultList;
     }
 
-    protected static getObjParamsForInsert(obj:any) {
+    private static getObjParamsForInsert(obj:any) {
         let statement = {
             attributes:"",
             values:"",
@@ -97,8 +114,7 @@ export default abstract class DAO {
             if (key !== "id") {
                 statement.attributes += (key + ",");
                 statement.values += "?,";
-                // TODO - Convert value to string
-                console.log("Value:",value);
+                value = this.convertValueToString(value);
                 statement.params.push(value);
             }
         });
@@ -107,7 +123,7 @@ export default abstract class DAO {
         return statement;
     }
 
-    protected static getObjParamsForUpdate(obj:any) {
+    private static getObjParamsForUpdate(obj:any) {
         let statement = {
             setSQL: "",
             params:[] as any[],
@@ -115,13 +131,35 @@ export default abstract class DAO {
         IterateThroughKeys(obj, (key, value) => {
             if (key !== "id") {
                 statement.setSQL += ` ${key}=?,`;
-                // TODO - Convert value to string
-                console.log("Value:",value);
+                value = this.convertValueToString(value);
                 statement.params.push(value);
             }
         });
         statement.setSQL = statement.setSQL.slice(0, -1);
         return statement;
+    }
+
+
+    private static convertValueToString(value:any) {
+        let convertedValue = null;
+        if (value) {
+            if (value instanceof Date) {
+                convertedValue = value.toJSON().substring(0,10);
+            } else if (typeof value === "number" || (typeof value === "object" && value.constructor === Number)) {
+                convertedValue = value.toString();
+            } else if (typeof value !== "string") {
+                try {
+                    convertedValue = value.toString() as string;
+                } catch (error) {
+                    console.log("ERROR:", error);
+                    console.log("-------- You need to implement toString() for the following value --------");
+                    console.log("Value:", value);
+                }
+            } else {
+                convertedValue = value;
+            }
+        }
+        return convertedValue
     }
 
 

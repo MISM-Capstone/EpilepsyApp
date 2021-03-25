@@ -5,7 +5,7 @@ export default class Survey extends Db {
     description: string = "";
 }
 
-export const SurveyDb:DBObj = {
+export const SurveyDb = {
     table: "survey",
     fields: {
         ...DbFields,

@@ -13,9 +13,9 @@ export default class EpilepsyTypeDao extends DAO {
         return this.convertQueryResultToObj(resultEpilepsyType, EpilepsyType);
     }
     static async insert(epilepsyType:EpilepsyType) {
-        return await this.insertObject(epilepsyType, EpilepsyTypeDb);
+        return await this.insertObj(epilepsyType, EpilepsyTypeDb);
     }
     static async update(epilepsyType:EpilepsyType) {
-        return await this.updateObject(epilepsyType, EpilepsyTypeDb);
+        return await this.updateObj(epilepsyType, EpilepsyTypeDb);
     }
 }

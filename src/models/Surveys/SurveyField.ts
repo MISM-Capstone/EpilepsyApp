@@ -17,7 +17,7 @@ export default class SurveyField extends Db {
     }
 }
 
-export const SurveyFieldDb:DBObj = {
+export const SurveyFieldDb = {
     table: "survey_field",
     fields: {
         ...DbFields,

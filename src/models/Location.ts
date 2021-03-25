@@ -5,7 +5,7 @@ export default class Location extends Db {
     description: string = "";
 }
 
-export const LocationDb:DBObj = {
+export const LocationDb = {
     table: "location",
     fields: {
         ...DbFields,

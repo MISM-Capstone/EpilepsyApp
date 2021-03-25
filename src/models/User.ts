@@ -5,7 +5,7 @@ export default class User extends Db {
     last_name: string = "";
 }
 
-export const UserDb:DBObj = {
+export const UserDb = {
     table: "user",
     fields: {
         ...DbFields,

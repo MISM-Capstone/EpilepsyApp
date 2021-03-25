@@ -11,13 +11,16 @@ export default class UserDao extends DAO {
             LIMIT 1;
         `;
         const resultUsers = (await this.runQuery(sql));
-        let convertedUsers =  this.convertQueryResultToObj(resultUsers, User);
-        return convertedUsers[0];
+        let convertedUsers =  this.convertQueryResultToObj(resultUsers, User)[0];
+        return convertedUsers?convertedUsers:undefined;
     }
     static async insert(user:User) {
-        return await this.insertObject(user, UserDb);
+        return await this.insertObj(user, UserDb);
+    }
+    static async deleteSeizureLog(id: number | string) {
+        return await this.deleteObj(id, UserDb);
     }
     static async update(user:User) {
-        return await this.updateObject(user, UserDb);
+        return await this.updateObj(user, UserDb);
     }
 }

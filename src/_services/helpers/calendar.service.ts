@@ -2,7 +2,7 @@ import SeizureLogDao from '../database/dao/SeizureLogDao';
 
 // Default structure for getting chart data
 const getCalendarData = async () => {
-    const seizures: any[] = await SeizureLogDao.getSeizureLogs();
+    const seizures: any[] = await SeizureLogDao.getAll();
     let days: any = [];
 
     seizures.forEach(seizure => {

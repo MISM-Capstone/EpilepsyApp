@@ -6,7 +6,7 @@ export default class DosageUnit extends Db {
     is_default:boolean = false;
 }
 
-export const DosageUnitDb:DBObj = {
+export const DosageUnitDb = {
     table: "dosage_unit",
     fields: {
         ...DbFields,

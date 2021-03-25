@@ -12,7 +12,7 @@ export default abstract class Log extends Db {
     }
 }
 
-export const LogFields:DBObjFields = {
+export const LogFields = {
     ...DbFields,
     date_recorded: "date_recorded",
     date_modified: "date_modified",
