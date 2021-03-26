@@ -7,7 +7,9 @@ export default class MedicationDao extends DAO {
             SELECT
                 *
             FROM
-                ${MedicationDb.table};
+                ${MedicationDb.table}
+            ORDER BY
+                ${MedicationDb.fields.name};
         `;
         const resultMedication = await this.runQuery(sql);
         return this.convertQueryResultToObj(resultMedication, Medication);

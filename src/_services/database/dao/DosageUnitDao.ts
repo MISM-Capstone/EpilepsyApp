@@ -7,7 +7,10 @@ export default class DosageUnitDao extends DAO {
             SELECT
                 *
             FROM
-                ${DosageUnitDb.table};
+                ${DosageUnitDb.table}
+            ORDER BY
+                ${DosageUnitDb.fields.is_default},
+                ${DosageUnitDb.fields.name};
         `;
         const resultDosageUnit = await this.runQuery(sql);
         return this.convertQueryResultToObj(resultDosageUnit, DosageUnit);

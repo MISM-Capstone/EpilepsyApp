@@ -11,19 +11,31 @@ import HeaderStyle from "../styles/HeaderStyle";
 import HealthKitTest from '../pages/Home/HealthKitTest';
 import AddLocation from '../pages/Home/AddLocation';
 
-export type EditSeizureProps = {
+type EditProps ={
     date?:Date;
+}
+
+export type EditSeizureProps = {
     location_id?:number;
+} 
+
+export type EditMedicationProps = {
+    medication_id?:number;
+    dosage_unit_id?:number;
+}
+
+export type AddProps = {
+    previousPage?: keyof HomeStackParamList
 }
 
 export type HomeStackParamList = {
     Home: undefined;
     DailySurvey: undefined;
     SurveyHistory: undefined;
-    LogSeizure: EditSeizureProps;
-    RecordMedication: undefined;
+    LogSeizure: EditSeizureProps & EditProps;
+    RecordMedication: EditMedicationProps & EditProps;
     HealthKitTest: undefined;
-    AddLocation:undefined;
+    AddLocation:AddProps;
 };
 
 const Stack = createStackNavigator<HomeStackParamList>();

@@ -40,7 +40,7 @@ const Home = (props:Props) => {
                 <NavigationButton
                     title="Record Medication"
                     icon="pill"
-                    navigate={() => props.navigation.navigate("RecordMedication")}
+                    navigate={() => props.navigation.navigate("RecordMedication", {})}
                 />
                 <NavigationButton
                     title="Survey History"

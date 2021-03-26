@@ -37,7 +37,11 @@ export default function AddLocation(props: Props) {
         let results = await LocationDao.insert(location);
         if (results) {
             console.log('inserted: ', results);
-            props.navigation.navigate("LogSeizure", {location_id:results.insertId});
+            if (props.route.params.previousPage) {
+                props.navigation.navigate(props.route.params.previousPage, {location_id:results.insertId});
+            } else {
+                props.navigation.goBack();
+            }
         }
     }
 

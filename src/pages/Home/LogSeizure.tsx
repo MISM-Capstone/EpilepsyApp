@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Text, View, Button } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
@@ -132,7 +132,7 @@ export default function LogSeizure(props: Props) {
                 <View style={SurveyStyles.questionSection}>
                     <Text style={SurveyStyles.questionHeading}>Location</Text>
                     <Button title="Add Location" onPress={() => {
-                        props.navigation.navigate("AddLocation")
+                        props.navigation.navigate("AddLocation", {previousPage:"LogSeizure"})
                     }} />
                     {
                         locations.length ?
