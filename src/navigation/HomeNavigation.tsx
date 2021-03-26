@@ -9,9 +9,11 @@ import RecordMedication from "../pages/Home/RecordMedication";
 
 import HeaderStyle from "../styles/HeaderStyle";
 import HealthKitTest from '../pages/Home/HealthKitTest';
+import AddLocation from '../pages/Home/AddLocation';
 
 export type EditSeizureProps = {
     date?:Date;
+    location_id?:number;
 }
 
 export type HomeStackParamList = {
@@ -21,6 +23,7 @@ export type HomeStackParamList = {
     LogSeizure: EditSeizureProps;
     RecordMedication: undefined;
     HealthKitTest: undefined;
+    AddLocation:undefined;
 };
 
 const Stack = createStackNavigator<HomeStackParamList>();
@@ -70,6 +73,13 @@ const HomeNavigation = () => {
                     component={HealthKitTest}
                     options={{
                         title: 'Health Kit Test'
+                    }}
+                />
+                <Stack.Screen
+                    name="AddLocation"
+                    component={AddLocation}
+                    options={{
+                        title: 'Add Location'
                     }}
                 />
             </Stack.Navigator>

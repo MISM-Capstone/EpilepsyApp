@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar } from 'react-native';
 
-import AuthProvider, { GetAuthContext } from './src/_services/Providers/AuthProvider';
+import AuthProvider from './src/_services/Providers/AuthProvider';
 import LoadingOptions from './src/navigation/LoadingOptions';
 
 

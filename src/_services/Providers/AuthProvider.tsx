@@ -1,18 +1,26 @@
-import 'react-native-gesture-handler';
+import React, { useReducer, useEffect, useMemo, createContext } from 'react';
 
-import React, { useReducer, useEffect, useMemo } from 'react';
-
-import LoginReducer, { initialReducerState } from '../reducers/LoginReducer';
-import AuthContext, { AuthProviderContext } from '../Authentication/AuthContext';
+import AuthReducer, { initialAuthReducerState } from '../reducers/AuthReducer';
 import { registerUser, getUser, updateUser } from '../Authentication/AuthFunctions';
 import User from '../../models/User';
+
+
+export interface AuthProviderContext {
+    isLoading: boolean;
+    user?: User;
+    register: (data:any) => void;
+    update: (user:User) => void;
+}
+
+const AuthContext = createContext<AuthProviderContext>({} as AuthProviderContext);
+
 
 type AuthProviderProps = {
     children: React.ReactNode;
 }
 
 export default function AuthProvider(props:AuthProviderProps) {
-    const [state, dispatch] = useReducer(LoginReducer, initialReducerState);
+    const [state, dispatch] = useReducer(AuthReducer, initialAuthReducerState);
     useEffect(() => {
         getUser(dispatch);
     }, []);

@@ -1,31 +1,30 @@
-import { Reducer } from "react";
 import User from "../../models/User";
 
-export enum REDUCER_OPTIONS {
+export enum AUTH_REDUCER_OPTIONS {
   registerUser = "registerUser",
   setUser = "setUser",
 }
 
-export type ReducerState = {
+export type AuthReducerState = {
   isLoading: boolean;
   user?: User;
 }
 
-type ActionSetUser = {
-    type:REDUCER_OPTIONS.setUser,
+type AuthActionSetUser = {
+    type:AUTH_REDUCER_OPTIONS.setUser,
     user?:User,
 }
 
-export type AuthAction = ActionSetUser;
+export type AuthAction = AuthActionSetUser;
 
 
-export const initialReducerState: ReducerState = {
+export const initialAuthReducerState: AuthReducerState = {
   isLoading: true,
 }
 
-function LoginReducer(state:ReducerState, action:AuthAction) {
+function AuthReducer(state:AuthReducerState, action:AuthAction) {
     switch (action.type) {
-        case REDUCER_OPTIONS.setUser:
+        case AUTH_REDUCER_OPTIONS.setUser:
           return {
             ...state,
             user: action.user,
@@ -37,4 +36,4 @@ function LoginReducer(state:ReducerState, action:AuthAction) {
       }
 }
 
-export default LoginReducer
+export default AuthReducer

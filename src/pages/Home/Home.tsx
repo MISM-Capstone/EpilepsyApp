@@ -30,7 +30,7 @@ const Home = (props:Props) => {
                 <NavigationButton
                     title="Log a Seizure"
                     icon="clipboard-pulse"
-                    navigate={() => props.navigation.navigate("LogSeizure")}
+                    navigate={() => props.navigation.navigate("LogSeizure", {})}
                 />
                 <NavigationButton
                     title="Take Daily Survey"

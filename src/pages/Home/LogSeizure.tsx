@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { createContext, useEffect, useMemo, useState } from 'react';
 
 import { Text, View, Button } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
@@ -33,11 +33,10 @@ export default function LogSeizure(props: Props) {
     const {user} = GetAuthContext();
     const [seizureLog, setSeizureLog] = useState(new SeizureLog(user!.id!));
     const [locations, setLocations] = useState<Location[]>([]);
-    const [shouldLoadLocation, setShouldLoadLocation] = useState(true);
 
     function updateValue(key:string, value:any){
-        const newUser = CopyAndSetKey(seizureLog, key, value) as SeizureLog;
-        setSeizureLog(newUser);
+        const seizLog = CopyAndSetKey(seizureLog, key, value) as SeizureLog;
+        setSeizureLog(seizLog);
     }
     
     const errors: ErrorObject = {};
@@ -52,20 +51,20 @@ export default function LogSeizure(props: Props) {
     }, []);
 
     useEffect(() => {
-        if (shouldLoadLocation) {
-            (async () => {
-                const locs = await LocationDao.getAll();
-                const currentLocation = locs.find((loc) => {
-                    return loc.id === seizureLog.location_id;
-                });
-                if (locs.length > 0 && !currentLocation && seizureLog.location_id === 0) {
-                    updateValue(SeizureLogDb.fields.location_id, locs[0].id)
-                }
-                setLocations(locs);
-                setShouldLoadLocation(false);
-            })();
+        if (props.route.params.location_id) {
+            updateValue(SeizureLogDb.fields.location_id, props.route.params.location_id);
         }
-    }, [shouldLoadLocation]);
+        (async () => {
+            const locs = await LocationDao.getAll();
+            const currentLocation = locs.find((loc) => {
+                return loc.id === seizureLog.location_id;
+            });
+            if (locs.length > 0 && !currentLocation && seizureLog.location_id === 0) {
+                updateValue(SeizureLogDb.fields.location_id, locs[0].id)
+            }
+            setLocations(locs);
+        })();
+    }, [props.route.params.location_id]);
 
     const onChangeDate = (_event: Event, selectedDate: Date | undefined) => {
         const currentDate = selectedDate || seizureLog.date;
@@ -76,7 +75,6 @@ export default function LogSeizure(props: Props) {
         const currentTime = selectedDate || seizureLog.date;
         console.log(selectedDate);
         updateValue(SeizureLogDb.fields.time, currentTime.toLocaleTimeString());
-        console.log(seizureLog);
     };
 
     // Optional way to validate form -> do we want to require every field?
@@ -93,8 +91,6 @@ export default function LogSeizure(props: Props) {
     // TODO: find way for errors to be displayed
     const checkErrors = () => {
         (seizureLog.location_id && seizureLog.location_id === 0) ? errors.location = "Please Add a Location." : null;
-        seizureLog.notes === "" ? errors.notes = "Please Add Notes about the Seizure." : null;
-
         console.log(errors);
 
         if (Object.keys(errors).length == 0) {
@@ -134,6 +130,9 @@ export default function LogSeizure(props: Props) {
                 </View>
                 <View style={SurveyStyles.questionSection}>
                     <Text style={SurveyStyles.questionHeading}>Location</Text>
+                    <Button title="Add Location" onPress={() => {
+                        props.navigation.navigate("AddLocation")
+                    }} />
                     {
                         locations.length ?
                             <Picker
