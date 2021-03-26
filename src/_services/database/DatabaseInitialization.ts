@@ -122,6 +122,15 @@ export class DatabaseInitialization {
                     ('No Specific Diagnosis', ''),
                     ('Not Sure', '');
             `);
+            transaction.executeSql(`
+                INSERT INTO dosage_unit
+                    (name, description, is_default)
+                VALUES
+                    ('pill', '', false),
+                    ('tsp', 'Teaspoon', false),
+                    ('mg', 'Milligram', true),
+                    ('ml', 'Milliliter', false);
+            `);
             // Lastly, update the database version
             transaction.executeSql("INSERT INTO Version (version) VALUES (1);");
       }
