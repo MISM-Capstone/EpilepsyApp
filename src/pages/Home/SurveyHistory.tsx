@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, Text, View } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import Location from '../../models/Location';
 import SeizureLog from '../../models/SeizureLog';
 import HistoryStyles from '../../styles/HistoryStyles';
 import HistoryDao from '../../_services/database/dao/HistoryDao';
+import LocationDao from '../../_services/database/dao/LocationDao';
 import sleepDatesService from '../../_services/helpers/sleepDates.service';
 
 type Props = {
@@ -14,14 +16,24 @@ type RenderProps = {
     log: any;
 }
 
-function SeizureCard(props: RenderProps) {
+type RenderSeizureLog = {
+    seizure:SeizureLog;
+    locations:Location[];
+}
+
+function SeizureCard(props: RenderSeizureLog) {
+
+    const currentLocation = props.locations.find((loc) => {
+        return loc.id === props.seizure.location_id;
+    });
+    const location = currentLocation?currentLocation.name:"";
     return (
         <View style={HistoryStyles.HistoryEventCard}>
-            <Text style={HistoryStyles.HistoryCardTitle}>{props.log.date}</Text>
+            <Text style={HistoryStyles.HistoryCardTitle}>{props.seizure.date}</Text>
             <View>
-                <Text>Time: {props.log.time}</Text>
-                <Text>Location: {props.log.location}</Text>
-                <Text>Notes: {props.log.notes}</Text>
+                <Text>Time: {props.seizure.time}</Text>
+                <Text>Location: {location}</Text>
+                <Text>Notes: {props.seizure.notes}</Text>
             </View>
         </View>
     )
@@ -62,6 +74,7 @@ export default function SurveyHistory(props: Props) {
     const [seizures, setSeizures] = useState<SeizureLog[]>([]);
     const [surveys, setSurveys] = useState<any[]>([]);
     const [medications, setMedications] = useState<any[]>([]);
+    const [locations, setLocations] = useState<Location[]>([]);
 
     useEffect(() => {
         (async () => {
@@ -73,6 +86,12 @@ export default function SurveyHistory(props: Props) {
         })();
     }, []);
 
+    useEffect(() => {
+        (async () => {
+            const locs = await LocationDao.getAll();
+            setLocations(locs);
+        })();
+    }, []);
 
     return (
         <SafeAreaView>
@@ -80,7 +99,7 @@ export default function SurveyHistory(props: Props) {
                 <Text style={HistoryStyles.SectionHeader}>Seizures</Text>
                 {seizures.length > 0 ?
                     seizures.map(function (seizure, key) {
-                        return <SeizureCard log={seizure} key={key} />
+                        return <SeizureCard seizure={seizure} locations={locations} key={key} />
                     })
                     :
                     <Text style={HistoryStyles.HistoryAlternateText}>No Seizure Events recorded for this date.</Text>
