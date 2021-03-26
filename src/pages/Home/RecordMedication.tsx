@@ -8,6 +8,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from "../../navigation/HomeNavigation";
 import MedicationLogDao from '../../_services/database/dao/MedicationLogDao';
 import SurveyStyles from '../../styles/SurveyStyles';
+import MedicationLog, { MedicationLogDb } from '../../models/Medication/MedicationLog';
+import { GetAuthContext } from '../../_services/Providers/AuthProvider';
+import { CopyAndSetKey } from '../../functions';
 
 type RecordMedicationScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'RecordMedication'>;
 
@@ -18,12 +21,16 @@ type Props = {
 
 
 export default function RecordMedication(props: Props) {
+    const {user} = GetAuthContext();
+    const [medicationLog, setMedicationLog] = useState<MedicationLog>(new MedicationLog(user!.id!));
     const [date, setDate] = useState<any>(new Date());
     const [time, setTime] = useState<any>(new Date());
-    const [medicationText, setMedicationText] = useState('');
-    const [dosageText, setDosageText] = useState('');
-    const [notesText, setNotesText] = useState('');
 
+    function updateValue(key:string, value:any){
+        const seizLog = CopyAndSetKey(medicationLog, key, value) as MedicationLog;
+        setMedicationLog(seizLog);
+    }
+    
     useEffect(() => {
         if (props.route.params) {
             let date: any = props.route.params.date;
@@ -32,29 +39,19 @@ export default function RecordMedication(props: Props) {
     }, []);
 
     const onChangeDate = (_event: Event, selectedDate: Date | undefined) => {
-        const currentDate = selectedDate || date;
-        setDate(currentDate);
+        const currentDate = selectedDate || medicationLog.date;
+        updateValue(MedicationLogDb.fields.date, currentDate);
     };
 
     const onChangeTime = (_event: Event, selectedDate: Date | undefined) => {
+        const currentTime = selectedDate || medicationLog.date;
         console.log(selectedDate);
-        setTime(selectedDate);
+        updateValue(MedicationLogDb.fields.time, currentTime.toLocaleTimeString());
+        updateValue(MedicationLogDb.fields.date, currentTime);
     };
 
-    const onChangeMedicationText = (text: string) => {
-        setMedicationText(text);
-    }
-
-    const onChangeDosageText = (text: string) => {
-        setDosageText(text);
-    }
-
-    const onChangeNotesText = (text: string) => {
-        setNotesText(text);
-    }
-
-    const insertQuery = async (date: Date, time: Date, medication: string | any, dosage: string | any, notes: string | any) => {
-        let results = await MedicationLogDao.insertMedicationLog(date, time, medication, dosage, notes);
+    const insertQuery = async () => {
+        let results = await MedicationLogDao.insert(medicationLog);
         console.log('inserted: ', results);
         props.navigation.goBack();
     }
@@ -66,7 +63,7 @@ export default function RecordMedication(props: Props) {
                     <Text style={SurveyStyles.questionHeading}>Date of Medication</Text>
                     <DateTimePicker
                         testID="datePicker"
-                        value={date}
+                        value={medicationLog.date}
                         mode="date"
                         display="default"
                         onChange={onChangeDate}
@@ -77,7 +74,7 @@ export default function RecordMedication(props: Props) {
                     <Text style={SurveyStyles.questionHeading}>Time of Medication</Text>
                     <DateTimePicker
                         testID="timePicker"
-                        value={time}
+                        value={medicationLog.date}
                         mode="time"
                         display="default"
                         onChange={onChangeTime}
@@ -87,27 +84,31 @@ export default function RecordMedication(props: Props) {
                     <Text style={SurveyStyles.questionHeading}>Medication Name</Text>
                     <TextInput
                         style={{ height: 40, backgroundColor: 'lightgray' }}
-                        onChangeText={text => onChangeMedicationText(text)}
-                        value={medicationText} />
+                        onChangeText={(value) => {
+                            updateValue(MedicationLogDb.fields.dosage_unit_id, value);
+                        }}
+                        value={medicationLog.medication_id.toString()} />
                 </View>
                 <View style={SurveyStyles.questionSection}>
                     <Text style={SurveyStyles.questionHeading}>Dosage</Text>
                     <TextInput
                         style={{ height: 40, backgroundColor: 'lightgray' }}
-                        onChangeText={text => onChangeDosageText(text)}
-                        value={dosageText} />
+                        onChangeText={(value) => {
+                            updateValue(MedicationLogDb.fields.dosage_unit_id, value);
+                        }}
+                        value={medicationLog.dosage.toString()} />
                 </View>
                 <View style={SurveyStyles.questionSection}>
-                    <Text style={SurveyStyles.questionHeading}>Notes</Text>
+                    <Text style={SurveyStyles.questionHeading}>Dosage Unit</Text>
                     <TextInput
-                        style={{ backgroundColor: 'lightgray', height: 100 }}
-                        onChangeText={text => onChangeNotesText(text)}
-                        value={notesText}
-                        multiline
-                        numberOfLines={5} />
+                        style={{ height: 40, backgroundColor: 'lightgray' }}
+                        onChangeText={(value) => {
+                            updateValue(MedicationLogDb.fields.dosage_unit_id, value);
+                        }}
+                        value={medicationLog.dosage_unit_id.toString()} />
                 </View>
             </View>
-            <Button title="Save" onPress={() => insertQuery(date, time, medicationText, dosageText, notesText)} />
+            <Button title="Save" onPress={() => insertQuery()} />
             <Button title="Cancel" onPress={props.navigation.goBack} />
         </SafeAreaView>
     )

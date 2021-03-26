@@ -1,4 +1,4 @@
-import Db, { DbFields, DBObj } from "../AbstractClasses/Db";
+import Db, { DbFields } from "../AbstractClasses/Db";
 
 export default class Medication extends Db {
     name:string = "";

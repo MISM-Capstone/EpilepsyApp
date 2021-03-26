@@ -11,7 +11,7 @@ export default class HistoryDao extends Dao {
     static async getAllLogs() {
         const seizures = await SeizureLogDao.getAll();
         const surveys = await SurveyLogDao.getSurveyLogs();
-        const medications = await MedicationLogDao.getMedicationLogs();
+        const medications = await MedicationLogDao.getAll();
         const data = {
             seizures: seizures,
             surveys: surveys,
@@ -45,7 +45,7 @@ export default class HistoryDao extends Dao {
     static async getAllLogsByDate(date: string) {
         const seizures = await SeizureLogDao.getByDate(date);
         const surveys = await SurveyLogDao.getSurveyLogsByDate(date);
-        const medications = await MedicationLogDao.getMedicationLogsByDate(date);
+        const medications = await MedicationLogDao.getByDate(date);
         const data = {
             seizures: seizures,
             surveys: surveys,

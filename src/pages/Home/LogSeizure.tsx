@@ -75,6 +75,7 @@ export default function LogSeizure(props: Props) {
         const currentTime = selectedDate || seizureLog.date;
         console.log(selectedDate);
         updateValue(SeizureLogDb.fields.time, currentTime.toLocaleTimeString());
+        updateValue(SeizureLogDb.fields.date, currentTime);
     };
 
     // Optional way to validate form -> do we want to require every field?
