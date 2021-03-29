@@ -1,11 +1,13 @@
 {
   "images" : [
     {
+      "filename" : "Group 1 copy 4.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "20x20"
     },
     {
+      "filename" : "Group 1 copy 5.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "20x20"
@@ -31,19 +33,19 @@
       "size" : "40x40"
     },
     {
-      "filename" : "Logo 2 120.png",
+      "filename" : "Group 1 copy 3.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "60x60"
     },
     {
-      "filename" : "Logo 2 180.png",
+      "filename" : "Group 1 copy 2.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "60x60"
     },
     {
-      "filename" : "Logo 2 1024.png",
+      "filename" : "Group 1 copy.png",
       "idiom" : "ios-marketing",
       "scale" : "1x",
       "size" : "1024x1024"
