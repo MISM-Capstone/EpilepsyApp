@@ -44,10 +44,10 @@
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
-		00E356EE1AD99517003FC87E /* EpilepsyAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EpilepsyAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* EpiLogTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EpiLogTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* EpilepsyAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EpilepsyAppTests.m; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* EpilepsyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EpilepsyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* EpiLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EpiLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = EpilepsyApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = EpilepsyApp/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = EpilepsyApp/Images.xcassets; sourceTree = "<group>"; };
@@ -55,8 +55,8 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = EpilepsyApp/main.m; sourceTree = "<group>"; };
 		1907F7D52E296BF839B5AF3D /* Pods-EpilepsyApp-EpilepsyAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EpilepsyApp-EpilepsyAppTests.release.xcconfig"; path = "Target Support Files/Pods-EpilepsyApp-EpilepsyAppTests/Pods-EpilepsyApp-EpilepsyAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		28C65E8B1645BD12624A78B3 /* Pods-EpilepsyApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EpilepsyApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-EpilepsyApp-tvOSTests/Pods-EpilepsyApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
-		2D02E47B1E0B4A5D006451C7 /* EpilepsyApp-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EpilepsyApp-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D02E4901E0B4A5D006451C7 /* EpilepsyApp-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "EpilepsyApp-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E47B1E0B4A5D006451C7 /* EpiLog-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EpiLog-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E4901E0B4A5D006451C7 /* EpiLog-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "EpiLog-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		31336310F0B84960F96DCC67 /* Pods-EpilepsyApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EpilepsyApp-tvOS.release.xcconfig"; path = "Target Support Files/Pods-EpilepsyApp-tvOS/Pods-EpilepsyApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		3FBA363F25D422EF007F3421 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = EpilepsyApp/www; sourceTree = "<group>"; };
 		63E3A200FD3F3428145D0505 /* Pods-EpilepsyApp-EpilepsyAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EpilepsyApp-EpilepsyAppTests.debug.xcconfig"; path = "Target Support Files/Pods-EpilepsyApp-EpilepsyAppTests/Pods-EpilepsyApp-EpilepsyAppTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -203,10 +203,10 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* EpilepsyApp.app */,
-				00E356EE1AD99517003FC87E /* EpilepsyAppTests.xctest */,
-				2D02E47B1E0B4A5D006451C7 /* EpilepsyApp-tvOS.app */,
-				2D02E4901E0B4A5D006451C7 /* EpilepsyApp-tvOSTests.xctest */,
+				13B07F961A680F5B00A75B9A /* EpiLog.app */,
+				00E356EE1AD99517003FC87E /* EpiLogTests.xctest */,
+				2D02E47B1E0B4A5D006451C7 /* EpiLog-tvOS.app */,
+				2D02E4901E0B4A5D006451C7 /* EpiLog-tvOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -214,9 +214,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* EpilepsyAppTests */ = {
+		00E356ED1AD99517003FC87E /* EpiLogTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "EpilepsyAppTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "EpiLogTests" */;
 			buildPhases = (
 				EBB64C4F631FA6E98E028DB8 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -229,14 +229,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = EpilepsyAppTests;
+			name = EpiLogTests;
 			productName = EpilepsyAppTests;
-			productReference = 00E356EE1AD99517003FC87E /* EpilepsyAppTests.xctest */;
+			productReference = 00E356EE1AD99517003FC87E /* EpiLogTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* EpilepsyApp */ = {
+		13B07F861A680F5B00A75B9A /* EpiLog */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "EpilepsyApp" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "EpiLog" */;
 			buildPhases = (
 				B115B53E53DDA2B5945E7C36 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -250,14 +250,14 @@
 			);
 			dependencies = (
 			);
-			name = EpilepsyApp;
+			name = EpiLog;
 			productName = EpilepsyApp;
-			productReference = 13B07F961A680F5B00A75B9A /* EpilepsyApp.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* EpiLog.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E47A1E0B4A5D006451C7 /* EpilepsyApp-tvOS */ = {
+		2D02E47A1E0B4A5D006451C7 /* EpiLog-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "EpilepsyApp-tvOS" */;
+			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "EpiLog-tvOS" */;
 			buildPhases = (
 				C55ACF4FFD5F9597A268C17C /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
@@ -270,14 +270,14 @@
 			);
 			dependencies = (
 			);
-			name = "EpilepsyApp-tvOS";
+			name = "EpiLog-tvOS";
 			productName = "EpilepsyApp-tvOS";
-			productReference = 2D02E47B1E0B4A5D006451C7 /* EpilepsyApp-tvOS.app */;
+			productReference = 2D02E47B1E0B4A5D006451C7 /* EpiLog-tvOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E48F1E0B4A5D006451C7 /* EpilepsyApp-tvOSTests */ = {
+		2D02E48F1E0B4A5D006451C7 /* EpiLog-tvOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "EpilepsyApp-tvOSTests" */;
+			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "EpiLog-tvOSTests" */;
 			buildPhases = (
 				B6F8B87E4A250F2BE32E80C9 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
@@ -289,9 +289,9 @@
 			dependencies = (
 				2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */,
 			);
-			name = "EpilepsyApp-tvOSTests";
+			name = "EpiLog-tvOSTests";
 			productName = "EpilepsyApp-tvOSTests";
-			productReference = 2D02E4901E0B4A5D006451C7 /* EpilepsyApp-tvOSTests.xctest */;
+			productReference = 2D02E4901E0B4A5D006451C7 /* EpiLog-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -321,7 +321,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "EpilepsyApp" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "EpiLog" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -334,10 +334,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* EpilepsyApp */,
-				00E356ED1AD99517003FC87E /* EpilepsyAppTests */,
-				2D02E47A1E0B4A5D006451C7 /* EpilepsyApp-tvOS */,
-				2D02E48F1E0B4A5D006451C7 /* EpilepsyApp-tvOSTests */,
+				13B07F861A680F5B00A75B9A /* EpiLog */,
+				00E356ED1AD99517003FC87E /* EpiLogTests */,
+				2D02E47A1E0B4A5D006451C7 /* EpiLog-tvOS */,
+				2D02E48F1E0B4A5D006451C7 /* EpiLog-tvOSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -675,12 +675,12 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* EpilepsyApp */;
+			target = 13B07F861A680F5B00A75B9A /* EpiLog */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 		2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2D02E47A1E0B4A5D006451C7 /* EpilepsyApp-tvOS */;
+			target = 2D02E47A1E0B4A5D006451C7 /* EpiLog-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -706,7 +706,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EpilepsyApp.app/EpilepsyApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EpiLog.app/EpiLog";
 			};
 			name = Debug;
 		};
@@ -727,7 +727,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EpilepsyApp.app/EpilepsyApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EpiLog.app/EpiLog";
 			};
 			name = Release;
 		};
@@ -749,7 +749,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = EpilepsyApp;
+				PRODUCT_NAME = EpiLog;
 				SWIFT_OBJC_BRIDGING_HEADER = "EpilepsyApp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -774,7 +774,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = EpilepsyApp;
+				PRODUCT_NAME = EpiLog;
 				SWIFT_OBJC_BRIDGING_HEADER = "EpilepsyApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -859,7 +859,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.EpilepsyApp-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EpilepsyApp-tvOS.app/EpilepsyApp-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EpiLog-tvOS.app/EpiLog-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Debug;
@@ -886,7 +886,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.EpilepsyApp-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EpilepsyApp-tvOS.app/EpilepsyApp-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EpiLog-tvOS.app/EpiLog-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Release;
@@ -1007,7 +1007,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "EpilepsyAppTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "EpiLogTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -1016,7 +1016,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "EpilepsyApp" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "EpiLog" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -1025,7 +1025,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "EpilepsyApp-tvOS" */ = {
+		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "EpiLog-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4971E0B4A5E006451C7 /* Debug */,
@@ -1034,7 +1034,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "EpilepsyApp-tvOSTests" */ = {
+		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "EpiLog-tvOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4991E0B4A5E006451C7 /* Debug */,
@@ -1043,7 +1043,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "EpilepsyApp" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "EpiLog" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
