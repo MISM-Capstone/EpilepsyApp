@@ -1,4 +1,4 @@
-import Db, { DbFields, DBObj } from "./AbstractClasses/Db";
+import Db, { DbFields } from "./AbstractClasses/Db";
 
 export default class DosageUnit extends Db {
     name:string = "";
@@ -14,4 +14,4 @@ export const DosageUnitDb = {
         description: "description",
         is_default: "is_default",
     }
-}
+} as const;

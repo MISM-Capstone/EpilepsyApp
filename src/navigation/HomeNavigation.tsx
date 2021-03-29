@@ -10,6 +10,8 @@ import RecordMedication from "../pages/Home/RecordMedication";
 import HeaderStyle from "../styles/HeaderStyle";
 import HealthKitTest from '../pages/Home/HealthKitTest';
 import AddLocation from '../pages/Home/AddLocation';
+import AddMedication from '../pages/Home/AddMedication';
+import AddDosageUnit from '../pages/Home/AddDosageUnit';
 
 type EditProps ={
     date?:Date;
@@ -19,8 +21,12 @@ export type EditSeizureProps = {
     location_id?:number;
 } 
 
-export type EditMedicationProps = {
+export type EditMedicationLogProps = {
     medication_id?:number;
+    dosage_unit_id?:number;
+}
+
+export type AddMedicationProps = {
     dosage_unit_id?:number;
 }
 
@@ -33,9 +39,11 @@ export type HomeStackParamList = {
     DailySurvey: undefined;
     SurveyHistory: undefined;
     LogSeizure: EditSeizureProps & EditProps;
-    RecordMedication: EditMedicationProps & EditProps;
+    RecordMedication: EditMedicationLogProps & EditProps;
     HealthKitTest: undefined;
+    AddDosageUnit:AddProps;
     AddLocation:AddProps;
+    AddMedication:AddProps & AddMedicationProps;
 };
 
 const Stack = createStackNavigator<HomeStackParamList>();
@@ -92,6 +100,20 @@ const HomeNavigation = () => {
                     component={AddLocation}
                     options={{
                         title: 'Add Location'
+                    }}
+                />
+                <Stack.Screen
+                    name="AddMedication"
+                    component={AddMedication}
+                    options={{
+                        title: 'Add Medication'
+                    }}
+                />
+                <Stack.Screen
+                    name="AddDosageUnit"
+                    component={AddDosageUnit}
+                    options={{
+                        title: 'Add Dosage Unit'
                     }}
                 />
             </Stack.Navigator>

@@ -1,4 +1,4 @@
-import Db, { DbFields, DBObj } from "../AbstractClasses/Db";
+import Db, { DbFields } from "../AbstractClasses/Db";
 
 export default class SurveyAnswer extends Db {
     answer: string = "";
@@ -19,4 +19,4 @@ export const SurveyAnswerDb = {
         survey_log_id: "survey_log_id",
         survey_field_id: "survey_field_id",
     }
-}
+} as const;

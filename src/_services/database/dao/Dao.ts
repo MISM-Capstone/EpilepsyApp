@@ -53,6 +53,8 @@ export default abstract class DAO {
 
     protected static async insertObj(obj:Db, dbObj:DBObj) {
         const tableAttributes = this.getObjParamsForInsert(obj);
+        console.log("----------------------------------");
+        console.log(tableAttributes);
         const sql = `
             INSERT INTO ${dbObj.table}
                 (${tableAttributes.attributes})
@@ -152,6 +154,8 @@ export default abstract class DAO {
                 convertedValue = value.toJSON().substring(0,10);
             } else if (typeof value === "number" || (typeof value === "object" && value.constructor === Number)) {
                 convertedValue = value.toString();
+            } else if (typeof value === "boolean") {
+                convertedValue = "1";
             } else if (typeof value !== "string") {
                 try {
                     convertedValue = value.toString() as string;
@@ -163,6 +167,8 @@ export default abstract class DAO {
             } else {
                 convertedValue = value;
             }
+        } else if (typeof value === "boolean") {
+            convertedValue = "0";
         }
         return convertedValue
     }

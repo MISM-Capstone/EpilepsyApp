@@ -26,8 +26,8 @@ const Profile = (props:Props) => {
     const {user, update} = GetAuthContext();
     const [updateUser, setUpdateUser] = useState(user!);
 
-    function updateValue(key:string, value:any){
-        const newUser = CopyAndSetKey(updateUser, key, value) as User;
+    function updateValue(key:keyof User, value:any){
+        const newUser = CopyAndSetKey(updateUser, key, value);
         setUpdateUser(newUser);
     }
 

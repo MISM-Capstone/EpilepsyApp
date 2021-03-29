@@ -1,4 +1,4 @@
-import Db, { DbFields, DBObj } from "./AbstractClasses/Db";
+import Db, { DbFields } from "./AbstractClasses/Db";
 
 export default class EpilepsyType extends Db {
     name: string = "";
@@ -12,4 +12,4 @@ export const EpilepsyTypeDb = {
         name: "name",
         description: "description",
     }
-}
+} as const;

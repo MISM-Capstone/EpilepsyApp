@@ -34,8 +34,8 @@ export default function LogSeizure(props: Props) {
     const [seizureLog, setSeizureLog] = useState(new SeizureLog(user!.id!));
     const [locations, setLocations] = useState<Location[]>([]);
 
-    function updateValue(key:string, value:any){
-        const seizLog = CopyAndSetKey(seizureLog, key, value) as SeizureLog;
+    function updateValue(key:keyof SeizureLog, value:any){
+        const seizLog = CopyAndSetKey(seizureLog, key, value);
         setSeizureLog(seizLog);
     }
     

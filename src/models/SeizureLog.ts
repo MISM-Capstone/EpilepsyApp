@@ -1,4 +1,3 @@
-import { DBObj } from "./AbstractClasses/Db";
 import Log, { LogFields } from "./AbstractClasses/Log";
 
 export default class SeizureLog extends Log {
@@ -20,4 +19,4 @@ export const SeizureLogDb = {
         notes: "notes",
         location_id: "location_id",
     }
-}
+} as const;

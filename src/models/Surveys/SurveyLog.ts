@@ -14,4 +14,4 @@ export const SurveyLogDb = {
         ...LogFields,
         survey_id: "survey_id",
     }
-}
+} as const;

@@ -20,4 +20,4 @@ export const MedicationDb = {
         dosage: "dosage",
         dosage_unit_id: "dosage_unit_id",
     }
-}
+} as const;

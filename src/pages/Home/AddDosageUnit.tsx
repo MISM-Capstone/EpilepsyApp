@@ -7,25 +7,25 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from "../../navigation/HomeNavigation";
 import SurveyStyles from '../../styles/SurveyStyles';
 import { CopyAndSetKey } from '../../functions';
-import Location, { LocationDb } from '../../models/Location';
 import { RouteProp } from '@react-navigation/native';
-import LocationDao from '../../_services/database/dao/LocationDao';
+import DosageUnit, { DosageUnitDb } from '../../models/DosageUnits';
+import DosageUnitDao from '../../_services/database/dao/DosageUnitDao';
 
-type LocationScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'AddLocation'>;
-type LocationScreenRouteProp = RouteProp<HomeStackParamList, 'AddLocation'>;
+type DosageUnitScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'AddDosageUnit'>;
+type DosageUnitScreenRouteProp = RouteProp<HomeStackParamList, 'AddDosageUnit'>;
 
 type Props = {
-    navigation: LocationScreenNavigationProp;
-    route: LocationScreenRouteProp;
+    navigation: DosageUnitScreenNavigationProp;
+    route: DosageUnitScreenRouteProp;
 };
 
 
-export default function AddLocation(props: Props) {
-    const [location, setLocation] = useState(new Location());
-
-    function updateValue(key:keyof Location, value:any){
-        const loc = CopyAndSetKey(location, key, value);
-        setLocation(loc);
+export default function AddDosageUnit(props: Props) {
+    const [dosageUnit, setDosageUnit] = useState(new DosageUnit());
+    console.log("------------------", dosageUnit);
+    function updateValue(key:keyof DosageUnit, value:any){
+        const dos = CopyAndSetKey(dosageUnit, key, value);
+        setDosageUnit(dos);
     }
 
     // TODO: find way for errors to be displayed
@@ -34,11 +34,11 @@ export default function AddLocation(props: Props) {
     }
 
     const insertQuery = async () => {
-        let results = await LocationDao.insert(location);
+        let results = await DosageUnitDao.insert(dosageUnit);
         if (results) {
             console.log('inserted: ', results);
             if (props.route.params.previousPage) {
-                props.navigation.navigate(props.route.params.previousPage, {location_id:results.insertId});
+                props.navigation.navigate(props.route.params.previousPage, {dosage_unit_id:results.insertId});
             } else {
                 props.navigation.goBack();
             }
@@ -53,18 +53,18 @@ export default function AddLocation(props: Props) {
                     <TextInput
                         style={{ height: 40, backgroundColor: 'lightgray' }}
                         onChangeText={(value) => {
-                            updateValue(LocationDb.fields.name, value);
+                            updateValue(DosageUnitDb.fields.name, value);
                         }}
-                        value={location.name} />
+                        value={dosageUnit.name} />
                 </View>
                 <View style={SurveyStyles.questionSection}>
                     <Text style={SurveyStyles.questionHeading}>Description</Text>
                     <TextInput
                         style={{ backgroundColor: 'lightgray', height: 100 }}
                         onChangeText={(value) => {
-                            updateValue(LocationDb.fields.description, value);
+                            updateValue(DosageUnitDb.fields.description, value);
                         }}
-                        value={location.description}
+                        value={dosageUnit.description}
                         multiline
                         numberOfLines={5} />
                 </View>

@@ -1,4 +1,4 @@
-import Db, { DbFields, DBObj } from "./AbstractClasses/Db";
+import Db, { DbFields } from "./AbstractClasses/Db";
 
 export default class User extends Db {
     first_name: string = "";
@@ -12,4 +12,4 @@ export const UserDb = {
         first_name: "first_name",
         last_name: "last_name",
     }
-}
+} as const;

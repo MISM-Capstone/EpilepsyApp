@@ -1,4 +1,4 @@
-import Db, { DbFields, DBObj } from "./AbstractClasses/Db";
+import Db, { DbFields } from "./AbstractClasses/Db";
 
 export default class EpilepsyTypeUser extends Db {
     user_id: number;
@@ -17,4 +17,4 @@ export const EpilepsyTypeUserDb = {
         user_id: "user_id",
         epilepsy_type_id: "epilepsy_type_id",
     }
-}
+} as const;

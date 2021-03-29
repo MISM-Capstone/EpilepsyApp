@@ -1,4 +1,3 @@
-import { DBObj } from "../AbstractClasses/Db";
 import Log, { LogFields } from "../AbstractClasses/Log";
 import Medication from "./Medication";
 
@@ -26,4 +25,4 @@ export const MedicationLogDb = {
         dosage_unit_id: "dosage_unit_id",
         medication_id: "medication_id",
     }
-}
+} as const;

@@ -1,5 +1,4 @@
-import Db, { DbFields, DBObj, DBObjFields } from "./Db";
-import User from "../User";
+import Db, { DbFields } from "./Db";
 
 export default abstract class Log extends Db {
     date_recorded: Date = new Date();
@@ -18,4 +17,4 @@ export const LogFields = {
     date_modified: "date_modified",
     date: "date",
     user_id:"user_id",
-}
+} as const;

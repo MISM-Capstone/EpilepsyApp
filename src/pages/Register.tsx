@@ -15,8 +15,8 @@ export default function Register() {
     const [user, setUser] = useState(new User());
     const {register} = GetAuthContext();
 
-    function updateValue(key:string, value:any){
-        const newUser = CopyAndSetKey(user, key, value) as User;
+    function updateValue(key:keyof User, value:any){
+        const newUser = CopyAndSetKey(user, key, value);
         setUser(newUser);
     }
 

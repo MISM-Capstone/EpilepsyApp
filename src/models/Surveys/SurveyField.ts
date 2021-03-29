@@ -1,4 +1,4 @@
-import Db, { DbFields, DBObj } from "../AbstractClasses/Db";
+import Db, { DbFields } from "../AbstractClasses/Db";
 
 export enum FieldType {
     bool = "boolean",
@@ -25,4 +25,4 @@ export const SurveyFieldDb = {
         field_type: "field_type",
         survey_id: "survey_id",
     }
-}
+} as const;
