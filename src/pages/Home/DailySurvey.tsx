@@ -10,6 +10,7 @@ import ButtonSet from '../../components/ButtonSet';
 import AppleHealthKit, { } from 'react-native-health';
 import SurveyStyles from '../../styles/SurveyStyles';
 import Slider from '@react-native-community/slider';
+import calendarService from '../../_services/helpers/calendar.service';
 
 type DailySurveyScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'DailySurvey'>;
 
@@ -19,9 +20,8 @@ type Props = {
 };
 
 export default function DailySurvey(props: Props) {
-    const date = new Date();
-    const prev_date = new Date();
-    prev_date.setDate(date.getDate() - 1);
+    const [prev_date, setPrevDate] = useState<Date>(new Date());
+    const [date, setDate] = useState<Date>(new Date());
     const [sleepStartDate, setSleepStartDate] = useState<Date>(date);
     const [sleepEndDate, setSleepEndDate] = useState<Date>(date);
     const [stress_level, setStressLevel] = useState<any>();
@@ -30,25 +30,40 @@ export default function DailySurvey(props: Props) {
     const [miss_meal, setMissMeal] = useState<boolean>();
     const [medication, setMedication] = useState<boolean>();
 
-    useEffect(() => {        
+    useEffect(() => {
         // Getting data from HealthKit and putting it in the sleep section
         // TODO: move this to a service
         // - How to handle errors if there are no values
         // - Add note that this information comes from Apple
-        const options: any = { startDate: prev_date.toISOString(), limit: 1 }
-        AppleHealthKit.getSleepSamples(options, (err: string, results: any) => {
-            console.log('Sleep sample: ', results);
-            try {
-                const start = new Date(results[0]['startDate'])
-                const end = new Date(results[0]['endDate'])
-                console.log('start: ', start);
-                console.log('end: ', end);
-                setSleepStartDate(start);
-                setSleepEndDate(end);
-            } catch (err: unknown) {
-                console.log(err)
-            }
-        });
+
+        if (props.route.params) {
+            let time_array: Array<number> = calendarService.getTimeArray(new Date());
+            let date_array: any = props.route.params.date
+            let today: Date = new Date(date_array['year'], date_array['month'] - 1, date_array['day'], time_array[0], time_array[1]);
+            let prev_day: Date = new Date(date_array['year'], date_array['month'] - 1, date_array['day'] - 1, time_array[0], time_array[1]);
+            setDate(today);
+            setPrevDate(prev_day);
+            setSleepStartDate(prev_day);
+            setSleepEndDate(today);
+        } else {
+            let prev = new Date();
+            prev.setDate(date.getDate() - 1);
+            setPrevDate(prev);
+            setSleepStartDate(prev);
+            setSleepEndDate(date);
+            const options: any = { startDate: prev_date.toISOString(), limit: 1 }
+            AppleHealthKit.getSleepSamples(options, (err: string, results: any) => {
+                console.log('Sleep sample: ', results);
+                try {
+                    const start = new Date(results[0]['startDate']);
+                    const end = new Date(results[0]['endDate']);
+                    setSleepStartDate(start);
+                    setSleepEndDate(end);
+                } catch (err: unknown) {
+                    console.log(err)
+                }
+            });
+        }
 
     }, []);
 
@@ -90,7 +105,7 @@ export default function DailySurvey(props: Props) {
                     />
                 </View>
                 <View style={SurveyStyles.questionSection}>
-                    <Text style={SurveyStyles.questionHeading}>What time did you wake up date?</Text>
+                    <Text style={SurveyStyles.questionHeading}>What time did you wake up today?</Text>
                     <DateTimePicker
                         testID="datePicker"
                         value={sleepEndDate}
@@ -103,16 +118,16 @@ export default function DailySurvey(props: Props) {
                 </View>
                 <View style={SurveyStyles.questionSection}>
                     <Text style={SurveyStyles.questionHeading}>How stressed do you feel? (Scale of 1-10)</Text>
-                    <View style={{display: `flex`, flexDirection: `row`}}>
-                    <Slider
-                        style={{width: 250, height: 40}}
-                        minimumValue={1}
-                        maximumValue={10}
-                        step={1}
-                        value={1}
-                        onValueChange={value => onChangeStress(value)}
-                    />
-                    <Text style={{ fontSize: 24, paddingTop: 4, marginLeft: 10}}>{stress_level}</Text>
+                    <View style={{ display: `flex`, flexDirection: `row` }}>
+                        <Slider
+                            style={{ width: 250, height: 40 }}
+                            minimumValue={1}
+                            maximumValue={10}
+                            step={1}
+                            value={1}
+                            onValueChange={value => onChangeStress(value)}
+                        />
+                        <Text style={{ fontSize: 24, paddingTop: 4, marginLeft: 10 }}>{stress_level}</Text>
                     </View>
                 </View>
                 <View style={SurveyStyles.questionSection}>

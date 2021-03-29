@@ -29,7 +29,17 @@ const createDateFromTime = (time: string): Date => {
     return date
 }
 
+const getTimeArray = (date: Date): Array<number> => {
+    let hours: number = date.getHours();
+    let minutes: number = date.getMinutes();
+    let time_array: Array<number> = new Array();
+    time_array[0] = hours;
+    time_array[1] = minutes;
+    return time_array;
+}
+
 export default {
     getCalendarData,
-    createDateFromTime
+    createDateFromTime,
+    getTimeArray
 }

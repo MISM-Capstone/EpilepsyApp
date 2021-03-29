@@ -2,6 +2,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, SafeAreaView, Button, Pressable } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TrendsStackParamList } from '../../navigation/TrendsNavigation';
 import HistoryStyles from '../../styles/HistoryStyles';
 import HistoryDao from '../../_services/database/dao/HistoryDao';
@@ -25,18 +26,19 @@ type TrendsScreenNavigationProp = StackNavigationProp<
 >;
 
 function SeizureCard(props: RenderProps) {
-    console.log(props.log.seizure_id );
+    console.log(props.log.seizure_id);
     return (
         <View style={HistoryStyles.HistoryEventCard}>
-            <View>
-                <Text>Time: {props.log.time}</Text>
-                <Text>Location: {props.log.location}</Text>
-                <Text>Notes: {props.log.notes}</Text>
+            <View style={{ display: 'flex', flexDirection: `row`, justifyContent: 'space-between' }}>
+                <View>
+                    <Text>Time: {props.log.time}</Text>
+                    <Text>Location: {props.log.location}</Text>
+                    <Text>Notes: {props.log.notes}</Text>
+                </View>
+                <Pressable onPress={() => props.navigation.navigate("UpdateSeizureLog", { seizure_id: props.log.seizure_id })}>
+                    <MaterialCommunityIcons name="pencil" size={25} color={'#44C2B3'} />
+                </Pressable>
             </View>
-            <Button
-                title="Update"
-                onPress={() => props.navigation.navigate("UpdateSeizureLog", { seizure_id: props.log.seizure_id })}
-            />
         </View>
     )
 }
@@ -92,7 +94,7 @@ const DateHistory = (props: Props) => {
                 <Text style={HistoryStyles.SectionHeader}>Seizures</Text>
                 {seizures.length > 0 ?
                     seizures.map(function (seizure, key) {
-                        return <SeizureCard log={seizure} key={key} navigation={props.navigation}/>
+                        return <SeizureCard log={seizure} key={key} navigation={props.navigation} />
                     })
                     :
                     <View>
@@ -107,7 +109,7 @@ const DateHistory = (props: Props) => {
                 <Text style={HistoryStyles.SectionHeader}>Surveys</Text>
                 {surveys.length > 0 ?
                     surveys.map(function (survey, key) {
-                        return <SurveyCard log={survey} key={key} navigation={props.navigation}/>
+                        return <SurveyCard log={survey} key={key} navigation={props.navigation} />
                     })
                     :
                     <View>
