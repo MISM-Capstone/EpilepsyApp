@@ -44,11 +44,11 @@ const Home = (props:Props) => {
                     icon="archive"
                     navigate={() => props.navigation.navigate("SurveyHistory")}
                 />
-                <NavigationButton
+                {/* <NavigationButton
                     title="Healthkit"
                     icon="hospital-box"
                     navigate={() => props.navigation.navigate("HealthKitTest")}
-                />
+                /> */}
             </View>
 
         </SafeAreaView>

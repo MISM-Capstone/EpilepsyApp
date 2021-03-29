@@ -40,7 +40,7 @@ const HomeNavigation = () => {
                 />
                 <Stack.Screen
                     name="UpdateSeizureLog"
-                    options={() => ({title: "Update Seizure"})}
+                    options={() => ({title: "Update"})}
                     component={UpdateSeizureLog}
                 />
             </Stack.Navigator>

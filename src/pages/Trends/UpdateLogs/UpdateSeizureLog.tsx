@@ -67,7 +67,6 @@ const UpdateSeizureLog = (props: Props) => {
     return (
         <SafeAreaView>
             <View style={{ padding: 12 }}>
-            <Text>{JSON.stringify(seizureLog)}</Text>
                 <View style={SurveyStyles.questionSection}>
                     <Text style={SurveyStyles.questionHeading}>Date of Seizure</Text>
                     <DateTimePicker
