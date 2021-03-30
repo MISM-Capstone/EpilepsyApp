@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, Text, View } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import DosageUnit from '../../models/DosageUnits';
 import Location from '../../models/Location';
+import Medication from '../../models/Medication/Medication';
+import MedicationLog from '../../models/Medication/MedicationLog';
 import SeizureLog from '../../models/SeizureLog';
+import SurveyLog from '../../models/Surveys/SurveyLog';
 import HistoryStyles from '../../styles/HistoryStyles';
+import DosageUnitDao from '../../_services/database/dao/DosageUnitDao';
 import HistoryDao from '../../_services/database/dao/HistoryDao';
 import LocationDao from '../../_services/database/dao/LocationDao';
+import MedicationDao from '../../_services/database/dao/MedicationDao';
 import sleepDatesService from '../../_services/helpers/sleepDates.service';
 
 type Props = {
@@ -56,33 +62,50 @@ function SurveyCard(props: RenderProps) {
     )
 }
 
-function MedicationCard(props: RenderProps) {
+type RenderMedicationLog = {
+    log:MedicationLog;
+    medications:Medication[];
+    dosageUnits:DosageUnit[];
+}
+
+function MedicationCard(props: RenderMedicationLog) {
+    const currentMed = props.medications.find((med) => {
+        return med.id === props.log.medication_id;
+    });
+    const medication = currentMed?currentMed.name:"";
+
+    const currentDos = props.dosageUnits.find((dos) => {
+        return dos.id === props.log.dosage_unit_id;
+    });
+    const dosageUnit = currentDos?currentDos.name:"";
     return (
         <View style={HistoryStyles.HistoryEventCard}>
             <Text style={HistoryStyles.HistoryCardTitle}>{props.log.date}</Text>
             <View>
                 <Text>Time: {props.log.time}</Text>
-                <Text>Medication: {props.log.medication}</Text>
-                <Text>Dosage: {props.log.dosage}</Text>
-                <Text>Notes: {props.log.notes}</Text>
+                <Text>Medication: {medication}</Text>
+                <Text>Dosage: {props.log.dosage} {dosageUnit}</Text>
             </View>
         </View>
     )
 }
 
 export default function SurveyHistory(props: Props) {
-    const [seizures, setSeizures] = useState<SeizureLog[]>([]);
-    const [surveys, setSurveys] = useState<any[]>([]);
-    const [medications, setMedications] = useState<any[]>([]);
+    const [results, setResults] = useState(
+        {
+            seizures: [] as SeizureLog[],
+            surveys: [] as SurveyLog[],
+            medications: [] as MedicationLog[],
+        }
+    );
     const [locations, setLocations] = useState<Location[]>([]);
+    const [medications, setMedications] = useState<Medication[]>([]);
+    const [dosageUnits, setDosageUnits] = useState<DosageUnit[]>([]);
 
     useEffect(() => {
         (async () => {
             const results = await HistoryDao.getAllLogs();
-            console.log(results);
-            setSeizures(results.seizures);
-            setSurveys(results.surveys);
-            setMedications(results.medications);
+            setResults(results);
         })();
     }, []);
 
@@ -90,6 +113,10 @@ export default function SurveyHistory(props: Props) {
         (async () => {
             const locs = await LocationDao.getAll();
             setLocations(locs);
+            const meds = await MedicationDao.getAll();
+            setMedications(meds);
+            const dos = await DosageUnitDao.getAll();
+            setDosageUnits(dos);
         })();
     }, []);
 
@@ -97,28 +124,47 @@ export default function SurveyHistory(props: Props) {
         <SafeAreaView>
             <ScrollView>
                 <Text style={HistoryStyles.SectionHeader}>Seizures</Text>
-                {seizures.length > 0 ?
-                    seizures.map(function (seizure, key) {
-                        return <SeizureCard seizure={seizure} locations={locations} key={key} />
+                {results.seizures.length > 0 ?
+                    results.seizures.map(function (seizure, key) {
+                        return (
+                            <SeizureCard
+                                seizure={seizure}
+                                locations={locations}
+                                key={key}
+                            />
+                        );
                     })
                     :
-                    <Text style={HistoryStyles.HistoryAlternateText}>No Seizure Events recorded for this date.</Text>
+                    <Text style={HistoryStyles.HistoryAlternateText}>
+                        No Seizure Events recorded for this date.
+                    </Text>
                 }
                 <Text style={HistoryStyles.SectionHeader}>Surveys</Text>
-                {surveys.length > 0 ?
-                    surveys.map(function (survey, key) {
+                {results.surveys.length > 0 ?
+                    results.surveys.map(function (survey, key) {
                         return <SurveyCard log={survey} key={key} />
                     })
                     :
-                    <Text style={HistoryStyles.HistoryAlternateText}>No Surveys recorded for this date.</Text>
+                    <Text style={HistoryStyles.HistoryAlternateText}>
+                        No Surveys recorded for this date.
+                    </Text>
                 }
                 <Text style={HistoryStyles.SectionHeader}>Medications</Text>
-                {medications.length > 0 ?
-                    medications.map(function (medication, key) {
-                        return <MedicationCard log={medication} key={key} />
+                {results.medications.length > 0 ?
+                    results.medications.map(function (medication, key) {
+                        return (
+                            <MedicationCard
+                                log={medication}
+                                dosageUnits={dosageUnits}
+                                medications={medications}
+                                key={key}
+                            />
+                        );
                     })
                     :
-                    <Text style={HistoryStyles.HistoryAlternateText}>No Medications recorded for this date.</Text>
+                    <Text style={HistoryStyles.HistoryAlternateText}>
+                        No Medications recorded for this date.
+                    </Text>
                 }
             </ScrollView>
         </SafeAreaView >

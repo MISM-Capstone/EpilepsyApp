@@ -10,6 +10,7 @@ import NavigationButton from "../../components/NavigationButton";
 import HomeStyles from "../../styles/HomeStyles";
 import {default as mainStyle} from "../../styles/MainStyles";
 import { GetAuthContext } from '../../_services/Providers/AuthProvider';
+import { ScrollView } from 'react-native-gesture-handler';
 
 type HomeScreenNavigationProp = StackNavigationProp<HomeStackParamList,'Home'>;
 
@@ -23,7 +24,7 @@ const Home = (props:Props) => {
 
     return (
         <SafeAreaView style={mainStyle.container}>
-            <View style={HomeStyles.HomeContainer}>
+            <ScrollView style={HomeStyles.HomeContainer}>
                 <View style={HomeStyles.welcomeMessageContainer}>
                 <Text style={HomeStyles.welcomeMessageText}>Hi, {user!.first_name}!</Text>
                 </View>
@@ -43,6 +44,11 @@ const Home = (props:Props) => {
                     navigate={() => props.navigation.navigate("RecordMedication", {})}
                 />
                 <NavigationButton
+                    title="My Surveys"
+                    icon="pill"
+                    navigate={() => props.navigation.navigate("PersonalSurveys")}
+                />
+                <NavigationButton
                     title="Survey History"
                     icon="archive"
                     navigate={() => props.navigation.navigate("SurveyHistory")}
@@ -52,7 +58,7 @@ const Home = (props:Props) => {
                     icon="hospital-box"
                     navigate={() => props.navigation.navigate("HealthKitTest")}
                 />
-            </View>
+            </ScrollView>
 
         </SafeAreaView>
     );

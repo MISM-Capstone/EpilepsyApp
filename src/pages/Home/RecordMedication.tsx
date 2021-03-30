@@ -17,6 +17,8 @@ import Medication from '../../models/Medication/Medication';
 import DosageUnit from '../../models/DosageUnits';
 import DosageUnitDao from '../../_services/database/dao/DosageUnitDao';
 import { Picker } from '@react-native-picker/picker';
+import { InputContainer } from '../../components/Inputs/InputComponents';
+import { SingleInput } from '../../components/Inputs/Input';
 
 type RecordMedicationScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'RecordMedication'>;
 type LogSeizureScreenRouteProp = RouteProp<HomeStackParamList, 'RecordMedication'>;
@@ -150,8 +152,7 @@ export default function RecordMedication(props: Props) {
         <SafeAreaView>
             <ScrollView>
                 <View style={SurveyStyles.surveyContainer}>
-                    <View style={SurveyStyles.questionSection}>
-                        <Text style={SurveyStyles.questionHeading}>Date of Medication</Text>
+                    <InputContainer title="Date of Medication">
                         <DateTimePicker
                             testID="datePicker"
                             value={medicationLog.date}
@@ -160,9 +161,8 @@ export default function RecordMedication(props: Props) {
                             onChange={onChangeDate}
                             maximumDate={new Date()}
                         />
-                    </View>
-                    <View style={SurveyStyles.questionSection}>
-                        <Text style={SurveyStyles.questionHeading}>Time of Medication</Text>
+                    </InputContainer>
+                    <InputContainer title="Time of Medication">
                         <DateTimePicker
                             testID="timePicker"
                             value={medicationLog.date}
@@ -170,9 +170,8 @@ export default function RecordMedication(props: Props) {
                             display="default"
                             onChange={onChangeTime}
                         />
-                    </View>
-                    <View style={SurveyStyles.questionSection}>
-                        <Text style={SurveyStyles.questionHeading}>Medication</Text>
+                    </InputContainer>
+                    <InputContainer title="Medication">
                         <Button title="Add Medication" onPress={() => {
                             props.navigation.navigate("AddMedication", {previousPage:"RecordMedication"})
                         }} />
@@ -193,18 +192,15 @@ export default function RecordMedication(props: Props) {
                                 <Text>Please Add a Medication</Text>
                         }
                         
-                    </View>
-                    <View style={SurveyStyles.questionSection}>
-                        <Text style={SurveyStyles.questionHeading}>Dosage</Text>
-                        <TextInput
-                            style={{ height: 40, backgroundColor: 'lightgray' }}
-                            onChangeText={(value) => {
-                                update(MedicationLogDb.fields.dosage, parseFloat(value));
-                            }}
-                            value={medicationLog.dosage.toString()} />
-                    </View>
-                    <View style={SurveyStyles.questionSection}>
-                        <Text style={SurveyStyles.questionHeading}>Dosage Unit</Text>
+                    </InputContainer>
+                    <SingleInput
+                        title="Dosage"
+                        onChange={(value) => {
+                            update(MedicationLogDb.fields.dosage, parseFloat(value));
+                        }}
+                        value={medicationLog.dosage.toString()}
+                    />
+                    <InputContainer title="Dosage Unit">
                         <Button title="Add Dosage Unit" onPress={() => {
                             props.navigation.navigate("AddDosageUnit", {previousPage:"RecordMedication"})
                         }} />
@@ -225,7 +221,7 @@ export default function RecordMedication(props: Props) {
                                 <Text>Please Add a Dosage Unit</Text>
                         }
                         
-                    </View>
+                    </InputContainer>
                 </View>
                 <Button title="Save" onPress={() => insertQuery()} />
                 <Button title="Cancel" onPress={props.navigation.goBack} />

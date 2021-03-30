@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 
-import { Text, View, Button } from 'react-native';
+import { View, Button } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
-import { TextInput } from 'react-native-gesture-handler';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from "../../navigation/HomeNavigation";
-import SurveyStyles from '../../styles/SurveyStyles';
 import { CopyAndSetKey } from '../../functions';
 import { RouteProp } from '@react-navigation/native';
 import DosageUnit, { DosageUnitDb } from '../../models/DosageUnits';
 import DosageUnitDao from '../../_services/database/dao/DosageUnitDao';
+import { MultiInput, SingleInput } from '../../components/Inputs/Input';
 
 type DosageUnitScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'AddDosageUnit'>;
 type DosageUnitScreenRouteProp = RouteProp<HomeStackParamList, 'AddDosageUnit'>;
@@ -48,26 +47,20 @@ export default function AddDosageUnit(props: Props) {
     return (
         <SafeAreaView>
             <View style={{ padding: 12 }}>
-                <View style={SurveyStyles.questionSection}>
-                    <Text style={SurveyStyles.questionHeading}>Name</Text>
-                    <TextInput
-                        style={{ height: 40, backgroundColor: 'lightgray' }}
-                        onChangeText={(value) => {
-                            updateValue(DosageUnitDb.fields.name, value);
-                        }}
-                        value={dosageUnit.name} />
-                </View>
-                <View style={SurveyStyles.questionSection}>
-                    <Text style={SurveyStyles.questionHeading}>Description</Text>
-                    <TextInput
-                        style={{ backgroundColor: 'lightgray', height: 100 }}
-                        onChangeText={(value) => {
-                            updateValue(DosageUnitDb.fields.description, value);
-                        }}
-                        value={dosageUnit.description}
-                        multiline
-                        numberOfLines={5} />
-                </View>
+                <SingleInput
+                    title="Name"
+                    onChange={(value) => {
+                        updateValue(DosageUnitDb.fields.name, value);
+                    }}
+                    value={dosageUnit.name}
+                />
+                <MultiInput
+                    title="Description"
+                    onChange={(value) => {
+                        updateValue(DosageUnitDb.fields.description, value);
+                    }}
+                    value={dosageUnit.description}
+                />
             </View>
             <Button title="Save" onPress={() => checkErrors()} />
             <Button title="Cancel" onPress={props.navigation.goBack} />

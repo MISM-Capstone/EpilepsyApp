@@ -17,7 +17,7 @@ export class DatabaseInitialization {
         // Perform DB updates based on this version
         // This is included as an example of how you make database schema changes once the app has been shipped
         if (dbVersion < 1) {
-            return database.transaction(this.preVersion1Inserts);
+            await database.transaction(this.preVersion1Inserts);
         }
         if (dbVersion < 2) {
             // Uncomment the next line, and the referenced function below, to enable this
@@ -104,7 +104,7 @@ export class DatabaseInitialization {
   
     // Once the app has shipped, use the following functions as a template for updating the database:
       // This function should be called when the version of the db is < 1
-      private static preVersion1Inserts(transaction: SQLite.Transaction) {
+      private static async preVersion1Inserts(transaction: SQLite.Transaction) {
             console.log("Running pre-version 1 DB inserts");
             // Make schema changes
             transaction.executeSql(`
@@ -131,11 +131,38 @@ export class DatabaseInitialization {
                     ('mg', 'Milligram', true),
                     ('ml', 'Milliliter', false);
             `);
+            transaction.executeSql(`
+                INSERT INTO survey
+                    (name, description)
+                VALUES
+                    ('Daily Survey', 'A survey for you to take each day'),
+                    ('Monthly Survey', 'A survey for you to take each month');
+            `);
+            transaction.executeSql(`
+                INSERT INTO survey_field
+                    (question, field_type, survey_id)
+                VALUES
+                    ('What time did you go to sleep last night?', 'Date', 1),
+                    ('What time did you wake up today?', 'Date', 1),
+                    ('Have you felt sick today?', 'boolean', 1),
+                    ('Have you had a fever?', 'boolean', 1),
+                    ('Have you missed any meals?', 'boolean', 1),
+                    ('Have you taken proper medications?', 'boolean', 1);
+            `);
+            transaction.executeSql(`
+                INSERT INTO survey_field
+                    (question, field_type, survey_id)
+                VALUES
+                    ('In the last month, how often have you felt that you were unable to control the important things in your life?', 'integer', 2),
+                    ('In the last month, how often have you felt confident about your ability to handle your personal problems?', 'integer', 2),
+                    ('In the last month, how often have you felt that things were going your way?', 'integer', 2),
+                    ('In the last month, how often have you felt difficulties were piling up so high that you could not overcome them?', 'integer', 2);
+            `);
             // Lastly, update the database version
             transaction.executeSql("INSERT INTO Version (version) VALUES (1);");
       }
       // This function should be called when the version of the db is < 2
-      private preVersion2Inserts(transaction: SQLite.Transaction) {
+      private static async preVersion2Inserts(transaction: SQLite.Transaction) {
           console.log("Running pre-version 2 DB inserts");
           
           // Make schema changes

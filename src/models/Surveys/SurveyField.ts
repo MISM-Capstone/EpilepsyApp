@@ -1,6 +1,6 @@
 import Db, { DbFields } from "../AbstractClasses/Db";
 
-export enum FieldType {
+export enum SURVEY_FIELD_TYPE {
     bool = "boolean",
     str = "string",
     num = "number",
@@ -9,7 +9,7 @@ export enum FieldType {
 
 export default class SurveyField extends Db {
     question: string = "";
-    field_type: FieldType = FieldType.bool;
+    field_type: SURVEY_FIELD_TYPE = SURVEY_FIELD_TYPE.bool;
     survey_id: number;
     constructor(surveyId:number = 0) {
         super();

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 import { Text, View, Button } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
-import { TextInput } from 'react-native-gesture-handler';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from "../../navigation/HomeNavigation";
 import SurveyStyles from '../../styles/SurveyStyles';
@@ -13,6 +12,8 @@ import MedicationDao from '../../_services/database/dao/MedicationDao';
 import DosageUnit from '../../models/DosageUnits';
 import DosageUnitDao from '../../_services/database/dao/DosageUnitDao';
 import { Picker } from '@react-native-picker/picker';
+import { SingleInput, MultiInput } from '../../components/Inputs/Input';
+import { InputContainer } from '../../components/Inputs/InputComponents';
 
 type MedicationcreenNavigationProp = StackNavigationProp<HomeStackParamList, 'AddMedication'>;
 type MedicationScreenRouteProp = RouteProp<HomeStackParamList, 'AddMedication'>;
@@ -68,37 +69,28 @@ export default function AddMedication(props: Props) {
     return (
         <SafeAreaView>
             <View style={{ padding: 12 }}>
-                <View style={SurveyStyles.questionSection}>
-                    <Text style={SurveyStyles.questionHeading}>Name</Text>
-                    <TextInput
-                        style={{ height: 40, backgroundColor: 'lightgray' }}
-                        onChangeText={(value) => {
-                            updateValue(MedicationDb.fields.name, value);
-                        }}
-                        value={medication.name} />
-                </View>
-                <View style={SurveyStyles.questionSection}>
-                    <Text style={SurveyStyles.questionHeading}>Description</Text>
-                    <TextInput
-                        style={{ backgroundColor: 'lightgray', height: 100 }}
-                        onChangeText={(value) => {
-                            updateValue(MedicationDb.fields.description, value);
-                        }}
-                        value={medication.description}
-                        multiline
-                        numberOfLines={5} />
-                </View>
-                <View style={SurveyStyles.questionSection}>
-                    <Text style={SurveyStyles.questionHeading}>Dosage</Text>
-                    <TextInput
-                        style={{ height: 40, backgroundColor: 'lightgray' }}
-                        onChangeText={(value) => {
-                            updateValue(MedicationDb.fields.dosage, value);
-                        }}
-                        value={medication.dosage.toString()} />
-                </View>
-                <View style={SurveyStyles.questionSection}>
-                    <Text style={SurveyStyles.questionHeading}>Dosage Unit</Text>
+                <SingleInput
+                    title="Name"
+                    onChange={(value) => {
+                        updateValue(MedicationDb.fields.name, value);
+                    }}
+                    value={medication.name}
+                />
+                <MultiInput
+                    title="Description"
+                    onChange={(value) => {
+                        updateValue(MedicationDb.fields.description, value);
+                    }}
+                    value={medication.description}
+                />
+                <SingleInput
+                    title="Dosage"
+                    onChange={(value) => {
+                        updateValue(MedicationDb.fields.dosage, value);
+                    }}
+                    value={medication.dosage.toString()}
+                />
+                <InputContainer title="Dosage Unit">
                     <Button title="Add Dosage Unit" onPress={() => {
                         props.navigation.navigate("AddDosageUnit", {previousPage:"AddMedication"})
                     }} />
@@ -118,8 +110,7 @@ export default function AddMedication(props: Props) {
                         :
                             <Text>Please Add a Dosage Unit</Text>
                     }
-                    
-                </View>
+                </InputContainer>
             </View>
             <Button title="Save" onPress={() => checkErrors()} />
             <Button title="Cancel" onPress={props.navigation.goBack} />

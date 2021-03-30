@@ -1,21 +1,21 @@
-export default class CreateTableQuery {
-    static user = `
+const CreateTableQuery = {
+    user: `
         CREATE TABLE IF NOT EXISTS "user" (
             "id"	INTEGER NOT NULL UNIQUE,
             "first_name"	TEXT NOT NULL,
             "last_name"	TEXT NOT NULL,
             PRIMARY KEY("id" AUTOINCREMENT)
         );
-    `;
-    static epilepsy_type = `
+    `,
+    epilepsy_type: `
         CREATE TABLE IF NOT EXISTS "epilepsy_type" (
             "id"	INTEGER NOT NULL UNIQUE,
             "name"	TEXT NOT NULL,
             "description"	TEXT,
             PRIMARY KEY("id" AUTOINCREMENT)
         );
-    `;
-    static epilepsy_type_user = `
+    `,
+    epilepsy_type_user: `
         CREATE TABLE IF NOT EXISTS "epilepsy_type_user" (
             "id"	INTEGER NOT NULL UNIQUE,
             "user_id"	INTEGER NOT NULL,
@@ -24,16 +24,16 @@ export default class CreateTableQuery {
             FOREIGN KEY("epilepsy_type_id") REFERENCES "epilepsy_type"("id"),
             PRIMARY KEY("id" AUTOINCREMENT)
         );
-    `;
-    static location = `
+    `,
+    location: `
         CREATE TABLE IF NOT EXISTS "location" (
             "id"	INTEGER NOT NULL UNIQUE,
             "name"	TEXT NOT NULL,
             "description"	TEXT,
             PRIMARY KEY("id" AUTOINCREMENT)
         );
-    `;
-    static seizure_log = `
+    `,
+    seizure_log: `
         CREATE TABLE IF NOT EXISTS "seizure_log" (
             "id"	INTEGER NOT NULL UNIQUE,
             "date_recorded"	TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -47,16 +47,16 @@ export default class CreateTableQuery {
             FOREIGN KEY("user_id") REFERENCES "user"("id"),
             PRIMARY KEY("id" AUTOINCREMENT)
         );
-    `;
-    static survey = `
+    `,
+    survey: `
         CREATE TABLE IF NOT EXISTS "survey" (
             "id"	INTEGER NOT NULL UNIQUE,
             "name"	TEXT NOT NULL,
             "description"	TEXT,
             PRIMARY KEY("id" AUTOINCREMENT)
         );
-    `;
-    static survey_field = `
+    `,
+    survey_field: `
         CREATE TABLE IF NOT EXISTS "survey_field" (
             "id"	INTEGER NOT NULL UNIQUE,
             "question"	TEXT NOT NULL,
@@ -65,8 +65,8 @@ export default class CreateTableQuery {
             FOREIGN KEY("survey_id") REFERENCES "survey"("id"),
             PRIMARY KEY("id" AUTOINCREMENT)
         );
-    `;
-    static survey_log = `
+    `,
+    survey_log: `
         CREATE TABLE IF NOT EXISTS "survey_log" (
             "id"	INTEGER NOT NULL UNIQUE,
             "date_recorded"	TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -78,8 +78,8 @@ export default class CreateTableQuery {
             FOREIGN KEY("user_id") REFERENCES "user"("id"),
             PRIMARY KEY("id" AUTOINCREMENT)
         );
-    `;
-    static survey_answer = `
+    `,
+    survey_answer: `
         CREATE TABLE IF NOT EXISTS "survey_answer" (
             "id"	INTEGER NOT NULL UNIQUE,
             "answer"	TEXT NOT NULL,
@@ -89,8 +89,8 @@ export default class CreateTableQuery {
             FOREIGN KEY("survey_log_id") REFERENCES "survey_log"("id"),
             PRIMARY KEY("id" AUTOINCREMENT)
         );
-    `;
-    static dosage_unit = `
+    `,
+    dosage_unit: `
         CREATE TABLE IF NOT EXISTS "dosage_unit" (
             "id"	INTEGER NOT NULL UNIQUE,
             "name"	TEXT NOT NULL,
@@ -98,8 +98,8 @@ export default class CreateTableQuery {
             "is_default"	BOOLEAN NOT NULL DEFAULT 0 CHECK(is_default IN (0, 1)),
             PRIMARY KEY("id" AUTOINCREMENT)
         );
-    `;
-    static medication = `
+    `,
+    medication: `
         CREATE TABLE IF NOT EXISTS "medication" (
             "id"	INTEGER NOT NULL UNIQUE,
             "name"	TEXT NOT NULL,
@@ -109,8 +109,8 @@ export default class CreateTableQuery {
             FOREIGN KEY("dosage_unit_id") REFERENCES "dosage_unit"("id"),
             PRIMARY KEY("id" AUTOINCREMENT)
         );
-    `;
-    static medication_log = `
+    `,
+    medication_log: `
         CREATE TABLE IF NOT EXISTS "medication_log" (
             "id"	INTEGER NOT NULL UNIQUE,
             "date_recorded"	TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -126,5 +126,7 @@ export default class CreateTableQuery {
             FOREIGN KEY("user_id") REFERENCES "user"("id"),
             PRIMARY KEY("id" AUTOINCREMENT)
         );
-    `;
-}
+    `,
+} as const
+
+export default CreateTableQuery

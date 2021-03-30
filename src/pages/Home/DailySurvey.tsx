@@ -6,11 +6,12 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from "../../navigation/HomeNavigation";
 import SurveyLogDao from '../../_services/database/dao/SurveyLogDao';
-import ButtonSet from '../../components/ButtonSet';
+import ButtonSet from '../../components/Inputs/ButtonSet';
 import AppleHealthKit, { } from 'react-native-health';
 import SurveyStyles from '../../styles/SurveyStyles';
 import Slider from '@react-native-community/slider';
 import calendarService from '../../_services/helpers/calendar.service';
+import { InputContainer } from '../../components/Inputs/InputComponents';
 
 type DailySurveyScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'DailySurvey'>;
 
@@ -92,8 +93,7 @@ export default function DailySurvey(props: Props) {
         <SafeAreaView>
             <View style={SurveyStyles.surveyContainer}>
                 <Text style={SurveyStyles.dailySurveyHeading}>Daily Survey for {date.toLocaleDateString()}</Text>
-                <View style={SurveyStyles.questionSection}>
-                    <Text style={SurveyStyles.questionHeading}>What time did you go to sleep last night?</Text>
+                <InputContainer title="What time did you go to sleep last night?">
                     <DateTimePicker
                         testID="datePicker"
                         value={sleepStartDate}
@@ -103,9 +103,8 @@ export default function DailySurvey(props: Props) {
                         maximumDate={date}
                         minimumDate={prev_date}
                     />
-                </View>
-                <View style={SurveyStyles.questionSection}>
-                    <Text style={SurveyStyles.questionHeading}>What time did you wake up today?</Text>
+                </InputContainer>
+                <InputContainer title="What time did you wake up today?">
                     <DateTimePicker
                         testID="datePicker"
                         value={sleepEndDate}
@@ -115,10 +114,9 @@ export default function DailySurvey(props: Props) {
                         maximumDate={date}
                         minimumDate={prev_date}
                     />
-                </View>
-                <View style={SurveyStyles.questionSection}>
-                    <Text style={SurveyStyles.questionHeading}>How stressed do you feel? (Scale of 1-10)</Text>
-                    <View style={{ display: `flex`, flexDirection: `row` }}>
+                </InputContainer>
+                <InputContainer title="How stressed do you feel? (Scale of 1-10)">
+                <View style={{ display: `flex`, flexDirection: `row` }}>
                         <Slider
                             style={{ width: 250, height: 40 }}
                             minimumValue={1}
@@ -129,23 +127,19 @@ export default function DailySurvey(props: Props) {
                         />
                         <Text style={{ fontSize: 24, paddingTop: 4, marginLeft: 10 }}>{stress_level}</Text>
                     </View>
-                </View>
-                <View style={SurveyStyles.questionSection}>
-                    <Text style={SurveyStyles.questionHeading}>Have you felt sick lately?</Text>
+                </InputContainer>
+                <InputContainer title="Have you felt sick lately?">
                     <ButtonSet onChange={setIllness} />
-                </View>
-                <View style={SurveyStyles.questionSection}>
-                    <Text style={SurveyStyles.questionHeading}>Have you had a fever?</Text>
+                </InputContainer>
+                <InputContainer title="Have you had a fever?">
                     <ButtonSet onChange={setFever} />
-                </View>
-                <View style={SurveyStyles.questionSection}>
-                    <Text style={SurveyStyles.questionHeading}>Have you missed any meals?</Text>
+                </InputContainer>
+                <InputContainer title="Have you missed any meals?">
                     <ButtonSet onChange={setMissMeal} />
-                </View>
-                <View style={SurveyStyles.questionSection}>
-                    <Text style={SurveyStyles.questionHeading}>Have you taken proper medications?</Text>
+                </InputContainer>
+                <InputContainer title="Have you taken proper medications?">
                     <ButtonSet onChange={setMedication} />
-                </View>
+                </InputContainer>
             </View>
             <Button title="Save" onPress={() => insertQuery(date, sleepStartDate, sleepEndDate, stress_level, illness, fever, miss_meal, medication)} />
             <Button title="Cancel" onPress={props.navigation.goBack} />

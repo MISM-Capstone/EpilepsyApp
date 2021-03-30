@@ -12,6 +12,8 @@ import HealthKitTest from '../pages/Home/HealthKitTest';
 import AddLocation from '../pages/Home/AddLocation';
 import AddMedication from '../pages/Home/AddMedication';
 import AddDosageUnit from '../pages/Home/AddDosageUnit';
+import PersonalSurveys from '../pages/Home/PersonalSurveys';
+import AddEditSurvey from '../pages/Home/AddEditSurvey';
 
 type EditProps ={
     date?:Date;
@@ -31,7 +33,10 @@ export type AddMedicationProps = {
 }
 
 export type AddProps = {
-    previousPage?: keyof HomeStackParamList
+    previousPage?: keyof HomeStackParamList;
+}
+export type EditSurveyProps = {
+    survey?: number;
 }
 
 export type HomeStackParamList = {
@@ -44,6 +49,8 @@ export type HomeStackParamList = {
     AddDosageUnit:AddProps;
     AddLocation:AddProps;
     AddMedication:AddProps & AddMedicationProps;
+    PersonalSurveys:undefined;
+    AddEditSurvey:AddProps & EditSurveyProps;
 };
 
 const Stack = createStackNavigator<HomeStackParamList>();
@@ -79,6 +86,20 @@ const HomeNavigation = () => {
                     component={LogSeizure}
                     options={{
                         title: 'Log a Seizure'
+                    }}
+                />
+                <Stack.Screen
+                    name="PersonalSurveys"
+                    component={PersonalSurveys}
+                    options={{
+                        title: 'Personal Surveys'
+                    }}
+                />
+                <Stack.Screen
+                    name="AddEditSurvey"
+                    component={AddEditSurvey}
+                    options={{
+                        title: 'Edit Survey'
                     }}
                 />
                 <Stack.Screen

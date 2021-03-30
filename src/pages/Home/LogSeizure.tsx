@@ -3,11 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { Text, View, Button } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { TextInput } from 'react-native-gesture-handler';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from "../../navigation/HomeNavigation";
 import SeizureLogDao from '../../_services/database/dao/SeizureLogDao';
-import SurveyStyles from '../../styles/SurveyStyles';
 import SeizureLog, { SeizureLogDb } from '../../models/SeizureLog';
 import { CopyAndSetKey } from '../../functions';
 import { GetAuthContext } from '../../_services/Providers/AuthProvider';
@@ -15,6 +13,8 @@ import {Picker} from '@react-native-picker/picker';
 import Location from '../../models/Location';
 import { RouteProp } from '@react-navigation/native';
 import LocationDao from '../../_services/database/dao/LocationDao';
+import { InputContainer } from '../../components/Inputs/InputComponents';
+import { MultiInput } from '../../components/Inputs/Input';
 
 type LogSeizureScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'LogSeizure'>;
 type LogSeizureScreenRouteProp = RouteProp<HomeStackParamList, 'LogSeizure'>;
@@ -108,8 +108,7 @@ export default function LogSeizure(props: Props) {
     return (
         <SafeAreaView>
             <View style={{ padding: 12 }}>
-                <View style={SurveyStyles.questionSection}>
-                    <Text style={SurveyStyles.questionHeading}>Date of Seizure</Text>
+                <InputContainer title="Date of Seizure">
                     <DateTimePicker
                         testID="datePicker"
                         value={seizureLog.date}
@@ -118,9 +117,8 @@ export default function LogSeizure(props: Props) {
                         onChange={onChangeDate}
                         maximumDate={new Date()}
                     />
-                </View>
-                <View style={SurveyStyles.questionSection}>
-                    <Text style={SurveyStyles.questionHeading}>Time of Seizure</Text>
+                </InputContainer>
+                <InputContainer title="Time of Seizure">
                     <DateTimePicker
                         testID="timePicker"
                         value={seizureLog.date}
@@ -128,9 +126,8 @@ export default function LogSeizure(props: Props) {
                         display="default"
                         onChange={onChangeTime}
                     />
-                </View>
-                <View style={SurveyStyles.questionSection}>
-                    <Text style={SurveyStyles.questionHeading}>Location</Text>
+                </InputContainer>
+                <InputContainer title="Location">
                     <Button title="Add Location" onPress={() => {
                         props.navigation.navigate("AddLocation", {previousPage:"LogSeizure"})
                     }} />
@@ -151,18 +148,14 @@ export default function LogSeizure(props: Props) {
                             <Text>Please Add a Location</Text>
                     }
                     
-                </View>
-                <View style={SurveyStyles.questionSection}>
-                    <Text style={SurveyStyles.questionHeading}>Details</Text>
-                    <TextInput
-                        style={{ backgroundColor: 'lightgray', height: 100 }}
-                        onChangeText={(value) => {
-                            updateValue(SeizureLogDb.fields.notes, value);
-                        }}
-                        value={seizureLog.notes}
-                        multiline
-                        numberOfLines={5} />
-                </View>
+                </InputContainer>
+                <MultiInput
+                    title="Details"
+                    onChange={(value) => {
+                        updateValue(SeizureLogDb.fields.notes, value);
+                    }}
+                    value={seizureLog.notes}
+                />
             </View>
             <Button title="Save" onPress={() => checkErrors()} />
             <Button title="Cancel" onPress={props.navigation.goBack} />

@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 
-import { Text, View, Button } from 'react-native';
+import { View, Button } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
-import { TextInput } from 'react-native-gesture-handler';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from "../../navigation/HomeNavigation";
-import SurveyStyles from '../../styles/SurveyStyles';
 import { CopyAndSetKey } from '../../functions';
 import Location, { LocationDb } from '../../models/Location';
 import { RouteProp } from '@react-navigation/native';
 import LocationDao from '../../_services/database/dao/LocationDao';
+import { MultiInput, SingleInput } from '../../components/Inputs/Input';
 
 type LocationScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'AddLocation'>;
 type LocationScreenRouteProp = RouteProp<HomeStackParamList, 'AddLocation'>;
@@ -48,26 +47,20 @@ export default function AddLocation(props: Props) {
     return (
         <SafeAreaView>
             <View style={{ padding: 12 }}>
-                <View style={SurveyStyles.questionSection}>
-                    <Text style={SurveyStyles.questionHeading}>Name</Text>
-                    <TextInput
-                        style={{ height: 40, backgroundColor: 'lightgray' }}
-                        onChangeText={(value) => {
-                            updateValue(LocationDb.fields.name, value);
-                        }}
-                        value={location.name} />
-                </View>
-                <View style={SurveyStyles.questionSection}>
-                    <Text style={SurveyStyles.questionHeading}>Description</Text>
-                    <TextInput
-                        style={{ backgroundColor: 'lightgray', height: 100 }}
-                        onChangeText={(value) => {
-                            updateValue(LocationDb.fields.description, value);
-                        }}
-                        value={location.description}
-                        multiline
-                        numberOfLines={5} />
-                </View>
+                <SingleInput
+                    title="Name"
+                    onChange={(value) => {
+                        updateValue(LocationDb.fields.name, value);
+                    }}
+                    value={location.name}
+                />
+                <MultiInput
+                    title="Description"
+                    onChange={(value) => {
+                        updateValue(LocationDb.fields.description, value);
+                    }}
+                    value={location.description}
+                />
             </View>
             <Button title="Save" onPress={() => checkErrors()} />
             <Button title="Cancel" onPress={props.navigation.goBack} />
