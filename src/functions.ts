@@ -12,19 +12,17 @@ export function CopyObjAttributes(objToCopy:any, objCopiedTo:any) {
     });
 }
 
-export type PropType<TObj, TProp extends keyof TObj> = TObj[TProp];
-
 export function CopyAndSetKey<T extends Db>(obj:T, key:keyof T, value:any) {
     let newObj = obj.copy();
     newObj[key] = value;
     return newObj;
 }
 
-export function updateValue<T extends Db, TProp extends keyof T>(obj:T, key:TProp, value:PropType<T,TProp>, hook:(obj:T)=>void) {
+export function updateValue<T extends Db, TProp extends keyof T>(obj:T, key:TProp, value:T[TProp], hook:(obj:T)=>void) {
     updateValues(obj, [key], [value], hook);
 }
 
-export function updateValues<T extends Db, TProp extends keyof T>(obj:T, keys:TProp[], values:PropType<T,TProp>[], hook:(obj:T)=>void) {
+export function updateValues<T extends Db, TProp extends keyof T>(obj:T, keys:TProp[], values:T[TProp][], hook:(obj:T)=>void) {
     let newObj = obj.copy();
     for (let i=0; i<keys.length; i++) {
         newObj = CopyAndSetKey(newObj, keys[i], values[i]);

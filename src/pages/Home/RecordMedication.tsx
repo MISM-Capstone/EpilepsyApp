@@ -10,7 +10,7 @@ import MedicationLogDao from '../../_services/database/dao/MedicationLogDao';
 import SurveyStyles from '../../styles/SurveyStyles';
 import MedicationLog, { MedicationLogDb } from '../../models/Medication/MedicationLog';
 import { GetAuthContext } from '../../_services/Providers/AuthProvider';
-import { PropType, updateValue, updateValues } from '../../functions';
+import { updateValue, updateValues } from '../../functions';
 import { RouteProp } from '@react-navigation/native';
 import MedicationDao from '../../_services/database/dao/MedicationDao';
 import Medication from '../../models/Medication/Medication';
@@ -34,13 +34,13 @@ export default function RecordMedication(props: Props) {
     const [dosageUnits, setDosageUnits] = useState<DosageUnit[]>([]);
     const [newMedication, setNewMedication] = useState<Medication>();
 
-    function update(key:keyof MedicationLog, value:any){
+    function update<TProp extends keyof MedicationLog>(key:TProp, value:MedicationLog[TProp]){
         updateValue(medicationLog, key, value, setMedicationLog);
     }
 
     function updateMedication(medication:Medication) {
         let keyList:(keyof MedicationLog)[] = [];
-        let valueList:PropType<MedicationLog, "medication_id">[] = [];
+        let valueList:any[] = [];
 
         if (medicationLog.medication_id !== medication.id) {
             keyList.push(MedicationLogDb.fields.medication_id);
@@ -120,9 +120,9 @@ export default function RecordMedication(props: Props) {
             return dos.id === medicationLog.dosage_unit_id;
         });
         if (dosageUnits.length > 0 && !currentDos && medicationLog.dosage_unit_id === 0) {
-            update(MedicationLogDb.fields.dosage_unit_id, dosageUnits[0].id)
+            update(MedicationLogDb.fields.dosage_unit_id, dosageUnits[0].id!)
         } else if (currentDos) {
-            update(MedicationLogDb.fields.dosage_unit_id, currentDos.id)
+            update(MedicationLogDb.fields.dosage_unit_id, currentDos.id!)
         }
     }, [dosageUnits]);
 
@@ -199,7 +199,7 @@ export default function RecordMedication(props: Props) {
                         <TextInput
                             style={{ height: 40, backgroundColor: 'lightgray' }}
                             onChangeText={(value) => {
-                                update(MedicationLogDb.fields.dosage, value);
+                                update(MedicationLogDb.fields.dosage, parseFloat(value));
                             }}
                             value={medicationLog.dosage.toString()} />
                     </View>

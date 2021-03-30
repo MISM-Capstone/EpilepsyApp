@@ -8,6 +8,7 @@ export default class MedicationLog extends Log {
     medication_id: number = 0;
     constructor(userId: number = 0, medication?:Medication) {
         super(userId);
+        this.time = this.date.toLocaleTimeString();
         if (medication) {
             this.medication_id = medication.id!;
             this.dosage = medication.dosage;
