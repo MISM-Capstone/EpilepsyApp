@@ -38,7 +38,6 @@ export default function HealthKitTest(props: Props) {
     useEffect(() => {
         AppleHealthKit.getSleepSamples(options, (err: string, results: HealthValue) => {
             try {
-                console.log(results);
                 setSleep(results);
                 setSleepLoaded(true);
             } catch {
@@ -47,7 +46,6 @@ export default function HealthKitTest(props: Props) {
         });
         AppleHealthKit.getActiveEnergyBurned(options, (err: string, results: HealthValue[]) => {
             try {
-                console.log(results);
                 setEnergyBurned(results);
                 setEnergyLoaded(true);
             } catch {
@@ -56,7 +54,6 @@ export default function HealthKitTest(props: Props) {
         });
         AppleHealthKit.getLatestWeight(options, (err: string, results: HealthValue) => {
             try {
-                console.log(results);
                 if (results !== undefined){
 
                     setWeight(results);

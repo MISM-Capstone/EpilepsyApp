@@ -9,8 +9,6 @@ const getCalendarData = async () => {
         days.push( seizure.date );
     });
 
-    console.log('Days: ', String(days));
-
     let marked_days: any = {};
 
     days.forEach((day: string | number) => {

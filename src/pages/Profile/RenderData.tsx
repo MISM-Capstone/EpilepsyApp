@@ -1,4 +1,5 @@
 import React from 'react';
+import SeizureLog from '../../models/SeizureLog';
 import sleepDatesService from '../../_services/helpers/sleepDates.service';
 
 type ListRenderProps ={
@@ -10,22 +11,18 @@ type RenderProps = {
     log: any;
 };
 
-// export function listToHTML(props:ListRenderProps) {
-//     html += "<h2>Seizures</h2>";
-//     dbSeizures.forEach((seizure) => {
-//         let test = props.jsxElement() log={seizure} />;
-//         html += renderToString(test);
-//     });
-// }
+type RenderSeizureProps = {
+    seizure:SeizureLog;
+}
 
-export function RenderSeizure(props: RenderProps) {
+export function RenderSeizure(props: RenderSeizureProps) {
     return (
         <div>
-            <p>ID: {props.log.seizure_id}</p>
-            <p>Date: {props.log.date}</p>
-            <p>Time: {props.log.time}</p>
-            <p>Location: {props.log.location}</p>
-            <p>Notes: {props.log.notes}</p>
+            <p>ID: {props.seizure.id}</p>
+            <p>Date: {props.seizure.date.toString()}</p>
+            <p>Time: {props.seizure.time}</p>
+            <p>Location: {props.seizure.location_id}</p>
+            <p>Notes: {props.seizure.notes}</p>
             <p>------</p>
         </div>
     );

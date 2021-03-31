@@ -35,7 +35,7 @@ const getChartDataDay = async (): Promise<ChartData> => {
 
 // Charting Seizure Events by Day of the Week in a certain range
 const getChartDataDayInRange = async (startDate:Date, endDate:Date) => {
-    const seizures: any[] = await SeizureLogDao.getInDateRange(startDate, endDate);
+    const seizures = await SeizureLogDao.getInDateRange(startDate, endDate);
     let data = getDaysInWeekArray();
 
     seizures.forEach(seizure => {
@@ -59,9 +59,7 @@ const getChartDataTime = async (): Promise<ChartData> => {
 
     seizures.forEach(seizure => {
         let time = new Date("01/01/2021 " + seizure.time).getHours();
-        console.log('TIME: ', time);
         let bucket = Math.ceil(time / 4) // 4 hour buckets
-        console.log('bucket: ', bucket);
         data[bucket-1].seizures = +data[bucket-1].seizures + 1;
         numSeizures = numSeizures + 1;
     });

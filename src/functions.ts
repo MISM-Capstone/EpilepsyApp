@@ -19,7 +19,6 @@ export function CopyObjAttributes(objToCopy:any, objCopiedTo:any) {
             objCopiedTo[key] = value;
         }
     });
-    console.log(objCopiedTo);
 }
 
 export function CopyAndSetKey<T extends Db>(obj:T, key:keyof T, value:any) {

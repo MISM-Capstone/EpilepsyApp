@@ -51,7 +51,7 @@ export default class PDF {
         });
         html += "<h2>Seizures</h2>";
         dbSeizures.forEach((seizure) => {
-            let test = <RenderSeizure log={seizure} />;
+            let test = <RenderSeizure seizure={seizure} />;
             html += renderToString(test);
         });
         html += "<h2>Surveys</h2>";
@@ -67,7 +67,6 @@ export default class PDF {
         let today = new Date();
         let fileName = `Report_${this.dateAsString(today)}`;
         let reportTitle = `Report for ${this.dateAsString(startDate)} to ${this.dateAsString(endDate)}`;
-        console.log(fileName)
         let options: Options = {
             html: `
                 <div>
@@ -79,7 +78,6 @@ export default class PDF {
             fileName: fileName,
         };
         let file = await RNHTMLtoPDF.convert(options);
-        console.log("File:", file);
         return file.filePath!;
     }
     private static dateAsString(date:Date) {

@@ -19,9 +19,6 @@ export default function SurveyFieldDisplay(props:SurveyFieldProps) {
         }
         options.push(type.display)
     })
-    useEffect(() => {
-        console.log("Field:", props.field);
-    }, []);
     
     return (
         <View

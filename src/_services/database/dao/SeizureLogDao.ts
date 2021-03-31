@@ -30,6 +30,10 @@ export default class SeizureLogDao extends Dao {
         return this.convertQueryResultToObj(resultSeizureLog, SeizureLog);
     }
     static async getInDateRange(startDate:Date, endDate:Date) {
+        startDate.setHours(0,0,0,0);
+        let start = startDate.getTime();
+        endDate.setHours(23, 59, 59, 999);
+        let end = endDate.getTime();
         const sql = `
             SELECT
                 *
@@ -39,7 +43,7 @@ export default class SeizureLogDao extends Dao {
                 ${SeizureLogDb.fields.date} >= ?
                 and ${SeizureLogDb.fields.date} <= ?
         ;`;
-        const params = [startDate.toJSON().substring(0,10), endDate.toJSON().substring(0,10)];
+        const params = [start, end];
         const resultSeizureLog = await this.runQuery(sql, params);
         return this.convertQueryResultToObj(resultSeizureLog, SeizureLog);
     }

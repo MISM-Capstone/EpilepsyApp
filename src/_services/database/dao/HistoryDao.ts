@@ -46,7 +46,6 @@ export default class HistoryDao extends Dao {
     }
 
     static async getAllLogsByDate(date: Date) {
-        console.log("All logs")
         const seizures = await SeizureLogDao.getByDate(date);
         const surveys = await SurveyLogDao.getSurveyLogsByDate(date);
         const medications = await MedicationLogDao.getByDate(date);
@@ -55,7 +54,6 @@ export default class HistoryDao extends Dao {
             surveys: surveys,
             medications: medications
         };
-        console.log(data)
         return data;
     }
 }

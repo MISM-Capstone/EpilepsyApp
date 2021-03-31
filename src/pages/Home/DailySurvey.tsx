@@ -12,6 +12,7 @@ import SurveyStyles from '../../styles/SurveyStyles';
 import Slider from '@react-native-community/slider';
 import calendarService from '../../_services/helpers/calendar.service';
 import { InputContainer } from '../../components/Inputs/InputComponents';
+import SurveyLog from '../../models/Surveys/SurveyLog';
 
 type DailySurveyScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'DailySurvey'>;
 
@@ -21,6 +22,8 @@ type Props = {
 };
 
 export default function DailySurvey(props: Props) {
+    const [surveyLog, setSurveyLog] = useState(new SurveyLog());
+
     const [prev_date, setPrevDate] = useState<Date>(new Date());
     const [date, setDate] = useState<Date>(new Date());
     const [sleepStartDate, setSleepStartDate] = useState<Date>(date);
@@ -54,7 +57,6 @@ export default function DailySurvey(props: Props) {
             setSleepEndDate(date);
             const options: any = { startDate: prev_date.toISOString(), limit: 1 }
             AppleHealthKit.getSleepSamples(options, (err: string, results: any) => {
-                console.log('Sleep sample: ', results);
                 try {
                     const start = new Date(results[0]['startDate']);
                     const end = new Date(results[0]['endDate']);
@@ -82,10 +84,8 @@ export default function DailySurvey(props: Props) {
         setStressLevel(stress);
     }
 
-    const insertQuery = async (date: Date, sleepStartDate: Date, sleepEndDate: Date, stress_level: string | any, illness: boolean | any, fever: boolean | any, miss_meal: boolean | any, medication: boolean | any) => {
-        console.log('sleep dates: ', sleepStartDate, sleepEndDate)
-        let results = await SurveyLogDao.insertSurveyLog(date, sleepStartDate, sleepEndDate, stress_level, illness, fever, miss_meal, medication);
-        console.log('inserted:', results);
+    const insertQuery = async () => {
+        let results = await SurveyLogDao.save(surveyLog);
         props.navigation.goBack();
     }
 
@@ -141,7 +141,7 @@ export default function DailySurvey(props: Props) {
                     <ButtonSet onChange={setMedication} />
                 </InputContainer>
             </View>
-            <Button title="Save" onPress={() => insertQuery(date, sleepStartDate, sleepEndDate, stress_level, illness, fever, miss_meal, medication)} />
+            <Button title="Save" onPress={() => insertQuery()} />
             <Button title="Cancel" onPress={props.navigation.goBack} />
         </SafeAreaView>
     )

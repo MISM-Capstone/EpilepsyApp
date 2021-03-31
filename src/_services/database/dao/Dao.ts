@@ -30,7 +30,6 @@ export default abstract class DAO {
         const db = await this.getDatabase();
         let results:ResultSet[] = [];
         try {
-            console.log("Running Query")
             await db.transaction(async tx => {
                 let [, result] = await tx.executeSql(sql, params);
                 results.push(result);
@@ -45,7 +44,6 @@ export default abstract class DAO {
     protected static convertQueryResultToObj<T extends Db>(queryResult:any[], type: (new (...args: any[]) => T), ...args: any[]) {
         let convertedResults:T[] = [];
         queryResult.forEach((result) => {
-            console.log("Result:",result);
             const converted = new type(...args);
             CopyObjAttributes(result, converted);
             convertedResults.push(converted);

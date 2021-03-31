@@ -22,7 +22,6 @@ type Props = {
 
 export default function AddDosageUnit(props: Props) {
     const [dosageUnit, setDosageUnit] = useState(new DosageUnit());
-    console.log("------------------", dosageUnit);
     function updateValue(key:keyof DosageUnit, value:any){
         const dos = CopyAndSetKey(dosageUnit, key, value);
         setDosageUnit(dos);
@@ -36,7 +35,6 @@ export default function AddDosageUnit(props: Props) {
     const insertQuery = async () => {
         let results = await DosageUnitDao.save(dosageUnit);
         if (results) {
-            console.log('inserted: ', results);
             if (props.route.params.previousPage) {
                 props.navigation.navigate(props.route.params.previousPage, {tab:TabOptions.home, dosage_unit_id:results.insertId});
             } else {

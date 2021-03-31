@@ -87,7 +87,6 @@ export default function LogSeizure(props: Props) {
 
     const onChangeTime = (_event: Event, selectedDate: Date | undefined) => {
         const currentTime = selectedDate || seizureLog.date;
-        console.log(selectedDate);
         updateValue(SeizureLogDb.fields.time, currentTime.toLocaleTimeString());
         updateValue(SeizureLogDb.fields.date, currentTime);
     };
@@ -115,7 +114,6 @@ export default function LogSeizure(props: Props) {
 
     const insertQuery = async () => {
         let results = await SeizureLogDao.save(seizureLog);
-        console.log('inserted: ', results);
         props.navigation.goBack();
     }
 

@@ -9,9 +9,8 @@ export default class SurveyLogDao extends Dao {
             FROM
                 ${SurveyLogDb.table}
         ;`;
-        const db = await this.getDatabase();
-        const results = await db.executeSql(sql);
-        return this.SetResultsToList(results[0].rows) as SurveyLog[];
+        const resultSurveyLog = await this.runQuery(sql);
+        return this.convertQueryResultToObj(resultSurveyLog, SurveyLog);
     }
     static async getSurveyLogsByDate(date: Date) {
         let start = date.getTime();
@@ -25,11 +24,14 @@ export default class SurveyLogDao extends Dao {
             WHERE 
                 ${SurveyLogDb.fields.date} = ?
         ;`;
-        const db = await this.getDatabase();
-        const results = await db.executeSql(sql, [start, end]);
-        return this.SetResultsToList(results[0].rows) as SurveyLog[];
+        const resultSurveyLog = await this.runQuery(sql, [start, end]);
+        return this.convertQueryResultToObj(resultSurveyLog, SurveyLog);
     }
     static async getSurveysInDateRange(startDate:Date, endDate:Date):Promise<any[]> {
+        startDate.setHours(0,0,0,0);
+        let start = startDate.getTime();
+        endDate.setHours(23, 59, 59, 999);
+        let end = endDate.getTime();
         const sql = `
             SELECT
                 *
@@ -39,10 +41,8 @@ export default class SurveyLogDao extends Dao {
                 ${SurveyLogDb.fields.date} >= ?
                 and ${SurveyLogDb.fields.date} <= ?
         ;`;
-        const params = [startDate.toJSON().substring(0,10), endDate.toJSON().substring(0,10)];
-        const db = await this.getDatabase();
-        const results = await db.executeSql(sql, params);
-        return this.SetResultsToList(results[0].rows) as SurveyLog[];
+        const resultSurveyLog = await this.runQuery(sql, [start, end]);
+        return this.convertQueryResultToObj(resultSurveyLog, SurveyLog);
     }
     static async getSurveyLogById(survey_id: number | string) {
         const sql = `
@@ -53,80 +53,12 @@ export default class SurveyLogDao extends Dao {
             WHERE 
                 ${SurveyLogDb.fields.id} = ?
         ;`;
-        const db = await this.getDatabase();
-        const results = await db.executeSql(sql, [survey_id]);
-        return this.SetResultsToList(results[0].rows) as SurveyLog[];
+        const resultSurveyLog = await this.runQuery(sql, [survey_id]);
+        const convertedLogs = this.convertQueryResultToObj(resultSurveyLog, SurveyLog)[0];
+        return convertedLogs?convertedLogs:undefined;
     }
 
-    // TODO - Fix this!! 
-    static async insertSurveyLog(date: Date, sleep_start_date: Date, sleep_end_date: Date, stress_level: string, illness: boolean, fever: boolean, miss_meal: boolean, medication: boolean) {
-        let date_string = date.toJSON().substring(0,10);
-        const sql = `
-            INSERT INTO ${SurveyLogDb.table} 
-                (${SurveyLogDb.fields.date},
-                ${SurveyLogDb.fields.survey_id}) 
-            VALUES
-                (?,?,?,?,?,?,?,?)
-            ;
-        `;
-        const params = [
-            date_string,
-            sleep_start_date.toString(),
-            sleep_end_date.toString(),
-            stress_level,
-            illness.toString(),
-            fever.toString(),
-            miss_meal.toString(),
-            medication.toString()
-        ]
-        console.log('params: ', params);
-        const db = await this.getDatabase();
-        const results = await db.executeSql(sql, params);
-        return results;
-    }
-
-    static async deleteSurveyLog(id: number | string) {
-        const sql = `
-            DELETE FROM ${SurveyLogDb.table}
-            WHERE ${SurveyLogDb.fields.id} = ?
-        ;`;
-        const db = await this.getDatabase();
-        const results = await db.executeSql(sql, [id]);
-        return this.SetResultsToList(results[0].rows);
-    }
-
-    // TODO - Fix this!!!!!!!
-    static async updateSurveyLog(id: number | string, date: Date, sleep_start_date: Date, sleep_end_date: Date, stress_level: string, illness: boolean, fever: boolean, miss_meal: boolean, medication: boolean) {
-        let date_string = date.toJSON().substring(0, 10);
-        const sql = `
-            UPDATE survey_log 
-            SET    
-                date = ?, 
-                sleep_start_date =?,
-                sleep_end_date = ?, 
-                stress_level = ?,
-                illness = ?,
-                fever = ?,
-                miss_meal = ?,
-                medication = ? 
-            WHERE 
-                survey_id = ?
-            ;
-        `;
-        const params = [
-            date_string,
-            sleep_start_date.toString(),
-            sleep_end_date.toString(),
-            stress_level,
-            illness.toString(),
-            fever.toString(),
-            miss_meal.toString(),
-            medication.toString(),
-            id
-        ]
-        console.log('params: ', params);
-        const db = await this.getDatabase();
-        const results = await db.executeSql(sql, params);
-        return results;
+    static async delete(id: number | string) {
+        return await this.deleteObj(id, SurveyLogDb);
     }
 }

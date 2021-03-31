@@ -57,7 +57,6 @@ export default function AddMedication(props: Props) {
     const insertQuery = async () => {
         let results = await MedicationDao.save(medication);
         if (results) {
-            console.log('inserted: ', results);
             if (props.route.params.previousPage) {
                 props.navigation.navigate(props.route.params.previousPage, {tab:TabOptions.home, medication_id:results.insertId});
             } else {

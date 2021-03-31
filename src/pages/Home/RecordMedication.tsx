@@ -138,14 +138,12 @@ export default function RecordMedication(props: Props) {
 
     const onChangeTime = (_event: Event, selectedDate: Date | undefined) => {
         const currentTime = selectedDate || medicationLog.date;
-        console.log(selectedDate);
         update(MedicationLogDb.fields.time, currentTime.toLocaleTimeString());
         update(MedicationLogDb.fields.date, currentTime);
     };
 
     const insertQuery = async () => {
         let results = await MedicationLogDao.save(medicationLog);
-        console.log('inserted: ', results);
         props.navigation.goBack();
     }
 
