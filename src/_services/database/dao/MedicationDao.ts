@@ -27,10 +27,4 @@ export default class MedicationDao extends DAO {
         const resultMedication = await this.runQuery(sql, [id]);
         return this.convertQueryResultToObj(resultMedication, Medication)[0];
     }
-    static async insert(Medication:Medication) {
-        return await this.insertObj(Medication, MedicationDb);
-    }
-    static async update(Medication:Medication) {
-        return await this.updateObj(Medication, MedicationDb);
-    }
 }

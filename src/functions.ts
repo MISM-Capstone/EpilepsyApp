@@ -8,8 +8,18 @@ export function IterateThroughKeys(obj:any, action:(key:string, value:any)=>void
 
 export function CopyObjAttributes(objToCopy:any, objCopiedTo:any) {
     IterateThroughKeys(objToCopy, (key, value) => {
-        objCopiedTo[key] = value;
+        let oldValue = objCopiedTo[key];
+        if (oldValue !== null) {
+            if (!(oldValue instanceof Object) && typeof oldValue === typeof value) {
+                objCopiedTo[key] = value;            
+            } else if (oldValue instanceof Date) {
+                objCopiedTo[key] = new Date(value);
+            }
+        } else {
+            objCopiedTo[key] = value;
+        }
     });
+    console.log(objCopiedTo);
 }
 
 export function CopyAndSetKey<T extends Db>(obj:T, key:keyof T, value:any) {

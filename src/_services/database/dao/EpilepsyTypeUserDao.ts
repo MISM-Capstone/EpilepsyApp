@@ -12,10 +12,4 @@ export default class EpilepsyTypeDao extends DAO {
         const resultEpilepsyType = await this.runQuery(sql);
         return this.convertQueryResultToObj(resultEpilepsyType, EpilepsyTypeUser);
     }
-    static async insert(epilepsyTypeUser:EpilepsyTypeUser) {
-        return await this.insertObj(epilepsyTypeUser, EpilepsyTypeUserDb);
-    }
-    static async update(epilepsyTypeUser:EpilepsyTypeUser) {
-        return await this.updateObj(epilepsyTypeUser, EpilepsyTypeUserDb);
-    }
 }

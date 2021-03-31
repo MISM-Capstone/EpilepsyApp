@@ -42,9 +42,9 @@ export default class PDF {
     }
 
     static async generatePDF(startDate: Date, endDate: Date, imageLinks:string[]) {
-        const dbSeizures = await SeizureLogDao.getSeizuresInDateRange(startDate, endDate);
+        const dbSeizures = await SeizureLogDao.getInDateRange(startDate, endDate);
         const dbSurveys = await SurveyLogDao.getSurveysInDateRange(startDate, endDate);
-        const dbMedication = await MedicationLogDao.getMedicationInDateRange(startDate, endDate);
+        const dbMedication = await MedicationLogDao.getInDateRange(startDate, endDate);
         let html = "";
         imageLinks.forEach((image) => {
             html += `<img src="${image}" />`;

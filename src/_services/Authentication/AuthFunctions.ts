@@ -13,7 +13,7 @@ export async function getUser(dispatch:React.Dispatch<AuthAction>) {
 }
 
 export async function registerUser(user:User, dispatch:React.Dispatch<AuthAction>) {
-    const result = await UserDao.insert(user);
+    const result = await UserDao.save(user);
     const newUser = await UserDao.getFirst();
     dispatch({type: AUTH_REDUCER_OPTIONS.setUser, user: newUser});
 }

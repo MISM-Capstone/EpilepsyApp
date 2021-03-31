@@ -5,6 +5,10 @@ export default class Medication extends Db {
     description:string = "";
     dosage:number = 0;
     dosage_unit_id: number;
+    get db() {
+        return MedicationDb;
+    }
+
     constructor(dosageUnitId:number = 0) {
         super()
         this.dosage_unit_id = dosageUnitId;

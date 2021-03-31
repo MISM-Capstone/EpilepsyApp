@@ -36,9 +36,9 @@ const CreateTableQuery = {
     seizure_log: `
         CREATE TABLE IF NOT EXISTS "seizure_log" (
             "id"	INTEGER NOT NULL UNIQUE,
-            "date_recorded"	TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            "date_modified"	DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            "date"	DATE NOT NULL,
+            "date_recorded"	INTEGER NOT NULL,
+            "date_modified"	INTEGER NOT NULL,
+            "date"	INTEGER NOT NULL,
             "time"	TEXT NOT NULL,
             "notes"	TEXT,
             "location_id"	INTEGER NOT NULL,
@@ -69,9 +69,9 @@ const CreateTableQuery = {
     survey_log: `
         CREATE TABLE IF NOT EXISTS "survey_log" (
             "id"	INTEGER NOT NULL UNIQUE,
-            "date_recorded"	TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            "date_modified"	DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            "date"	DATE NOT NULL,
+            "date_recorded"	INTEGER NOT NULL,
+            "date_modified"	INTEGER NOT NULL,
+            "date"	INTEGER NOT NULL,
             "survey_id"	INTEGER NOT NULL,
             "user_id"	INTEGER NOT NULL,
             FOREIGN KEY("survey_id") REFERENCES "survey"("id"),
@@ -113,9 +113,9 @@ const CreateTableQuery = {
     medication_log: `
         CREATE TABLE IF NOT EXISTS "medication_log" (
             "id"	INTEGER NOT NULL UNIQUE,
-            "date_recorded"	TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            "date_modified"	DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            "date"	DATE NOT NULL,
+            "date_recorded"	INTEGER NOT NULL,
+            "date_modified"	INTEGER NOT NULL,
+            "date"	INTEGER NOT NULL,
             "time"	TEXT NOT NULL,
             "dosage" INTEGER NOT NULL,
             "dosage_unit_id"	INTEGER NOT NULL,

@@ -14,6 +14,11 @@ import AddMedication from '../pages/Home/AddMedication';
 import AddDosageUnit from '../pages/Home/AddDosageUnit';
 import PersonalSurveys from '../pages/Home/PersonalSurveys';
 import AddEditSurvey from '../pages/Home/AddEditSurvey';
+import { TabOptions } from "../components/TabOptions";
+
+type TabProps = {
+    tab: TabOptions.home;
+}
 
 type EditProps ={
     date?:Date;
@@ -40,17 +45,17 @@ export type EditSurveyProps = {
 }
 
 export type HomeStackParamList = {
-    Home: undefined;
-    DailySurvey: undefined;
-    SurveyHistory: undefined;
-    LogSeizure: EditSeizureProps & EditProps;
-    RecordMedication: EditMedicationLogProps & EditProps;
-    HealthKitTest: undefined;
-    AddDosageUnit:AddProps;
-    AddLocation:AddProps;
-    AddMedication:AddProps & AddMedicationProps;
-    PersonalSurveys:undefined;
-    AddEditSurvey:AddProps & EditSurveyProps;
+    Home: TabProps;
+    DailySurvey: TabProps;
+    SurveyHistory: TabProps;
+    LogSeizure: TabProps & EditSeizureProps & EditProps;
+    RecordMedication: TabProps & EditMedicationLogProps & EditProps;
+    HealthKitTest: TabProps;
+    AddDosageUnit: TabProps & AddProps;
+    AddLocation:TabProps & AddProps;
+    AddMedication:TabProps & AddProps & AddMedicationProps;
+    PersonalSurveys:TabProps;
+    AddEditSurvey:TabProps & AddProps & EditSurveyProps;
 };
 
 const Stack = createStackNavigator<HomeStackParamList>();

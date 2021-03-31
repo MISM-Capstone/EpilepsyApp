@@ -1,13 +1,15 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, SafeAreaView, Button, Pressable } from 'react-native';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { View, Text, SafeAreaView, Button, Pressable } from 'react-native';
+import { DateObject } from 'react-native-calendars';
+import { ScrollView } from 'react-native-gesture-handler';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { TabOptions } from "../../components/TabOptions";
+import SeizureLog from '../../models/SeizureLog';
 import { TrendsStackParamList } from '../../navigation/TrendsNavigation';
 import HistoryStyles from '../../styles/HistoryStyles';
 import HistoryDao from '../../_services/database/dao/HistoryDao';
 import sleepDatesService from '../../_services/helpers/sleepDates.service';
-import UpdateSeizureLog from './UpdateLogs/UpdateSeizureLog';
 
 type Props = {
     navigation: any;
@@ -35,7 +37,7 @@ function SeizureCard(props: RenderProps) {
                     <Text>Location: {props.log.location}</Text>
                     <Text>Notes: {props.log.notes}</Text>
                 </View>
-                <Pressable onPress={() => props.navigation.navigate("UpdateSeizureLog", { seizure_id: props.log.seizure_id })}>
+                <Pressable onPress={() => props.navigation.navigate("UpdateSeizureLog", {tab:TabOptions.trends, seizure_id: props.log.id })}>
                     <MaterialCommunityIcons name="pencil" size={25} color={'#44C2B3'} />
                 </Pressable>
             </View>
@@ -75,13 +77,15 @@ function MedicationCard(props: RenderProps) {
 const DateHistory = (props: Props) => {
     const { date } = props.route.params;
 
-    const [seizures, setSeizures] = useState<any[]>([]);
+    const [seizures, setSeizures] = useState<SeizureLog[]>([]);
     const [surveys, setSurveys] = useState<any[]>([]);
     const [medications, setMedications] = useState<any[]>([]);
 
     useEffect(() => {
         (async () => {
-            const results = await HistoryDao.getAllLogsByDate(date.dateString);
+            let d = date as DateObject;
+            let sendDate = new Date(d.dateString);
+            const results = await HistoryDao.getAllLogsByDate(sendDate);
             setSeizures(results['seizures']);
             setSurveys(results['surveys']);
             setMedications(results['medications']);

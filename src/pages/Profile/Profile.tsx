@@ -9,7 +9,7 @@ import MainStyles from "../../styles/MainStyles";
 import NavigationButton from '../../components/NavigationButton';
 import ProfileStyles from '../../styles/ProfileStyles';
 import { GetAuthContext } from '../../_services/Providers/AuthProvider';
-import User, { UserDb } from '../../models/User';
+import User from '../../models/User';
 import { CopyAndSetKey } from '../../functions';
 import LoginStyles from '../../styles/LoginStyles';
 
@@ -39,7 +39,7 @@ const Profile = (props:Props) => {
                     placeholder="First Name"
                     value={updateUser.first_name}
                     onChangeText={(value) => {
-                        updateValue(UserDb.fields.first_name, value);
+                        updateValue(updateUser.db.fields.first_name, value);
                     }}
                     style={LoginStyles.input}
                 />
@@ -47,13 +47,13 @@ const Profile = (props:Props) => {
                     placeholder="Last Name"
                     value={updateUser.last_name}
                     onChangeText={(value) => {
-                        updateValue(UserDb.fields.last_name, value);
+                        updateValue(updateUser.db.fields.last_name, value);
                     }}
                     style={LoginStyles.input}
                 />
                 <NavigationButton
                     title="Update"
-                    icon="login"
+                    icon="content-save-outline"
                     navigate={() => update(updateUser)}
                 />
                 <NavigationButton

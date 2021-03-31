@@ -19,6 +19,7 @@ import DosageUnitDao from '../../_services/database/dao/DosageUnitDao';
 import { Picker } from '@react-native-picker/picker';
 import { InputContainer } from '../../components/Inputs/InputComponents';
 import { SingleInput } from '../../components/Inputs/Input';
+import { TabOptions } from "../../components/TabOptions";
 
 type RecordMedicationScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'RecordMedication'>;
 type LogSeizureScreenRouteProp = RouteProp<HomeStackParamList, 'RecordMedication'>;
@@ -143,7 +144,7 @@ export default function RecordMedication(props: Props) {
     };
 
     const insertQuery = async () => {
-        let results = await MedicationLogDao.insert(medicationLog);
+        let results = await MedicationLogDao.save(medicationLog);
         console.log('inserted: ', results);
         props.navigation.goBack();
     }
@@ -173,7 +174,7 @@ export default function RecordMedication(props: Props) {
                     </InputContainer>
                     <InputContainer title="Medication">
                         <Button title="Add Medication" onPress={() => {
-                            props.navigation.navigate("AddMedication", {previousPage:"RecordMedication"})
+                            props.navigation.navigate("AddMedication", {tab:TabOptions.home, previousPage:"RecordMedication"})
                         }} />
                         {
                             medications.length ?
@@ -202,7 +203,7 @@ export default function RecordMedication(props: Props) {
                     />
                     <InputContainer title="Dosage Unit">
                         <Button title="Add Dosage Unit" onPress={() => {
-                            props.navigation.navigate("AddDosageUnit", {previousPage:"RecordMedication"})
+                            props.navigation.navigate("AddDosageUnit", {tab:TabOptions.home, previousPage:"RecordMedication"})
                         }} />
                         {
                             dosageUnits.length ?

@@ -7,13 +7,18 @@ import HeaderStyle from "../styles/HeaderStyle";
 import DateHistory from '../pages/Trends/DateHistory';
 import { DateObject } from 'react-native-calendars';
 import Charts from '../pages/Trends/Charts';
-import UpdateSeizureLog from '../pages/Trends/UpdateLogs/UpdateSeizureLog';
+import LogSeizure from '../pages/Home/LogSeizure';
+import { TabOptions } from "../components/TabOptions";
+
+type TabProps = {
+    tab: TabOptions.trends
+}
 
 export type TrendsStackParamList = {
-    Trends: undefined;
-    DateHistory: { date: DateObject };
-    Charts: undefined;
-    UpdateSeizureLog: { seizure_id: number};
+    Trends: TabProps;
+    DateHistory: TabProps & { date: DateObject };
+    Charts: TabProps;
+    UpdateSeizureLog: TabProps & { seizure_id: number};
 };
 
 const Stack = createStackNavigator<TrendsStackParamList>();
@@ -41,7 +46,7 @@ const HomeNavigation = () => {
                 <Stack.Screen
                     name="UpdateSeizureLog"
                     options={() => ({title: "Update Seizure"})}
-                    component={UpdateSeizureLog}
+                    component={LogSeizure}
                 />
             </Stack.Navigator>
         </>

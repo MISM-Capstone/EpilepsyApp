@@ -9,6 +9,7 @@ import { default as mainStyle } from "../../styles/MainStyles";
 import { CalendarList } from 'react-native-calendars';
 import HistoryDao from '../../_services/database/dao/HistoryDao';
 import LargeButton from '../../components/LargeButton';
+import { TabOptions } from "../../components/TabOptions";
 
 type TrendsScreenNavigationProp = StackNavigationProp<
     TrendsStackParamList,
@@ -24,9 +25,8 @@ const Trends = (props: Props) => {
 
     useEffect(() => {
         async function getMarkedDates() {
-            let dates: any[] = await HistoryDao.getAllEventDates();
-            let marked = dates.reduce((c: any, v: any) => Object.assign(c, {[v.date]: {marked: true}}), {});
-            setMarkedDates(marked);
+            let dates = await HistoryDao.getAllEventDates();
+            setMarkedDates(dates);
         }
 
         getMarkedDates();
@@ -35,7 +35,7 @@ const Trends = (props: Props) => {
     return (
         <SafeAreaView style={mainStyle.container}>
             <View style={{paddingBottom: 20}}>
-                <LargeButton title="View Charts" navigate={() => props.navigation.navigate("Charts")} />
+                <LargeButton title="View Charts" navigate={() => props.navigation.navigate("Charts", {tab:TabOptions.trends})} />
             </View>
             {/* Docs: https://github.com/wix/react-native-calendars */}
             <CalendarList
@@ -50,6 +50,7 @@ const Trends = (props: Props) => {
 
                 onDayPress={(day) => {
                     props.navigation.navigate('DateHistory', {
+                        tab:TabOptions.trends,
                         date: day
                     });
                 }}

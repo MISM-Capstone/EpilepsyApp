@@ -15,10 +15,4 @@ export default class DosageUnitDao extends DAO {
         const resultDosageUnit = await this.runQuery(sql);
         return this.convertQueryResultToObj(resultDosageUnit, DosageUnit);
     }
-    static async insert(dosageUnit:DosageUnit) {
-        return await this.insertObj(dosageUnit, DosageUnitDb);
-    }
-    static async update(dosageUnit:DosageUnit) {
-        return await this.updateObj(dosageUnit, DosageUnitDb);
-    }
 }

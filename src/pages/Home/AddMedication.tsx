@@ -4,7 +4,6 @@ import { Text, View, Button } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from "../../navigation/HomeNavigation";
-import SurveyStyles from '../../styles/SurveyStyles';
 import { CopyAndSetKey } from '../../functions';
 import { RouteProp } from '@react-navigation/native';
 import Medication, { MedicationDb } from '../../models/Medication/Medication';
@@ -14,6 +13,7 @@ import DosageUnitDao from '../../_services/database/dao/DosageUnitDao';
 import { Picker } from '@react-native-picker/picker';
 import { SingleInput, MultiInput } from '../../components/Inputs/Input';
 import { InputContainer } from '../../components/Inputs/InputComponents';
+import { TabOptions } from "../../components/TabOptions";
 
 type MedicationcreenNavigationProp = StackNavigationProp<HomeStackParamList, 'AddMedication'>;
 type MedicationScreenRouteProp = RouteProp<HomeStackParamList, 'AddMedication'>;
@@ -55,11 +55,11 @@ export default function AddMedication(props: Props) {
     }
 
     const insertQuery = async () => {
-        let results = await MedicationDao.insert(medication);
+        let results = await MedicationDao.save(medication);
         if (results) {
             console.log('inserted: ', results);
             if (props.route.params.previousPage) {
-                props.navigation.navigate(props.route.params.previousPage, {medication_id:results.insertId});
+                props.navigation.navigate(props.route.params.previousPage, {tab:TabOptions.home, medication_id:results.insertId});
             } else {
                 props.navigation.goBack();
             }
@@ -92,7 +92,7 @@ export default function AddMedication(props: Props) {
                 />
                 <InputContainer title="Dosage Unit">
                     <Button title="Add Dosage Unit" onPress={() => {
-                        props.navigation.navigate("AddDosageUnit", {previousPage:"AddMedication"})
+                        props.navigation.navigate("AddDosageUnit", {tab:TabOptions.home, previousPage:"AddMedication"})
                     }} />
                     {
                         dosageUnits.length ?

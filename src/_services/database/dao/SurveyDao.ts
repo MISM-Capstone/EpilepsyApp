@@ -27,10 +27,4 @@ export default class SurveyDao extends DAO {
         const resultSurvey = await this.runQuery(sql, [id]);
         return this.convertQueryResultToObj(resultSurvey, Survey)[0];
     }
-    static async insert(survey:Survey) {
-        return await this.insertObj(survey, SurveyDb);
-    }
-    static async update(survey:Survey) {
-        return await this.updateObj(survey, SurveyDb);
-    }
 }

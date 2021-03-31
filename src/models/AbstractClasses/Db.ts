@@ -9,6 +9,7 @@ export default abstract class Db {
         }
         return objCopy as this;
     }
+    abstract get db():DBObj;
 }
 
 export type DBObjFields = {[k:string]:string}

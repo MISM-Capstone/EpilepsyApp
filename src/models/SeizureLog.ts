@@ -4,6 +4,10 @@ export default class SeizureLog extends Log {
     time: string = "";
     notes: string = "";
     location_id: number;
+    get db() {
+        return SeizureLogDb;
+    }
+    
     constructor(user:number=0, locationId:number=0) {
         super(user);
         this.location_id = locationId;

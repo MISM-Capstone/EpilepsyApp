@@ -9,6 +9,7 @@ import { RouteProp } from '@react-navigation/native';
 import DosageUnit, { DosageUnitDb } from '../../models/DosageUnits';
 import DosageUnitDao from '../../_services/database/dao/DosageUnitDao';
 import { MultiInput, SingleInput } from '../../components/Inputs/Input';
+import { TabOptions } from "../../components/TabOptions";
 
 type DosageUnitScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'AddDosageUnit'>;
 type DosageUnitScreenRouteProp = RouteProp<HomeStackParamList, 'AddDosageUnit'>;
@@ -33,11 +34,11 @@ export default function AddDosageUnit(props: Props) {
     }
 
     const insertQuery = async () => {
-        let results = await DosageUnitDao.insert(dosageUnit);
+        let results = await DosageUnitDao.save(dosageUnit);
         if (results) {
             console.log('inserted: ', results);
             if (props.route.params.previousPage) {
-                props.navigation.navigate(props.route.params.previousPage, {dosage_unit_id:results.insertId});
+                props.navigation.navigate(props.route.params.previousPage, {tab:TabOptions.home, dosage_unit_id:results.insertId});
             } else {
                 props.navigation.goBack();
             }

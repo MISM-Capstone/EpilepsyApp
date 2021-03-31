@@ -4,6 +4,10 @@ export default class SurveyAnswer extends Db {
     answer: string = "";
     survey_log_id: number;
     survey_field_id: number;
+    get db() {
+        return SurveyAnswerDb;
+    }
+    
     constructor(surveyLogId:number = 0, surveyFieldId:number = 0) {
         super();
         this.survey_log_id = surveyLogId;

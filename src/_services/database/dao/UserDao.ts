@@ -14,13 +14,7 @@ export default class UserDao extends DAO {
         let convertedUsers =  this.convertQueryResultToObj(resultUsers, User)[0];
         return convertedUsers?convertedUsers:undefined;
     }
-    static async insert(user:User) {
-        return await this.insertObj(user, UserDb);
-    }
-    static async deleteSeizureLog(id: number | string) {
+    static async delete(id: number | string) {
         return await this.deleteObj(id, UserDb);
-    }
-    static async update(user:User) {
-        return await this.updateObj(user, UserDb);
     }
 }

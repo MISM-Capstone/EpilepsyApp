@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Text } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import SafeAreaView from 'react-native-safe-area-view';
+import { TabOptions } from "../../components/TabOptions";
 import SurveyCard from "../../components/SummaryCards/SurveyCard";
 import Survey from "../../models/Surveys/Survey";
 import { HomeStackParamList } from "../../navigation/HomeNavigation";
@@ -41,6 +42,7 @@ export default function PersonalSurveys(props:Props) {
                                     props.navigation.navigate(
                                         "AddEditSurvey",
                                         {
+                                            tab: TabOptions.home,
                                             previousPage: "PersonalSurveys",
                                             survey: survey.id!,
                                         }

@@ -11,6 +11,7 @@ import HomeStyles from "../../styles/HomeStyles";
 import {default as mainStyle} from "../../styles/MainStyles";
 import { GetAuthContext } from '../../_services/Providers/AuthProvider';
 import { ScrollView } from 'react-native-gesture-handler';
+import { TabOptions } from "../../components/TabOptions";
 
 type HomeScreenNavigationProp = StackNavigationProp<HomeStackParamList,'Home'>;
 
@@ -31,32 +32,32 @@ const Home = (props:Props) => {
                 <NavigationButton
                     title="Log a Seizure"
                     icon="clipboard-pulse"
-                    navigate={() => props.navigation.navigate("LogSeizure", {})}
+                    navigate={() => props.navigation.navigate("LogSeizure", {tab:TabOptions.home})}
                 />
                 <NavigationButton
                     title="Take Daily Survey"
                     icon="comment"
-                    navigate={() => props.navigation.navigate("DailySurvey")}
+                    navigate={() => props.navigation.navigate("DailySurvey", {tab:TabOptions.home})}
                 />
                 <NavigationButton
                     title="Record Medication"
                     icon="pill"
-                    navigate={() => props.navigation.navigate("RecordMedication", {})}
+                    navigate={() => props.navigation.navigate("RecordMedication", {tab:TabOptions.home})}
                 />
                 <NavigationButton
                     title="My Surveys"
-                    icon="pill"
-                    navigate={() => props.navigation.navigate("PersonalSurveys")}
+                    icon="file"
+                    navigate={() => props.navigation.navigate("PersonalSurveys", {tab:TabOptions.home})}
                 />
                 <NavigationButton
                     title="Survey History"
                     icon="archive"
-                    navigate={() => props.navigation.navigate("SurveyHistory")}
+                    navigate={() => props.navigation.navigate("SurveyHistory", {tab:TabOptions.home})}
                 />
                 <NavigationButton
                     title="Healthkit"
                     icon="hospital-box"
-                    navigate={() => props.navigation.navigate("HealthKitTest")}
+                    navigate={() => props.navigation.navigate("HealthKitTest", {tab:TabOptions.home})}
                 />
             </ScrollView>
 

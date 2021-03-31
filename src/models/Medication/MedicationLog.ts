@@ -6,6 +6,10 @@ export default class MedicationLog extends Log {
     dosage: number = 0;
     dosage_unit_id: number = 0;
     medication_id: number = 0;
+    get db() {
+        return MedicationLogDb;
+    }
+    
     constructor(userId: number = 0, medication?:Medication) {
         super(userId);
         this.time = this.date.toLocaleTimeString();

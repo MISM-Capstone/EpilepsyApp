@@ -13,7 +13,10 @@ export default class SurveyLogDao extends Dao {
         const results = await db.executeSql(sql);
         return this.SetResultsToList(results[0].rows) as SurveyLog[];
     }
-    static async getSurveyLogsByDate(date: string) {
+    static async getSurveyLogsByDate(date: Date) {
+        let start = date.getTime();
+        date.setHours(23, 59, 59, 999);
+        let end = date.getTime();
         const sql = `
             SELECT
                 *
@@ -23,7 +26,7 @@ export default class SurveyLogDao extends Dao {
                 ${SurveyLogDb.fields.date} = ?
         ;`;
         const db = await this.getDatabase();
-        const results = await db.executeSql(sql, [date]);
+        const results = await db.executeSql(sql, [start, end]);
         return this.SetResultsToList(results[0].rows) as SurveyLog[];
     }
     static async getSurveysInDateRange(startDate:Date, endDate:Date):Promise<any[]> {

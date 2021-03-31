@@ -37,12 +37,16 @@ export default class HistoryDao extends Dao {
             FROM
                 ${MedicationLogDb.table}
         ;`;
-        const db = await this.getDatabase();
-        const results = await db.executeSql(sql);
-        return this.SetResultsToList(results[0].rows);
+        const result = await this.runQuery(sql);
+        let marked = result.reduce((c: any, v: any) => {
+            const date = new Date(v.date);
+            return Object.assign(c, { [date.toJSON().substring(0,10)]: { marked: true } });
+        }, {});
+        return marked;
     }
 
-    static async getAllLogsByDate(date: string) {
+    static async getAllLogsByDate(date: Date) {
+        console.log("All logs")
         const seizures = await SeizureLogDao.getByDate(date);
         const surveys = await SurveyLogDao.getSurveyLogsByDate(date);
         const medications = await MedicationLogDao.getByDate(date);
@@ -51,6 +55,7 @@ export default class HistoryDao extends Dao {
             surveys: surveys,
             medications: medications
         };
+        console.log(data)
         return data;
     }
 }

@@ -30,6 +30,7 @@ export default abstract class DAO {
         const db = await this.getDatabase();
         let results:ResultSet[] = [];
         try {
+            console.log("Running Query")
             await db.transaction(async tx => {
                 let [, result] = await tx.executeSql(sql, params);
                 results.push(result);
@@ -44,6 +45,7 @@ export default abstract class DAO {
     protected static convertQueryResultToObj<T extends Db>(queryResult:any[], type: (new (...args: any[]) => T), ...args: any[]) {
         let convertedResults:T[] = [];
         queryResult.forEach((result) => {
+            console.log("Result:",result);
             const converted = new type(...args);
             CopyObjAttributes(result, converted);
             convertedResults.push(converted);
@@ -51,28 +53,14 @@ export default abstract class DAO {
         return convertedResults;
     }
 
-    protected static async insertObj(obj:Db, dbObj:DBObj) {
-        const tableAttributes = this.getObjParamsForInsert(obj);
-        console.log("----------------------------------");
-        console.log(tableAttributes);
-        const sql = `
-            INSERT INTO ${dbObj.table}
-                (${tableAttributes.attributes})
-            VALUES
-                (${tableAttributes.values});
-        `;
-        return await this.runTrueFalseQuery(sql, tableAttributes.params);
-    }
-
-    protected static async updateObj(obj:Db, dbObj:DBObj) {
-        const tableAttributes = this.getObjParamsForUpdate(obj);
-        tableAttributes.params.push(obj.id);
-        const sql = `
-            UPDATE ${dbObj.table}
-            SET ${tableAttributes.setSQL}
-            WHERE ${dbObj.fields.id} = ?;
-        `;
-        return await this.runTrueFalseQuery(sql, tableAttributes.params);
+    static async save(obj:Db) {
+        let result;
+        if (obj.id) {
+            result = await this.updateObj(obj);
+        } else {
+            result = await this.insertObj(obj);
+        }
+        return result as false | SQLite.ResultSet;
     }
 
     protected static async deleteObj(id:number | string, dbObj:DBObj) {
@@ -81,6 +69,31 @@ export default abstract class DAO {
             WHERE ${dbObj.fields.id} = ?
         ;`;
         return await this.runTrueFalseQuery(sql, [id])
+    }
+
+
+    private static async insertObj(obj:Db) {
+        const tableAttributes = this.getObjParamsForInsert(obj);
+        console.log("----------------------------------");
+        console.log(tableAttributes);
+        const sql = `
+            INSERT INTO ${obj.db.table}
+                (${tableAttributes.attributes})
+            VALUES
+                (${tableAttributes.values});
+        `;
+        return await this.runTrueFalseQuery(sql, tableAttributes.params);
+    }
+
+    private static async updateObj(obj:Db) {
+        const tableAttributes = this.getObjParamsForUpdate(obj);
+        tableAttributes.params.push(obj.id);
+        const sql = `
+            UPDATE ${obj.db.table}
+            SET ${tableAttributes.setSQL}
+            WHERE ${obj.db.fields.id} = ?;
+        `;
+        return await this.runTrueFalseQuery(sql, tableAttributes.params);
     }
 
     private static async runTrueFalseQuery(sql:string, params?:any[]) {
@@ -151,7 +164,7 @@ export default abstract class DAO {
         let convertedValue = null;
         if (value) {
             if (value instanceof Date) {
-                convertedValue = value.toJSON().substring(0,10);
+                convertedValue = value.getTime().toString();
             } else if (typeof value === "number" || (typeof value === "object" && value.constructor === Number)) {
                 convertedValue = value.toString();
             } else if (typeof value === "boolean") {

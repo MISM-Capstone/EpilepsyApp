@@ -4,6 +4,10 @@ export default class DosageUnit extends Db {
     name:string = "";
     description:string = "";
     is_default:boolean = false;
+    get db() {
+        return DosageUnitDb;
+    }
+    
 }
 
 export const DosageUnitDb = {

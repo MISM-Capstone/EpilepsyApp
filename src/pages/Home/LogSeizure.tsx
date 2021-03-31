@@ -15,13 +15,18 @@ import { RouteProp } from '@react-navigation/native';
 import LocationDao from '../../_services/database/dao/LocationDao';
 import { InputContainer } from '../../components/Inputs/InputComponents';
 import { MultiInput } from '../../components/Inputs/Input';
+import { TrendsStackParamList } from '../../navigation/TrendsNavigation';
+import { TabOptions } from "../../components/TabOptions";
 
-type LogSeizureScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'LogSeizure'>;
-type LogSeizureScreenRouteProp = RouteProp<HomeStackParamList, 'LogSeizure'>;
+type homeNavProp = StackNavigationProp<HomeStackParamList, 'LogSeizure'>;
+type homeRouteProp = RouteProp<HomeStackParamList, 'LogSeizure'>;
+
+type trendNavProp = StackNavigationProp<TrendsStackParamList, 'UpdateSeizureLog'>;
+type trendRouteProp = RouteProp<TrendsStackParamList, 'UpdateSeizureLog'>;
 
 type Props = {
-    navigation: LogSeizureScreenNavigationProp;
-    route: LogSeizureScreenRouteProp;
+    navigation: homeNavProp | trendNavProp;
+    route: homeRouteProp | trendRouteProp;
 };
 
 type ErrorObject = {
@@ -42,7 +47,7 @@ export default function LogSeizure(props: Props) {
     const errors: ErrorObject = {};
 
     useEffect(() => {
-        if (props.route.params && props.route.params.date) {
+        if (props.route.params.tab === TabOptions.home && props.route.params.date) {
             // TODO - Figure out what object type date is
             let date: any = props.route.params.date;
             let paramDate = new Date(date.dateString.replace(/-/g, '\/'));
@@ -51,7 +56,7 @@ export default function LogSeizure(props: Props) {
     }, []);
 
     useEffect(() => {
-        if (props.route.params.location_id) {
+        if (props.route.params.tab === TabOptions.home && props.route.params.location_id) {
             updateValue(SeizureLogDb.fields.location_id, props.route.params.location_id);
         }
         (async () => {
@@ -64,7 +69,16 @@ export default function LogSeizure(props: Props) {
             }
             setLocations(locs);
         })();
-    }, [props.route.params.location_id]);
+            (async () => {
+                if (props.route.params.tab === TabOptions.trends) {
+                    const id = props.route.params.seizure_id;
+                    const foundSeizure = await SeizureLogDao.getById(id);
+                    if (foundSeizure) {
+                        setSeizureLog(foundSeizure);
+                    }
+                }
+            })();
+    }, [props.route.params]);
 
     const onChangeDate = (_event: Event, selectedDate: Date | undefined) => {
         const currentDate = selectedDate || seizureLog.date;
@@ -100,7 +114,7 @@ export default function LogSeizure(props: Props) {
     }
 
     const insertQuery = async () => {
-        let results = await SeizureLogDao.insert(seizureLog);
+        let results = await SeizureLogDao.save(seizureLog);
         console.log('inserted: ', results);
         props.navigation.goBack();
     }
@@ -129,7 +143,10 @@ export default function LogSeizure(props: Props) {
                 </InputContainer>
                 <InputContainer title="Location">
                     <Button title="Add Location" onPress={() => {
-                        props.navigation.navigate("AddLocation", {previousPage:"LogSeizure"})
+                        if (props.route.params.tab ===  TabOptions.home) {
+                            const nav = props.navigation as homeNavProp;
+                            nav.navigate("AddLocation", {tab:TabOptions.home, previousPage:"LogSeizure"})
+                        }
                     }} />
                     {
                         locations.length ?

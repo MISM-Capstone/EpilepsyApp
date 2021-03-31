@@ -13,16 +13,20 @@ export default class SeizureLogDao extends Dao {
         const resultSeizureLog = await this.runQuery(sql);
         return this.convertQueryResultToObj(resultSeizureLog, SeizureLog);
     }
-    static async getByDate(date: string) {
+    static async getByDate(date: Date) {
+        let start = date.getTime();
+        date.setHours(23, 59, 59, 999);
+        let end = date.getTime();
         const sql = `
             SELECT
                 *
             FROM
                 ${SeizureLogDb.table}
             WHERE 
-                ${SeizureLogDb.fields.date} = ?
+                ${SeizureLogDb.fields.date} >= ?
+                AND ${SeizureLogDb.fields.date} <= ?
         ;`;
-        const resultSeizureLog = await this.runQuery(sql, [date]);
+        const resultSeizureLog = await this.runQuery(sql, [start, end]);
         return this.convertQueryResultToObj(resultSeizureLog, SeizureLog);
     }
     static async getInDateRange(startDate:Date, endDate:Date) {
@@ -53,13 +57,7 @@ export default class SeizureLogDao extends Dao {
         return convertedLogs?convertedLogs:undefined;
     }
 
-    static async insert(seizureLog:SeizureLog) {
-        return await this.insertObj(seizureLog, SeizureLogDb);
-    }
-    static async deleteSeizureLog(id: number | string) {
+    static async delete(id: number | string) {
         return await this.deleteObj(id, SeizureLogDb);
-    }
-    static async update(seizureLog:SeizureLog) {
-        return await this.updateObj(seizureLog, SeizureLogDb);
     }
 }

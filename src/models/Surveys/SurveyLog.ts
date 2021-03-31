@@ -2,6 +2,10 @@ import Log, { LogFields } from "../AbstractClasses/Log";
 
 export default class SurveyLog extends Log {
     survey_id: number;
+    get db() {
+        return SurveyLogDb;
+    }
+    
     constructor(user:number=0, surveyId:number=0) {
         super(user);
         this.survey_id = surveyId;
