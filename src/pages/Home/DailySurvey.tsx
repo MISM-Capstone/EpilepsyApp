@@ -63,7 +63,7 @@ export default function DailySurvey(props: Props) {
                     setSleepStartDate(start);
                     setSleepEndDate(end);
                 } catch (err: unknown) {
-                    console.log(err)
+                    console.warn(err)
                 }
             });
         }

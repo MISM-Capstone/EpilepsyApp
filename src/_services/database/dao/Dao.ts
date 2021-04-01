@@ -35,7 +35,7 @@ export default abstract class DAO {
                 results.push(result);
             });
         } catch (err) {
-            console.log("SQL Error:", err);
+            console.warn("SQL Error:", err);
             throw err;
         }
         return this.SetResultsToList(results[0].rows);
@@ -72,8 +72,6 @@ export default abstract class DAO {
 
     private static async insertObj(obj:Db) {
         const tableAttributes = this.getObjParamsForInsert(obj);
-        console.log("----------------------------------");
-        console.log(tableAttributes);
         const sql = `
             INSERT INTO ${obj.db.table}
                 (${tableAttributes.attributes})
@@ -105,7 +103,7 @@ export default abstract class DAO {
             return results[0];
 
         } catch (error) {
-            console.log("Error:",error);
+            console.warn("Error:",error);
         }
         return false;
     }
@@ -171,9 +169,9 @@ export default abstract class DAO {
                 try {
                     convertedValue = value.toString() as string;
                 } catch (error) {
-                    console.log("ERROR:", error);
-                    console.log("-------- You need to implement toString() for the following value --------");
-                    console.log("Value:", value);
+                    console.warn("ERROR:", error);
+                    console.warn("-------- You need to implement toString() for the following value --------");
+                    console.warn("Value:", value);
                 }
             } else {
                 convertedValue = value;
@@ -229,7 +227,7 @@ export default abstract class DAO {
     private static handleAppStateChange(nextAppState: AppStateStatus) {
         if (DAO.appState === "active" && nextAppState.match(/inactive|background/)) {
             // App has moved from the foreground into the background (or become inactive)
-            DAO.close().then(() => console.log("Finished closing"));
+            DAO.close().then(() => console.info("Finished closing"));
         }
         DAO.appState = nextAppState;
     }

@@ -39,7 +39,6 @@ export default function PersonalSurveys(props:Props) {
     }), [props.navigation];
 
     useEffect(() => {
-        console.log("Survey ID:", props.route.params.survey_id);
         (async () => {
             const dbSurveys = await SurveyDao.getAll();
             setSurveys(dbSurveys);

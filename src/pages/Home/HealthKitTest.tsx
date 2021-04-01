@@ -21,7 +21,7 @@ const permissions = {
 
 AppleHealthKit.initHealthKit(permissions, (error: string) => {
     if (error) {
-        console.log('[ERROR] Cannot grant permissions!')
+        console.warn('[ERROR] Cannot grant permissions!')
     }
 });
 

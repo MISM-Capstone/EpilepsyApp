@@ -7,7 +7,7 @@ export async function getUser(dispatch:React.Dispatch<AuthAction>) {
     try {
         user = await UserDao.getFirst();
     } catch (e) {
-        console.log("Error getting user");
+        console.warn("Error getting user");
     }
     dispatch({type: AUTH_REDUCER_OPTIONS.setUser, user: user});
 }
@@ -19,7 +19,7 @@ export async function registerUser(user:User, dispatch:React.Dispatch<AuthAction
 }
 
 export async function updateUser(user:User, dispatch:React.Dispatch<AuthAction>) {
-    const result = await UserDao.update(user);
+    await UserDao.save(user);
     const newUser = await UserDao.getFirst();
     dispatch({type: AUTH_REDUCER_OPTIONS.setUser, user: newUser});
 }

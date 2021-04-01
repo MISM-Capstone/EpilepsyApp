@@ -78,7 +78,6 @@ export default function AddEditSurvey(props:Props) {
                 await SurveyFieldDao.save(field);
             }));
             if (props.route.params.previousPage) {
-                console.log("Curr ID:", surveyId)
                 props.navigation.navigate(props.route.params.previousPage, {tab:TabOptions.home, survey_id:surveyId});
             } else {
                 props.navigation.goBack();

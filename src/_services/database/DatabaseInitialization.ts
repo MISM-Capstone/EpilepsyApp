@@ -7,13 +7,13 @@ export class DatabaseInitialization {
     // This should be called each time the database is opened.
     public static async updateDatabaseTables(database: SQLite.SQLiteDatabase) {
         let dbVersion: number = 0;
-        console.log("Beginning database updates...");
+        console.info("Beginning database updates...");
   
         // First: create tables if they do not already exist
         await database.transaction(this.createTables)
         let version = await this.getDatabaseVersion(database);
         dbVersion = version;
-        console.log("Current database version is: " + dbVersion);
+        console.info("Current database version is: " + dbVersion);
         // Perform DB updates based on this version
         // This is included as an example of how you make database schema changes once the app has been shipped
         if (dbVersion < 1) {
@@ -96,7 +96,7 @@ export class DatabaseInitialization {
                 }
             })
             .catch((error) => {
-                console.log(`No version set. Returning 0. Details: ${error}`);
+                console.info(`No version set. Returning 0. Details: ${error}`);
                 return 0;
             })
         );
@@ -105,7 +105,7 @@ export class DatabaseInitialization {
     // Once the app has shipped, use the following functions as a template for updating the database:
       // This function should be called when the version of the db is < 1
       private static async preVersion1Inserts(transaction: SQLite.Transaction) {
-            console.log("Running pre-version 1 DB inserts");
+            console.info("Running pre-version 1 DB inserts");
             // Make schema changes
             transaction.executeSql(`
                 INSERT INTO epilepsy_type
@@ -163,7 +163,7 @@ export class DatabaseInitialization {
       }
       // This function should be called when the version of the db is < 2
       private static async preVersion2Inserts(transaction: SQLite.Transaction) {
-          console.log("Running pre-version 2 DB inserts");
+          console.info("Running pre-version 2 DB inserts");
           
           // Make schema changes
           transaction.executeSql("ALTER TABLE ...");

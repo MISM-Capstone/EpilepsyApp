@@ -19,7 +19,7 @@ export default class PDF {
                 onDismiss: () => {
                     RNFS.unlink(pdfURI)
                     .catch(error => {
-                        console.log("ERROR DELETING FILE:", error);
+                        console.warn("ERROR DELETING FILE:", error);
                     });
                 }
             };
