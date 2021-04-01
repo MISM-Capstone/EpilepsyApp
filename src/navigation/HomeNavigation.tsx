@@ -15,6 +15,7 @@ import AddDosageUnit from '../pages/Home/AddDosageUnit';
 import PersonalSurveys from '../pages/Home/PersonalSurveys';
 import AddEditSurvey from '../pages/Home/AddEditSurvey';
 import { TabOptions } from "../components/TabOptions";
+import { Button } from 'react-native';
 
 type TabProps = {
     tab: TabOptions.home;
@@ -100,8 +101,10 @@ const HomeNavigation = () => {
                 <Stack.Screen
                     name="PersonalSurveys"
                     component={PersonalSurveys}
-                    options={{
-                        title: 'Personal Surveys'
+                    options={({navigation, route}) => {
+                        return {
+                            title: 'Personal Surveys',
+                        }
                     }}
                 />
                 <Stack.Screen

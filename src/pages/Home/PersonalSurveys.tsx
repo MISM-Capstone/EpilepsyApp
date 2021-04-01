@@ -1,7 +1,7 @@
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
-import { Text } from "react-native";
+import { Button, Text } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import SafeAreaView from 'react-native-safe-area-view';
 import { TabOptions } from "../../components/TabOptions";
@@ -21,6 +21,23 @@ type Props = {
 
 export default function PersonalSurveys(props:Props) {
     const [surveys, setSurveys] = useState<Survey[]>([]);
+
+    React.useLayoutEffect(() => {
+        props.navigation.setOptions({
+            headerRight: () => {
+                return <Button title="Add" onPress={() => {
+                    props.navigation.navigate(
+                        "AddEditSurvey",
+                        {
+                            tab: TabOptions.home,
+                            previousPage: "PersonalSurveys",
+                        }
+                    );
+                }} />
+            }
+        });
+    }), [props.navigation];
+
     useEffect(() => {
         console.log("Survey ID:", props.route.params.survey_id);
         (async () => {
@@ -32,7 +49,7 @@ export default function PersonalSurveys(props:Props) {
     return (
         <SafeAreaView>
             <ScrollView>
-                <Text style={HistoryStyles.SectionHeader}>Seizures</Text>
+                <Text style={HistoryStyles.SectionHeader}>Suveys</Text>
                 {surveys.length > 0 ?
                     surveys.map(function (survey) {
                         return (
