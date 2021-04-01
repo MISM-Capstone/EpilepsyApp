@@ -20,13 +20,14 @@ type Props = {
 };
 
 export default function PersonalSurveys(props:Props) {
-    const [surveys, setSurveys] = useState<Survey[]>([])
+    const [surveys, setSurveys] = useState<Survey[]>([]);
     useEffect(() => {
+        console.log("Survey ID:", props.route.params.survey_id);
         (async () => {
             const dbSurveys = await SurveyDao.getAll();
             setSurveys(dbSurveys);
         })();
-    }, []);
+    }, [props.route.params.survey_id]);
 
     return (
         <SafeAreaView>

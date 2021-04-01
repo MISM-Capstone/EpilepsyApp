@@ -40,6 +40,10 @@ export type AddMedicationProps = {
 export type AddProps = {
     previousPage?: keyof HomeStackParamList;
 }
+type AddSurveyProps = {
+    survey_id?:number;
+}
+
 export type EditSurveyProps = {
     survey?: number;
 }
@@ -54,7 +58,7 @@ export type HomeStackParamList = {
     AddDosageUnit: TabProps & AddProps;
     AddLocation:TabProps & AddProps;
     AddMedication:TabProps & AddProps & AddMedicationProps;
-    PersonalSurveys:TabProps;
+    PersonalSurveys:TabProps & AddSurveyProps;
     AddEditSurvey:TabProps & AddProps & EditSurveyProps;
 };
 

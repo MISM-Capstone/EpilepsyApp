@@ -36,7 +36,6 @@ export default function AddLocation(props: Props) {
     const insertQuery = async () => {
         let results = await LocationDao.save(location);
         if (results) {
-            console.log('inserted: ', results);
             if (props.route.params.previousPage) {
                 props.navigation.navigate(props.route.params.previousPage, {tab:TabOptions.home, location_id:results.insertId});
             } else {

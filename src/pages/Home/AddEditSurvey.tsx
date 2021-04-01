@@ -11,6 +11,7 @@ import { HomeStackParamList } from "../../navigation/HomeNavigation";
 import SurveyDao from "../../_services/database/dao/SurveyDao";
 import SurveyFieldDao from "../../_services/database/dao/SurveyFieldDao";
 import SurveyFieldDisplay from "../../components/SurveyFieldDisplay";
+import { TabOptions } from "../../components/TabOptions";
 
 type AddEditSurveyScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'AddEditSurvey'>;
 type AddEditSurveyScreenRouteProp = RouteProp<HomeStackParamList, 'AddEditSurvey'>;
@@ -41,6 +42,12 @@ export default function AddEditSurvey(props:Props) {
         setFields(newFields);
     }
 
+    function addField() {
+        const newFields = Array.from(fields);
+        newFields.push(new SurveyField(survey.id?survey.id:undefined));
+        setFields(newFields);
+    }
+
     useEffect(() => {
         (async () => {
             const surveyId = props.route.params.survey;
@@ -61,6 +68,22 @@ export default function AddEditSurvey(props:Props) {
             }
         })();
     },[survey.id]);
+
+    const insertQuery = async () => {
+        let surveyResult = await SurveyDao.save(survey);
+        if (surveyResult) {
+            const surveyId = survey.id?survey.id:surveyResult.insertId
+            await Promise.all(fields.map(async (field) => {
+                field.survey_id = surveyId;
+                await SurveyFieldDao.save(field);
+            }));
+            if (props.route.params.previousPage) {
+                props.navigation.navigate(props.route.params.previousPage, {tab:TabOptions.home, survey_id:surveyId});
+            } else {
+                props.navigation.goBack();
+            }
+        }
+    }
 
     return (
         <SafeAreaView>
@@ -87,6 +110,7 @@ export default function AddEditSurvey(props:Props) {
                 >
                     <Text style={{fontSize: 25, color: `#333`}}>
                         Fields
+                        <Button title="Add" onPress={addField} />
                     </Text>
                 </View>
                 {
@@ -101,7 +125,9 @@ export default function AddEditSurvey(props:Props) {
                     })
                 }
 
+                <Button title="Save" onPress={insertQuery} />
                 <Button title="Cancel" onPress={props.navigation.goBack} />
+                <View style={{height:12}}></View>
             </ScrollView>
         </SafeAreaView>
     );

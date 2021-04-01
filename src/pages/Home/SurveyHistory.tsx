@@ -35,7 +35,7 @@ function SeizureCard(props: RenderSeizureLog) {
     const location = currentLocation?currentLocation.name:"";
     return (
         <View style={HistoryStyles.HistoryEventCard}>
-            <Text style={HistoryStyles.HistoryCardTitle}>{props.seizure.date}</Text>
+            <Text style={HistoryStyles.HistoryCardTitle}>{props.seizure.date.toString()}</Text>
             <View>
                 <Text>Time: {props.seizure.time}</Text>
                 <Text>Location: {location}</Text>
