@@ -2,7 +2,6 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Home from "../../pages/Home/Home";
-import DailySurvey from "../../pages/Home/DailySurvey";
 import SurveyHistory from "../../pages/Home/SurveyHistory";
 import AddEditSeizureLog from "../../pages/_Shared/AddEditSeizureLog";
 import RecordMedication from "../../pages/_Shared/RecordMedication";
@@ -15,6 +14,7 @@ import AddDosageUnit from '../../pages/_Shared/AddDosageUnit';
 import PersonalSurveys from '../../pages/Home/PersonalSurveys';
 import AddEditSurvey from '../../pages/Home/AddEditSurvey';
 import { HomeOptions, HomeStackParamList } from './HomeNavProps';
+import TakeSurvey from '../../pages/Home/TakeSurvey';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -29,13 +29,6 @@ const HomeNavigation = () => {
                 <Stack.Screen
                     name={HomeOptions.Home}
                     component={Home}
-                />
-                <Stack.Screen
-                    name={HomeOptions.DailySurvey}
-                    component={DailySurvey}
-                    options={{
-                        title: 'Daily Survey'
-                    }}
                 />
                 <Stack.Screen
                     name={HomeOptions.SurveyHistory}
@@ -65,6 +58,13 @@ const HomeNavigation = () => {
                     component={AddEditSurvey}
                     options={{
                         title: 'Edit Survey'
+                    }}
+                />
+                <Stack.Screen
+                    name={HomeOptions.TakeSurvey}
+                    component={TakeSurvey}
+                    options={{
+                        title: 'Take Survey'
                     }}
                 />
                 <Stack.Screen

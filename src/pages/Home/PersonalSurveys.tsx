@@ -75,12 +75,21 @@ export default function PersonalSurveys(props:Props) {
                             <SurveyCard
                                 survey={survey}
                                 key={survey.id}
-                                onClick={() => {
+                                onEdit={() => {
                                     updateContext.setPageToUpdate(props.route.name)
                                     props.navigation.navigate(
                                         HomeOptions.AddEditSurvey,
                                         {
                                             tab: TabOptions.home,
+                                            id: survey.id!,
+                                        }
+                                    );
+                                }}
+                                onStartSurvey={() => {
+                                    props.navigation.navigate(
+                                        HomeOptions.TakeSurvey,
+                                        {
+                                            tab:TabOptions.home,
                                             id: survey.id!,
                                         }
                                     );

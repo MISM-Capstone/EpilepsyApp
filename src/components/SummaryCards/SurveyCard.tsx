@@ -5,7 +5,8 @@ import HistoryStyles from "../../styles/HistoryStyles";
 
 type RenderProps = {
     survey: Survey;
-    onClick: any
+    onEdit: any;
+    onStartSurvey: any;
 }
 
 export default function SurveyCard(props: RenderProps) {
@@ -15,7 +16,8 @@ export default function SurveyCard(props: RenderProps) {
             <View>
                 <Text>{props.survey.description}</Text>
             </View>
-            <Button title="Edit" onPress={props.onClick} />
+            <Button title="Take Survey" onPress={props.onStartSurvey} />
+            <Button title="Edit" onPress={props.onEdit} />
         </View>
     )
 }

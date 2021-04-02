@@ -37,11 +37,6 @@ export default function Home(props:Props) {
                     navigate={() => props.navigation.navigate(HomeOptions.LogSeizure, {tab:TabOptions.home})}
                 />
                 <NavigationButton
-                    title="Take Daily Survey"
-                    icon="comment"
-                    navigate={() => props.navigation.navigate(HomeOptions.DailySurvey, {tab:TabOptions.home})}
-                />
-                <NavigationButton
                     title="Record Medication"
                     icon="pill"
                     navigate={() => props.navigation.navigate(HomeOptions.RecordMedication, {tab:TabOptions.home})}

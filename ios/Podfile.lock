@@ -314,8 +314,6 @@ PODS:
     - React-jsi (= 0.63.4)
   - RNAppleHealthKit (1.3.0):
     - React
-  - RNCAsyncStorage (1.14.1):
-    - React-Core
   - RNCMaskedView (0.1.10):
     - React
   - RNCPicker (1.12.0):
@@ -396,7 +394,6 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RNAppleHealthKit (from `../node_modules/react-native-health`)
-  - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
@@ -493,8 +490,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNAppleHealthKit:
     :path: "../node_modules/react-native-health"
-  RNCAsyncStorage:
-    :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCMaskedView:
     :path: "../node_modules/@react-native-community/masked-view"
   RNCPicker:
@@ -564,7 +559,6 @@ SPEC CHECKSUMS:
   React-RCTVibration: ae4f914cfe8de7d4de95ae1ea6cc8f6315d73d9d
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
   RNAppleHealthKit: 07d47f1f25caa2b922c0184357b4dd75c1975acf
-  RNCAsyncStorage: 1ab3f6ec0bc2c676dad4a00471d4c9d1a2cf68a2
   RNCMaskedView: f5c7d14d6847b7b44853f7acb6284c1da30a3459
   RNCPicker: a3f85bfd04ab192fe9a8fe7485b5ef4f80e59022
   RNDateTimePicker: da3ca5b9a16d6d1b287e42c61cef7b7dd7c23a64
