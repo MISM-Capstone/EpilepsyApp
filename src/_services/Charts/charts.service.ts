@@ -39,7 +39,7 @@ const getChartDataDayInRange = async (startDate:Date, endDate:Date) => {
     let data = getDaysInWeekArray();
 
     seizures.forEach(seizure => {
-        let day = new Date(seizure.date).getUTCDay();
+        let day = seizure.date.getDay();
         data[day].seizures = +data[day].seizures + 1;
     });
     return data;
