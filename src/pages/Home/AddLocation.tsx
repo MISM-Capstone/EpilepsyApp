@@ -3,24 +3,25 @@ import React, { useState } from 'react';
 import { View, Button } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { HomeStackParamList } from "../../navigation/HomeNavigation";
-import { CopyAndSetKey } from '../../functions';
+import { HomeStackParamList } from "../../navigation/Home/HomeNavProps";
+import { CopyAndSetKey, returnToPreviousPage } from '../../functions';
 import Location, { LocationDb } from '../../models/Location';
 import { RouteProp } from '@react-navigation/native';
 import LocationDao from '../../_services/database/dao/LocationDao';
 import { MultiInput, SingleInput } from '../../components/Inputs/Input';
-import { TabOptions } from "../../components/TabOptions";
+import { GetUpdateContext, UpdateProviderContext } from '../../_services/Providers/UpdateProvider';
 
-type LocationScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'AddLocation'>;
-type LocationScreenRouteProp = RouteProp<HomeStackParamList, 'AddLocation'>;
+type LocNavProp = StackNavigationProp<HomeStackParamList, 'AddLocation'>;
+type LocRouteProp = RouteProp<HomeStackParamList, 'AddLocation'>;
 
 type Props = {
-    navigation: LocationScreenNavigationProp;
-    route: LocationScreenRouteProp;
+    navigation: LocNavProp;
+    route: LocRouteProp;
 };
 
 
 export default function AddLocation(props: Props) {
+    const updateContext = GetUpdateContext();
     const [location, setLocation] = useState(new Location());
 
     function updateValue(key:keyof Location, value:any){
@@ -36,11 +37,12 @@ export default function AddLocation(props: Props) {
     const insertQuery = async () => {
         let results = await LocationDao.save(location);
         if (results) {
-            if (props.route.params.previousPage) {
-                props.navigation.navigate(props.route.params.previousPage, {tab:TabOptions.home, location_id:results.insertId});
-            } else {
-                props.navigation.goBack();
-            }
+            returnToPreviousPage(
+                location,
+                results,
+                updateContext,
+                props.navigation.goBack
+            );
         }
     }
 
@@ -67,3 +69,4 @@ export default function AddLocation(props: Props) {
         </SafeAreaView>
     )
 }
+

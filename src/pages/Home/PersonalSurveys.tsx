@@ -7,9 +7,10 @@ import SafeAreaView from 'react-native-safe-area-view';
 import { TabOptions } from "../../components/TabOptions";
 import SurveyCard from "../../components/SummaryCards/SurveyCard";
 import Survey from "../../models/Surveys/Survey";
-import { HomeStackParamList } from "../../navigation/HomeNavigation";
+import { HomeStackParamList } from "../../navigation/Home/HomeNavProps";
 import HistoryStyles from "../../styles/HistoryStyles";
 import SurveyDao from "../../_services/database/dao/SurveyDao";
+import { GetUpdateContext } from "../../_services/Providers/UpdateProvider";
 
 type PersonalSurveyScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'PersonalSurveys'>;
 type PersonalSurveyScreenRouteProp = RouteProp<HomeStackParamList, 'PersonalSurveys'>;
@@ -20,17 +21,18 @@ type Props = {
 };
 
 export default function PersonalSurveys(props:Props) {
+    const updateContext = GetUpdateContext();
     const [surveys, setSurveys] = useState<Survey[]>([]);
 
     React.useLayoutEffect(() => {
         props.navigation.setOptions({
             headerRight: () => {
                 return <Button title="Add" onPress={() => {
+                    updateContext.setPageToUpdate(props.route.name)
                     props.navigation.navigate(
                         "AddEditSurvey",
                         {
                             tab: TabOptions.home,
-                            previousPage: "PersonalSurveys",
                         }
                     );
                 }} />
@@ -56,11 +58,11 @@ export default function PersonalSurveys(props:Props) {
                                 survey={survey}
                                 key={survey.id}
                                 onClick={() => {
+                                    updateContext.setPageToUpdate(props.route.name)
                                     props.navigation.navigate(
                                         "AddEditSurvey",
                                         {
                                             tab: TabOptions.home,
-                                            previousPage: "PersonalSurveys",
                                             survey: survey.id!,
                                         }
                                     );

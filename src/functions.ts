@@ -1,4 +1,9 @@
+import { StackNavigationProp } from "@react-navigation/stack";
+import { ResultSet } from "react-native-sqlite-storage";
 import Db from "./models/AbstractClasses/Db";
+import { HomeStackParamList } from "./navigation/Home/HomeNavProps";
+import { TrendsStackParamList } from "./navigation/Trends/TrendsNavProps";
+import { UpdateProviderContext } from "./_services/Providers/UpdateProvider";
 
 export function IterateThroughKeys(obj:any, action:(key:string, value:any)=>void) {
     for (let [key, value] of Object.entries(obj)) {
@@ -37,4 +42,10 @@ export function updateValues<T extends Db, TProp extends keyof T>(obj:T, keys:TP
         newObj = CopyAndSetKey(newObj, keys[i], values[i]);
     }
     hook(newObj);
+}
+
+export function returnToPreviousPage(obj: Db, results:ResultSet, updateContext: UpdateProviderContext, nav: () => void) {
+    const id = obj.id ? obj.id : results.insertId;
+    updateContext.setUpdateObj(obj, id);
+    nav();
 }

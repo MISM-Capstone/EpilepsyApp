@@ -1,67 +1,20 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Home from "../pages/Home/Home";
-import DailySurvey from "../pages/Home/DailySurvey";
-import SurveyHistory from "../pages/Home/SurveyHistory";
-import LogSeizure from "../pages/Home/LogSeizure";
-import RecordMedication from "../pages/Home/RecordMedication";
+import Home from "../../pages/Home/Home";
+import DailySurvey from "../../pages/Home/DailySurvey";
+import SurveyHistory from "../../pages/Home/SurveyHistory";
+import AddEditSeizureLog from "../../pages/Home/AddEditSeizureLog";
+import RecordMedication from "../../pages/Home/RecordMedication";
 
-import HeaderStyle from "../styles/HeaderStyle";
-import HealthKitTest from '../pages/Home/HealthKitTest';
-import AddLocation from '../pages/Home/AddLocation';
-import AddMedication from '../pages/Home/AddMedication';
-import AddDosageUnit from '../pages/Home/AddDosageUnit';
-import PersonalSurveys from '../pages/Home/PersonalSurveys';
-import AddEditSurvey from '../pages/Home/AddEditSurvey';
-import { TabOptions } from "../components/TabOptions";
-import { Button } from 'react-native';
-
-type TabProps = {
-    tab: TabOptions.home;
-}
-
-type EditProps ={
-    date?:Date;
-}
-
-export type EditSeizureProps = {
-    location_id?:number;
-} 
-
-export type EditMedicationLogProps = {
-    medication_id?:number;
-    dosage_unit_id?:number;
-}
-
-export type AddMedicationProps = {
-    dosage_unit_id?:number;
-}
-
-export type AddProps = {
-    previousPage?: keyof HomeStackParamList;
-}
-type AddSurveyProps = {
-    survey_id?:number;
-}
-
-export type EditSurveyProps = {
-    survey?: number;
-}
-
-export type HomeStackParamList = {
-    Home: TabProps;
-    DailySurvey: TabProps;
-    SurveyHistory: TabProps;
-    LogSeizure: TabProps & EditSeizureProps & EditProps;
-    RecordMedication: TabProps & EditMedicationLogProps & EditProps;
-    HealthKitTest: TabProps;
-    AddDosageUnit: TabProps & AddProps;
-    AddLocation:TabProps & AddProps;
-    AddMedication:TabProps & AddProps & AddMedicationProps;
-    PersonalSurveys:TabProps & AddSurveyProps;
-    AddEditSurvey:TabProps & AddProps & EditSurveyProps;
-};
+import HeaderStyle from "../../styles/HeaderStyle";
+import HealthKitTest from '../../pages/Home/HealthKitTest';
+import AddLocation from '../../pages/Home/AddLocation';
+import AddMedication from '../../pages/Home/AddMedication';
+import AddDosageUnit from '../../pages/Home/AddDosageUnit';
+import PersonalSurveys from '../../pages/Home/PersonalSurveys';
+import AddEditSurvey from '../../pages/Home/AddEditSurvey';
+import { HomeStackParamList } from './HomeNavProps';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -93,7 +46,7 @@ const HomeNavigation = () => {
                 />
                 <Stack.Screen
                     name="LogSeizure"
-                    component={LogSeizure}
+                    component={AddEditSeizureLog}
                     options={{
                         title: 'Log a Seizure'
                     }}

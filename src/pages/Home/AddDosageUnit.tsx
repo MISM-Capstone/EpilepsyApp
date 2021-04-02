@@ -3,13 +3,14 @@ import React, { useState } from 'react';
 import { View, Button } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { HomeStackParamList } from "../../navigation/HomeNavigation";
-import { CopyAndSetKey } from '../../functions';
+import { HomeStackParamList } from "../../navigation/Home/HomeNavProps";
+import { CopyAndSetKey, returnToPreviousPage } from '../../functions';
 import { RouteProp } from '@react-navigation/native';
 import DosageUnit, { DosageUnitDb } from '../../models/DosageUnits';
 import DosageUnitDao from '../../_services/database/dao/DosageUnitDao';
 import { MultiInput, SingleInput } from '../../components/Inputs/Input';
 import { TabOptions } from "../../components/TabOptions";
+import { GetUpdateContext } from '../../_services/Providers/UpdateProvider';
 
 type DosageUnitScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'AddDosageUnit'>;
 type DosageUnitScreenRouteProp = RouteProp<HomeStackParamList, 'AddDosageUnit'>;
@@ -21,6 +22,7 @@ type Props = {
 
 
 export default function AddDosageUnit(props: Props) {
+    const updateContext = GetUpdateContext();
     const [dosageUnit, setDosageUnit] = useState(new DosageUnit());
     function updateValue(key:keyof DosageUnit, value:any){
         const dos = CopyAndSetKey(dosageUnit, key, value);
@@ -35,11 +37,12 @@ export default function AddDosageUnit(props: Props) {
     const insertQuery = async () => {
         let results = await DosageUnitDao.save(dosageUnit);
         if (results) {
-            if (props.route.params.previousPage) {
-                props.navigation.navigate(props.route.params.previousPage, {tab:TabOptions.home, dosage_unit_id:results.insertId});
-            } else {
-                props.navigation.goBack();
-            }
+            returnToPreviousPage(
+                dosageUnit,
+                results,
+                updateContext,
+                props.navigation.goBack
+            );
         }
     }
 

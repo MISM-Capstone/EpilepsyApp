@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Text, View, Button } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { ScrollView, TextInput } from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { HomeStackParamList } from "../../navigation/HomeNavigation";
+import { HomeStackParamList } from "../../navigation/Home/HomeNavProps";
 import MedicationLogDao from '../../_services/database/dao/MedicationLogDao';
 import SurveyStyles from '../../styles/SurveyStyles';
-import MedicationLog, { MedicationLogDb } from '../../models/Medication/MedicationLog';
+import MedicationLog from '../../models/Medication/MedicationLog';
 import { GetAuthContext } from '../../_services/Providers/AuthProvider';
 import { updateValue, updateValues } from '../../functions';
 import { RouteProp } from '@react-navigation/native';
@@ -20,126 +20,120 @@ import { Picker } from '@react-native-picker/picker';
 import { InputContainer } from '../../components/Inputs/InputComponents';
 import { SingleInput } from '../../components/Inputs/Input';
 import { TabOptions } from "../../components/TabOptions";
+import { GetUpdateContext } from '../../_services/Providers/UpdateProvider';
 
-type RecordMedicationScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'RecordMedication'>;
-type LogSeizureScreenRouteProp = RouteProp<HomeStackParamList, 'RecordMedication'>;
+type MedLogNavProps = StackNavigationProp<HomeStackParamList, 'RecordMedication'>;
+type MedLogRouteProps = RouteProp<HomeStackParamList, 'RecordMedication'>;
 
 type Props = {
-    navigation: RecordMedicationScreenNavigationProp;
-    route: LogSeizureScreenRouteProp;
+    navigation: MedLogNavProps;
+    route: MedLogRouteProps;
 };
 
 
 export default function RecordMedication(props: Props) {
     const {user} = GetAuthContext();
+    const updateContext = GetUpdateContext();
     const [medicationLog, setMedicationLog] = useState<MedicationLog>(new MedicationLog(user!.id!));
     const [medications, setMedications] = useState<Medication[]>([]);
     const [dosageUnits, setDosageUnits] = useState<DosageUnit[]>([]);
-    const [newMedication, setNewMedication] = useState<Medication>();
 
     function update<TProp extends keyof MedicationLog>(key:TProp, value:MedicationLog[TProp]){
         updateValue(medicationLog, key, value, setMedicationLog);
     }
 
     function updateMedication(medication:Medication) {
+        console.log("Medication:", medication);
         let keyList:(keyof MedicationLog)[] = [];
         let valueList:any[] = [];
 
         if (medicationLog.medication_id !== medication.id) {
-            keyList.push(MedicationLogDb.fields.medication_id);
+            keyList.push(medicationLog.db.fields.medication_id);
             valueList.push(medication.id!);
         }
 
-        const oldMedication = medications.find((med) => {
-            return med.id === medicationLog.medication_id;
-        });
-
-        if (medicationLog.dosage === 0 || (oldMedication && medicationLog.dosage === oldMedication.dosage)) {
-            keyList.push(MedicationLogDb.fields.dosage);
+        if (medicationLog.dosage === 0 || (medication.dosage !== medicationLog.dosage)) {
+            keyList.push(medicationLog.db.fields.dosage);
             valueList.push(medication.dosage);
         }
-        if (medicationLog.dosage_unit_id === 0 || (oldMedication && medicationLog.dosage_unit_id === oldMedication.dosage_unit_id)) {
-            keyList.push(MedicationLogDb.fields.dosage_unit_id);
+        if (medicationLog.dosage_unit_id === 0 || (medication.dosage_unit_id !== medicationLog.dosage_unit_id)) {
+            keyList.push(medicationLog.db.fields.dosage_unit_id);
             valueList.push(medication.dosage_unit_id);
         }
+        console.log(keyList, valueList);
 
 
         updateValues(medicationLog, keyList, valueList, setMedicationLog);
     }
-    
+
+    async function getMedications() {
+        const meds = await MedicationDao.getAll();
+        const currentMed = meds.find((med) => {
+            return med.id === medicationLog.medication_id;
+        });
+        if (meds.length > 0 && !currentMed && medicationLog.medication_id === 0) {
+            updateMedication(meds[0]);
+        } else if (currentMed) {
+            updateMedication(currentMed);
+        }
+        setMedications(meds);
+    }
+
+    async function getDosageUnits() {
+        const dosages = await DosageUnitDao.getAll();
+        const currentDos = dosages.find((dos) => {
+            return dos.id === medicationLog.dosage_unit_id;
+        });
+        if (dosages.length > 0 && !currentDos && medicationLog.dosage_unit_id === 0) {
+            update(medicationLog.db.fields.dosage_unit_id, dosages[0].id!)
+        }
+        setDosageUnits(dosages);
+    }
+
+    useEffect(() => {
+        getDosageUnits();
+    }, [medicationLog.dosage_unit_id])
+
+    useEffect(() => {
+        console.log("Called:", medicationLog.medication_id);
+        getMedications();
+    }, [medicationLog.medication_id]);
+
     useEffect(() => {
         if (props.route.params && props.route.params.date) {
             // TODO - Figure out what object type date is
             let date: any = props.route.params.date;
             let paramDate = new Date(date.dateString.replace(/-/g, '\/'));
-            update(MedicationLogDb.fields.date, paramDate);
-            updateValue(medicationLog, MedicationLogDb.fields.date, paramDate, setMedicationLog);
+            update(medicationLog.db.fields.date, paramDate);
+            updateValue(medicationLog, medicationLog.db.fields.date, paramDate, setMedicationLog);
         }
     }, []);
 
     useEffect(() => {
-        const medId = props.route.params.medication_id;
-        if (medId) {
-            (async () => {
-                const med = await MedicationDao.getById(medId);
-                if (med) {
-                    updateMedication(med);
-                }
-                setNewMedication(med);
-            })();
+        const updatedObj = updateContext.getUpdatedObj(props.route.name, Medication);
+        if (updatedObj) {
+            update(medicationLog.db.fields.medication_id, updatedObj.id);
         }
-    }, [props.route.params.medication_id]);
+    }, [updateContext.hasObject]);
 
     useEffect(() => {
-        (async () => {
-            const meds = await MedicationDao.getAll();
-            setMedications(meds);
-        })();
-    }, [newMedication]);
-
-    useEffect(() => {
-        const currentMed = medications.find((med) => {
-            return med.id === medicationLog.medication_id;
-        });
-        if (medications.length > 0 && !currentMed && medicationLog.medication_id === 0) {
-            updateMedication(medications[0]);
-        } else if (currentMed) {
-            updateMedication(currentMed);
+        const updatedObj = updateContext.getUpdatedObj(props.route.name, DosageUnit);
+        if (updatedObj) {
+            update(medicationLog.db.fields.dosage_unit_id, updatedObj.id);
         }
-    }, [medications]);
-
-    useEffect(() => {
-        if (props.route.params.dosage_unit_id) {
-            update(MedicationLogDb.fields.dosage_unit_id, props.route.params.dosage_unit_id);
-        }
-        (async () => {
-            const dosages = await DosageUnitDao.getAll();
-            setDosageUnits(dosages);
-        })();
-    }, [props.route.params.dosage_unit_id, newMedication]);
-
-    useEffect(() => {
-        const currentDos = dosageUnits.find((dos) => {
-            return dos.id === medicationLog.dosage_unit_id;
-        });
-        if (dosageUnits.length > 0 && !currentDos && medicationLog.dosage_unit_id === 0) {
-            update(MedicationLogDb.fields.dosage_unit_id, dosageUnits[0].id!)
-        } else if (currentDos) {
-            update(MedicationLogDb.fields.dosage_unit_id, currentDos.id!)
-        }
-    }, [dosageUnits]);
+    }, [updateContext.hasObject]);
 
 
 
     const onChangeDate = (_event: Event, selectedDate: Date | undefined) => {
         const currentDate = selectedDate || medicationLog.date;
-        update(MedicationLogDb.fields.date, currentDate);
+        update(medicationLog.db.fields.date, currentDate);
     };
 
     const onChangeTime = (_event: Event, selectedDate: Date | undefined) => {
         const currentTime = selectedDate || medicationLog.date;
-        update(MedicationLogDb.fields.time, currentTime.toLocaleTimeString());
-        update(MedicationLogDb.fields.date, currentTime);
+        update(medicationLog.db.fields.time, currentTime.toLocaleTimeString());
+        update(medicationLog.db.fields.date, currentTime);
     };
 
     const insertQuery = async () => {
@@ -172,7 +166,8 @@ export default function RecordMedication(props: Props) {
                     </InputContainer>
                     <InputContainer title="Medication">
                         <Button title="Add Medication" onPress={() => {
-                            props.navigation.navigate("AddMedication", {tab:TabOptions.home, previousPage:"RecordMedication"})
+                            updateContext.setPageToUpdate(props.route.name)
+                            props.navigation.navigate("AddMedication", {tab:TabOptions.home})
                         }} />
                         {
                             medications.length ?
@@ -195,20 +190,21 @@ export default function RecordMedication(props: Props) {
                     <SingleInput
                         title="Dosage"
                         onChange={(value) => {
-                            update(MedicationLogDb.fields.dosage, parseFloat(value));
+                            update(medicationLog.db.fields.dosage, parseFloat(value));
                         }}
                         value={medicationLog.dosage.toString()}
                     />
                     <InputContainer title="Dosage Unit">
                         <Button title="Add Dosage Unit" onPress={() => {
-                            props.navigation.navigate("AddDosageUnit", {tab:TabOptions.home, previousPage:"RecordMedication"})
+                            updateContext.setPageToUpdate(props.route.name)
+                            props.navigation.navigate("AddDosageUnit", {tab:TabOptions.home})
                         }} />
                         {
                             dosageUnits.length ?
                                 <Picker
                                     selectedValue={medicationLog.dosage_unit_id}
                                     onValueChange={(itemValue, itemIndex) => {
-                                        update(MedicationLogDb.fields.dosage_unit_id, itemValue);
+                                        update(medicationLog.db.fields.dosage_unit_id, itemValue);
                                 }}>
                                     {
                                         dosageUnits.map((units) => {

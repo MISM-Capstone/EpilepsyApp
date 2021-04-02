@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import {HomeStackParamList} from "../../navigation/HomeNavigation"
+import { HomeStackParamList } from "../../navigation/Home/HomeNavProps";
 import NavigationButton from "../../components/NavigationButton";
 
 import HomeStyles from "../../styles/HomeStyles";
@@ -12,17 +12,19 @@ import {default as mainStyle} from "../../styles/MainStyles";
 import { GetAuthContext } from '../../_services/Providers/AuthProvider';
 import { ScrollView } from 'react-native-gesture-handler';
 import { TabOptions } from "../../components/TabOptions";
+import { RouteProp } from '@react-navigation/core';
 
-type HomeScreenNavigationProp = StackNavigationProp<HomeStackParamList,'Home'>;
+type HomeNavProp = StackNavigationProp<HomeStackParamList,'Home'>;
+type HomeRouteProp = RouteProp<HomeStackParamList,'Home'>;
 
 type Props = {
-  navigation: HomeScreenNavigationProp;
+  navigation: HomeNavProp;
+  route:HomeRouteProp
 };
 
 
-const Home = (props:Props) => {
+export default function Home(props:Props) {
     const {user} = GetAuthContext();
-
     return (
         <SafeAreaView style={mainStyle.container}>
             <ScrollView style={HomeStyles.HomeContainer}>
@@ -64,5 +66,3 @@ const Home = (props:Props) => {
         </SafeAreaView>
     );
 }
-
-export default Home;

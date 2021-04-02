@@ -7,17 +7,20 @@ import { StatusBar } from 'react-native';
 
 import AuthProvider from './src/_services/Providers/AuthProvider';
 import LoadingOptions from './src/navigation/LoadingOptions';
+import UpdateProvider from './src/_services/Providers/UpdateProvider';
 
 
 const App = () => {
     return (
         <AuthProvider>
-            <SafeAreaProvider>
-                <StatusBar barStyle="dark-content" />
-                <NavigationContainer>
-                    <LoadingOptions />
-                </NavigationContainer>
-            </SafeAreaProvider>
+            <UpdateProvider>
+                <SafeAreaProvider>
+                    <StatusBar barStyle="dark-content" />
+                    <NavigationContainer>
+                        <LoadingOptions />
+                    </NavigationContainer>
+                </SafeAreaProvider>
+            </UpdateProvider>
         </AuthProvider>
     );
 };

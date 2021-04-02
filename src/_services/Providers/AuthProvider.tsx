@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect, useMemo, createContext } from 'react';
 
 import AuthReducer, { initialAuthReducerState } from '../reducers/AuthReducer';
-import { registerUser, getUser, updateUser } from '../Authentication/AuthFunctions';
+import { registerUser, getUser, updateUser } from './AuthFunctions';
 import User from '../../models/User';
 
 

@@ -5,8 +5,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 const Tab = createBottomTabNavigator();
 
-import HomeNavigation from "../navigation/HomeNavigation";
-import TrendsNavigation from "../navigation/TrendsNavigation";
+import HomeNavigation from "../navigation/Home/HomeNavigation";
+import TrendsNavigation from "../navigation/Trends/TrendsNavigation";
 import ProfileNavigation from '../navigation/ProfileNavigation';
 import { COLORS } from '../constants';
 import { TabOptions } from './TabOptions';

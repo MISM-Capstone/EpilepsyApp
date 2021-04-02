@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import { TrendsStackParamList } from "../../navigation/TrendsNavigation";
+import { TrendsStackParamList } from "../../navigation/Trends/TrendsNavProps";
 
 import { default as mainStyle } from "../../styles/MainStyles";
 import { CalendarList } from 'react-native-calendars';

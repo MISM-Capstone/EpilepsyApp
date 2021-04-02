@@ -4,7 +4,7 @@ import { Text, View, Button } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { HomeStackParamList } from "../../navigation/HomeNavigation";
+import { HomeStackParamList } from "../../navigation/Home/HomeNavProps";
 import SeizureLogDao from '../../_services/database/dao/SeizureLogDao';
 import SeizureLog, { SeizureLogDb } from '../../models/SeizureLog';
 import { CopyAndSetKey } from '../../functions';
@@ -15,8 +15,9 @@ import { RouteProp } from '@react-navigation/native';
 import LocationDao from '../../_services/database/dao/LocationDao';
 import { InputContainer } from '../../components/Inputs/InputComponents';
 import { MultiInput } from '../../components/Inputs/Input';
-import { TrendsStackParamList } from '../../navigation/TrendsNavigation';
+import { TrendsStackParamList } from "../../navigation/Trends/TrendsNavProps";
 import { TabOptions } from "../../components/TabOptions";
+import { GetUpdateContext } from '../../_services/Providers/UpdateProvider';
 
 type homeNavProp = StackNavigationProp<HomeStackParamList, 'LogSeizure'>;
 type homeRouteProp = RouteProp<HomeStackParamList, 'LogSeizure'>;
@@ -34,14 +35,25 @@ type ErrorObject = {
     notes?: string;
 }
 
-export default function LogSeizure(props: Props) {
+export default function AddEditSeizureLog(props: Props) {
     const {user} = GetAuthContext();
+    const updateContext = GetUpdateContext();
     const [seizureLog, setSeizureLog] = useState(new SeizureLog(user!.id!));
     const [locations, setLocations] = useState<Location[]>([]);
 
     function updateValue(key:keyof SeizureLog, value:any){
         const seizLog = CopyAndSetKey(seizureLog, key, value);
         setSeizureLog(seizLog);
+    }
+    async function getLocations() {
+        const locs = await LocationDao.getAll();
+        const currentLocation = locs.find((loc) => {
+            return loc.id === seizureLog.location_id;
+        });
+        if (locs.length > 0 && !currentLocation && seizureLog.location_id === 0) {
+            updateValue(SeizureLogDb.fields.location_id, locs[0].id)
+        }
+        setLocations(locs);
     }
     
     const errors: ErrorObject = {};
@@ -56,29 +68,27 @@ export default function LogSeizure(props: Props) {
     }, []);
 
     useEffect(() => {
-        if (props.route.params.tab === TabOptions.home && props.route.params.location_id) {
-            updateValue(SeizureLogDb.fields.location_id, props.route.params.location_id);
+        getLocations()
+    }, [seizureLog.location_id]);
+
+    useEffect(() => {
+        const updatedObj = updateContext.getUpdatedObj(props.route.name, Location);
+        if (updatedObj) {
+            updateValue(SeizureLogDb.fields.location_id, updatedObj.id);
         }
+    }, [updateContext.hasObject]);
+
+    useEffect(() => {
         (async () => {
-            const locs = await LocationDao.getAll();
-            const currentLocation = locs.find((loc) => {
-                return loc.id === seizureLog.location_id;
-            });
-            if (locs.length > 0 && !currentLocation && seizureLog.location_id === 0) {
-                updateValue(SeizureLogDb.fields.location_id, locs[0].id)
-            }
-            setLocations(locs);
-        })();
-            (async () => {
-                if (props.route.params.tab === TabOptions.trends) {
-                    const id = props.route.params.seizure_id;
-                    const foundSeizure = await SeizureLogDao.getById(id);
-                    if (foundSeizure) {
-                        setSeizureLog(foundSeizure);
-                    }
+            if (props.route.params.seizure_id) {
+                const id = props.route.params.seizure_id;
+                const foundSeizure = await SeizureLogDao.getById(id);
+                if (foundSeizure) {
+                    setSeizureLog(foundSeizure);
                 }
-            })();
-    }, [props.route.params]);
+            }
+        })();
+    }, [props.route.params.seizure_id]);
 
     const onChangeDate = (_event: Event, selectedDate: Date | undefined) => {
         const currentDate = selectedDate || seizureLog.date;
@@ -114,7 +124,17 @@ export default function LogSeizure(props: Props) {
 
     const insertQuery = async () => {
         let results = await SeizureLogDao.save(seizureLog);
-        props.navigation.goBack();
+        if (props.route.params.previousPage) {
+            if (props.route.params.tab === TabOptions.home) {
+                let homeNav = props.navigation as homeNavProp;
+                homeNav.navigate(props.route.params.previousPage, {tab:TabOptions.home})
+            } else {
+                let homeNav = props.navigation as trendNavProp;
+                homeNav.navigate(props.route.params.previousPage, {tab:TabOptions.trends})
+            }
+        } else {
+            props.navigation.goBack();
+        }
     }
 
     return (
@@ -143,7 +163,8 @@ export default function LogSeizure(props: Props) {
                     <Button title="Add Location" onPress={() => {
                         if (props.route.params.tab ===  TabOptions.home) {
                             const nav = props.navigation as homeNavProp;
-                            nav.navigate("AddLocation", {tab:TabOptions.home, previousPage:"LogSeizure"})
+                            updateContext.setPageToUpdate(props.route.name)
+                            nav.navigate("AddLocation", {tab:TabOptions.home})
                         }
                     }} />
                     {

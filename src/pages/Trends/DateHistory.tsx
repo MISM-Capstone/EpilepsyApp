@@ -6,7 +6,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TabOptions } from "../../components/TabOptions";
 import SeizureLog from '../../models/SeizureLog';
-import { TrendsStackParamList } from '../../navigation/TrendsNavigation';
+import { TrendsStackParamList } from "../../navigation/Trends/TrendsNavProps";
 import HistoryStyles from '../../styles/HistoryStyles';
 import HistoryDao from '../../_services/database/dao/HistoryDao';
 import sleepDatesService from '../../_services/helpers/sleepDates.service';

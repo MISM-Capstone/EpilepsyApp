@@ -1,25 +1,13 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Trends from "../pages/Trends/Trends";
+import Trends from "../../pages/Trends/Trends";
 
-import HeaderStyle from "../styles/HeaderStyle";
-import DateHistory from '../pages/Trends/DateHistory';
-import { DateObject } from 'react-native-calendars';
-import Charts from '../pages/Trends/Charts';
-import LogSeizure from '../pages/Home/LogSeizure';
-import { TabOptions } from "../components/TabOptions";
-
-type TabProps = {
-    tab: TabOptions.trends
-}
-
-export type TrendsStackParamList = {
-    Trends: TabProps;
-    DateHistory: TabProps & { date: DateObject };
-    Charts: TabProps;
-    UpdateSeizureLog: TabProps & { seizure_id: number};
-};
+import HeaderStyle from "../../styles/HeaderStyle";
+import DateHistory from '../../pages/Trends/DateHistory';
+import Charts from '../../pages/Trends/Charts';
+import AddEditSeizureLog from '../../pages/Home/AddEditSeizureLog';
+import { TrendsStackParamList } from './TrendsNavProps';
 
 const Stack = createStackNavigator<TrendsStackParamList>();
 
@@ -46,7 +34,7 @@ const HomeNavigation = () => {
                 <Stack.Screen
                     name="UpdateSeizureLog"
                     options={() => ({title: "Update Seizure"})}
-                    component={LogSeizure}
+                    component={AddEditSeizureLog}
                 />
             </Stack.Navigator>
         </>

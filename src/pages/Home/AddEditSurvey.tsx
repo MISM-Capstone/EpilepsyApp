@@ -4,14 +4,15 @@ import React, { useEffect, useState } from "react";
 import { Button, ScrollView, View, Text } from "react-native";
 import SafeAreaView from 'react-native-safe-area-view';
 import { MultiInput, SingleInput } from "../../components/Inputs/Input";
-import { CopyAndSetKey } from "../../functions";
+import { CopyAndSetKey, returnToPreviousPage } from "../../functions";
 import Survey, { SurveyDb } from "../../models/Surveys/Survey";
 import SurveyField from "../../models/Surveys/SurveyField";
-import { HomeStackParamList } from "../../navigation/HomeNavigation";
+import { HomeStackParamList } from "../../navigation/Home/HomeNavProps";
 import SurveyDao from "../../_services/database/dao/SurveyDao";
 import SurveyFieldDao from "../../_services/database/dao/SurveyFieldDao";
 import SurveyFieldDisplay from "../../components/SurveyFieldDisplay";
 import { TabOptions } from "../../components/TabOptions";
+import { GetUpdateContext } from "../../_services/Providers/UpdateProvider";
 
 type AddEditSurveyScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'AddEditSurvey'>;
 type AddEditSurveyScreenRouteProp = RouteProp<HomeStackParamList, 'AddEditSurvey'>;
@@ -23,6 +24,7 @@ type Props = {
 
 export default function AddEditSurvey(props:Props) {
     // TODO - Maybe use reducer instead of use state for the fields
+    const updateContext = GetUpdateContext();
     const [survey, setSurvey] = useState(new Survey());
     const [fields, setFields] = useState<SurveyField[]>([]);
 
@@ -77,11 +79,12 @@ export default function AddEditSurvey(props:Props) {
                 field.survey_id = surveyId;
                 await SurveyFieldDao.save(field);
             }));
-            if (props.route.params.previousPage) {
-                props.navigation.navigate(props.route.params.previousPage, {tab:TabOptions.home, survey_id:surveyId});
-            } else {
-                props.navigation.goBack();
-            }
+            returnToPreviousPage(
+                survey,
+                surveyResult,
+                updateContext,
+                props.navigation.goBack
+            );
         }
     }
 
