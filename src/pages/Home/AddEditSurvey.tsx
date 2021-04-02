@@ -64,8 +64,8 @@ export default function AddEditSurvey(props:Props) {
     useEffect(() => {
         (async () => {
             if (survey.id) {
-                const survFields = await SurveyFieldDao.getBySurveyId(survey.id);
-                setFields(survFields);
+                const surveyFields = await SurveyFieldDao.getBySurveyId(survey.id);
+                setFields(surveyFields);
             }
         })();
     },[survey.id]);

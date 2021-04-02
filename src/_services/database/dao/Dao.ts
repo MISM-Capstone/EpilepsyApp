@@ -7,7 +7,7 @@
 import { AppState, AppStateStatus } from "react-native";
 import SQLite, { ResultSet, ResultSetRowList } from 'react-native-sqlite-storage';
 import { CopyObjAttributes, IterateThroughKeys } from "../../../functions";
-import Db, { DBObj } from "../../../models/AbstractClasses/Db";
+import Db from "../../../models/AbstractClasses/Db";
 import {DatabaseInitialization} from "../DatabaseInitialization";
 
 export default abstract class DAO {
@@ -61,14 +61,56 @@ export default abstract class DAO {
         return result as false | SQLite.ResultSet;
     }
 
-    protected static async deleteObj(id:number | string, dbObj:DBObj) {
+    static async deleteObj(obj:Db) {
         const sql = `
-            DELETE FROM ${dbObj.table}
-            WHERE ${dbObj.fields.id} = ?
+            DELETE FROM ${obj.db.table}
+            WHERE ${obj.db.fields.id} = ?
         ;`;
-        return await this.runTrueFalseQuery(sql, [id])
+        return await this.runTrueFalseQuery(sql, [obj.id])
     }
 
+    protected static async pullById<T extends Db>(id:number, type: (new (...args: any[]) => T)) {
+        let t = new type();
+        const sql = `
+            SELECT
+                *
+            FROM
+                ${t.db.table}
+            WHERE 
+                ${t.db.fields.id} = ?
+            LIMIT 1
+        ;`;
+        const result = await this.runQuery(sql, [id]);
+        const convertedResult = this.convertQueryResultToObj(result, type)[0];
+        return convertedResult?convertedResult:undefined;
+    }
+
+    protected static async pullAll<T extends Db>(type: (new (...args: any[]) => T)) {
+        let t = new type();
+        const sql = `
+            SELECT
+                *
+            FROM
+                ${t.db.table}
+        ;`;
+        const result = await this.runQuery(sql);
+        return this.convertQueryResultToObj(result, type);
+    }
+
+
+
+
+
+
+
+
+    private static SetResultsToList(results:ResultSetRowList) {
+        let resultList:any[] = [];
+        for (let i = 0; i < results.length; i++) {
+            resultList.push(results.item(i));
+        }
+        return resultList;
+    }
 
     private static async insertObj(obj:Db) {
         const tableAttributes = this.getObjParamsForInsert(obj);
@@ -108,18 +150,6 @@ export default abstract class DAO {
         return false;
     }
 
-
-
-
-
-    protected static SetResultsToList(results:ResultSetRowList) {
-        let resultList:any[] = [];
-        for (let i = 0; i < results.length; i++) {
-            resultList.push(results.item(i));
-        }
-        return resultList;
-    }
-
     private static getObjParamsForInsert(obj:any) {
         let statement = {
             attributes:"",
@@ -155,7 +185,6 @@ export default abstract class DAO {
         return statement;
     }
 
-
     private static convertValueToString(value:any) {
         let convertedValue = null;
         if (value) {
@@ -181,8 +210,6 @@ export default abstract class DAO {
         }
         return convertedValue
     }
-
-
 
     // Open a connection to the database
     private static async open(): Promise<SQLite.SQLiteDatabase> {
@@ -218,7 +245,7 @@ export default abstract class DAO {
             // No need to close DB again - it's already closed
             return;
         }
-        let status = await DAO.databaseInstance.close();
+        await DAO.databaseInstance.close();
         DAO.databaseInstance = undefined;
     }
 

@@ -3,16 +3,7 @@ import DAO from "./Dao"
 
 export default class SurveyFieldDao extends DAO {
     static async getAll() {
-        const sql = `
-            SELECT
-                *
-            FROM
-                ${SurveyFieldDb.table}
-            ORDER BY
-                ${SurveyFieldDb.fields.id};
-        `;
-        const resultSurveyField = await this.runQuery(sql);
-        return this.convertQueryResultToObj(resultSurveyField, SurveyField);
+        return await this.pullAll(SurveyField);
     }
     static async getBySurveyId(surveyId:number) {
         const sql = `
@@ -28,17 +19,8 @@ export default class SurveyFieldDao extends DAO {
         const resultSurveyField = await this.runQuery(sql, [surveyId]);
         return this.convertQueryResultToObj(resultSurveyField, SurveyField);
     }
-    static async getById(id:number): Promise<SurveyField | undefined> {
-        const sql = `
-            SELECT
-                *
-            FROM
-                ${SurveyFieldDb.table}
-            WHERE
-                id=?
-            LIMIT 1;
-        `;
-        const resultSurveyField = await this.runQuery(sql, [id]);
-        return this.convertQueryResultToObj(resultSurveyField, SurveyField)[0];
+    static async getById(id:number) {
+        return await this.pullById(id, SurveyField);
+
     }
 }

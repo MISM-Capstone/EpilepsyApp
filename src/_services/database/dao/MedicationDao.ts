@@ -1,30 +1,13 @@
-import Medication, {MedicationDb} from "../../../models/Medication/Medication";
+import Medication from "../../../models/Medication/Medication";
 import DAO from "./Dao"
 
 export default class MedicationDao extends DAO {
     static async getAll() {
-        const sql = `
-            SELECT
-                *
-            FROM
-                ${MedicationDb.table}
-            ORDER BY
-                ${MedicationDb.fields.name};
-        `;
-        const resultMedication = await this.runQuery(sql);
-        return this.convertQueryResultToObj(resultMedication, Medication);
+        return await this.pullAll(Medication);
+
     }
-    static async getById(id:number): Promise<Medication | undefined> {
-        const sql = `
-            SELECT
-                *
-            FROM
-                ${MedicationDb.table}
-            WHERE
-                id=?
-            LIMIT 1;
-        `;
-        const resultMedication = await this.runQuery(sql, [id]);
-        return this.convertQueryResultToObj(resultMedication, Medication)[0];
+    static async getById(id:number) {
+        return await this.pullById(id, Medication);
+
     }
 }

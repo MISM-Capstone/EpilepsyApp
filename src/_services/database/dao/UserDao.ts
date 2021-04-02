@@ -14,7 +14,4 @@ export default class UserDao extends DAO {
         let convertedUsers =  this.convertQueryResultToObj(resultUsers, User)[0];
         return convertedUsers?convertedUsers:undefined;
     }
-    static async delete(id: number | string) {
-        return await this.deleteObj(id, UserDb);
-    }
 }
