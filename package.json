@@ -28,6 +28,7 @@
     "react-native-gesture-handler": "^1.9.0",
     "react-native-health": "^1.4.0",
     "react-native-html-to-pdf": "^0.9.1",
+    "react-native-notifications": "^3.4.2",
     "react-native-print": "^0.7.0",
     "react-native-reanimated": "^1.13.2",
     "react-native-safe-area-context": "^3.1.9",

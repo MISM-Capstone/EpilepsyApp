@@ -238,6 +238,8 @@ PODS:
   - React-jsinspector (0.63.4)
   - react-native-html-to-pdf (0.9.1):
     - React
+  - react-native-notifications (3.4.2):
+    - React-Core
   - react-native-print (0.7.0):
     - React
   - react-native-progress-bar-android (1.0.4):
@@ -376,6 +378,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-html-to-pdf (from `../node_modules/react-native-html-to-pdf`)
+  - react-native-notifications (from `../node_modules/react-native-notifications`)
   - react-native-print (from `../node_modules/react-native-print`)
   - "react-native-progress-bar-android (from `../node_modules/@react-native-community/progress-bar-android`)"
   - "react-native-progress-view (from `../node_modules/@react-native-community/progress-view`)"
@@ -454,6 +457,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-html-to-pdf:
     :path: "../node_modules/react-native-html-to-pdf"
+  react-native-notifications:
+    :path: "../node_modules/react-native-notifications"
   react-native-print:
     :path: "../node_modules/react-native-print"
   react-native-progress-bar-android:
@@ -541,6 +546,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 93bd528844ad21dc07aab1c67cb10abae6df6949
   React-jsinspector: 58aef7155bc9a9683f5b60b35eccea8722a4f53a
   react-native-html-to-pdf: 95ffebf254a9a1e5aaacfcaf4116974096b060d8
+  react-native-notifications: 51ed8167f70f01c5000ba81a4465ea98b4612e23
   react-native-print: b31a7afe481fc7c27960fbd1a10055bce7146a86
   react-native-progress-bar-android: ce95a69f11ac580799021633071368d08aaf9ad8
   react-native-progress-view: 0e5095f31642d63cbb2085e21b2499f978edfd1d
