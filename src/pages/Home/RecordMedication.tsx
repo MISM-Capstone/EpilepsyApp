@@ -37,7 +37,7 @@ export default function RecordMedication(props: Props) {
     const [medicationLog, setMedicationLog] = useState<MedicationLog>(new MedicationLog(user!.id!));
     const [medications, setMedications] = useState<Medication[]>([]);
     const [dosageUnits, setDosageUnits] = useState<DosageUnit[]>([]);
-    const id = props.route.params.medication_log_id;
+    const id = props.route.params.id;
 
     useEffect(() => {
         (async () => {
@@ -48,7 +48,7 @@ export default function RecordMedication(props: Props) {
                 }
             }
         })();
-    }, [props.route.params.medication_log_id]);
+    }, [props.route.params.id]);
 
     function update<TProp extends keyof MedicationLog>(key:TProp, value:MedicationLog[TProp]){
         updateValue(medicationLog, key, value, setMedicationLog);

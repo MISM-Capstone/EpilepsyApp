@@ -81,7 +81,7 @@ export default function PersonalSurveys(props:Props) {
                                         "AddEditSurvey",
                                         {
                                             tab: TabOptions.home,
-                                            survey: survey.id!,
+                                            id: survey.id!,
                                         }
                                     );
                                 }}

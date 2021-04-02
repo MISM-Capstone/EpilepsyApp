@@ -43,15 +43,15 @@ export default function AddEditSeizureLog(props: Props) {
 
     useEffect(() => {
         (async () => {
-            if (props.route.params.seizure_id) {
-                const id = props.route.params.seizure_id;
+            if (props.route.params.id) {
+                const id = props.route.params.id;
                 const foundSeizure = await SeizureLogDao.getById(id);
                 if (foundSeizure) {
                     setSeizureLog(foundSeizure);
                 }
             }
         })();
-    }, [props.route.params.seizure_id]);
+    }, [props.route.params.id]);
 
     function updateValue(key:keyof SeizureLog, value:any){
         const seizLog = CopyAndSetKey(seizureLog, key, value);

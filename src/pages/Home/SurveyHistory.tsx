@@ -102,7 +102,7 @@ export default function SurveyHistory(props: Props) {
                                         "LogSeizure",
                                         {
                                             tab:TabOptions.home,
-                                            seizure_id:seizure.id!,
+                                            id:seizure.id!,
                                         }
                                     );
                                 }}
@@ -139,7 +139,7 @@ export default function SurveyHistory(props: Props) {
                                         "RecordMedication",
                                         {
                                             tab:TabOptions.home,
-                                            medication_log_id:medication.id!,
+                                            id:medication.id!,
                                         }
                                     );
                                 }}

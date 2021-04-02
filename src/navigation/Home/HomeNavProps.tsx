@@ -2,38 +2,23 @@ import { TabOptions } from "../../components/TabOptions";
 
 type TabProps = {
     tab: TabOptions.home;
+    id?: number;
 };
 interface EditLogProps extends TabProps {
     date?: Date;
 }
-interface AddEditSeizureLog extends EditLogProps {
-    seizure_id?: number;
-}
-interface AddEditMedicationLog extends EditLogProps {
-    medication_log_id?: number;
-}
-interface AddEditMedication extends TabProps {
-    medication_id?: number;
-    dosage_unit_id?: number;
-}
-type AddSurveyProps = {
-    survey_id?: number;
-};
 
-export type EditSurveyProps = {
-    survey?: number;
-};
 
 export type HomeStackParamList = {
     Home: TabProps;
-    LogSeizure: AddEditSeizureLog;
-    RecordMedication: AddEditMedicationLog;
+    LogSeizure: EditLogProps;
+    RecordMedication: EditLogProps;
     DailySurvey: TabProps;
     SurveyHistory: TabProps;
     HealthKitTest: TabProps;
     AddDosageUnit: TabProps;
     AddLocation: TabProps;
-    AddMedication: AddEditMedication;
-    PersonalSurveys: TabProps & AddSurveyProps;
-    AddEditSurvey: TabProps & EditSurveyProps;
+    AddMedication: TabProps;
+    PersonalSurveys: TabProps;
+    AddEditSurvey: TabProps;
 };

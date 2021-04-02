@@ -38,7 +38,7 @@ function SeizureCard(props: RenderProps) {
                     <Text>Notes: {props.log.notes}</Text>
                 </View>
                 <Pressable onPress={() => {
-                    return props.navigation.navigate("UpdateSeizureLog", { tab: TabOptions.trends, seizure_id: props.log.id });
+                    return props.navigation.navigate("UpdateSeizureLog", { tab: TabOptions.trends, id: props.log.id });
                 }}>
                     <MaterialCommunityIcons name="pencil" size={25} color={'#44C2B3'} />
                 </Pressable>

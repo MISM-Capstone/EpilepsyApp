@@ -11,7 +11,6 @@ import { HomeStackParamList } from "../../navigation/Home/HomeNavProps";
 import SurveyDao from "../../_services/database/dao/SurveyDao";
 import SurveyFieldDao from "../../_services/database/dao/SurveyFieldDao";
 import SurveyFieldDisplay from "../../components/SurveyFieldDisplay";
-import { TabOptions } from "../../components/TabOptions";
 import { GetUpdateContext } from "../../_services/Providers/UpdateProvider";
 
 type AddEditSurveyScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'AddEditSurvey'>;
@@ -52,7 +51,7 @@ export default function AddEditSurvey(props:Props) {
 
     useEffect(() => {
         (async () => {
-            const surveyId = props.route.params.survey;
+            const surveyId = props.route.params.id;
             if (surveyId) {
                 const surv = await SurveyDao.getById(surveyId);
                 if (surv) {
@@ -60,7 +59,7 @@ export default function AddEditSurvey(props:Props) {
                 }
             }
         })();
-    },[props.route.params.survey]);
+    },[props.route.params.id]);
 
     useEffect(() => {
         (async () => {
