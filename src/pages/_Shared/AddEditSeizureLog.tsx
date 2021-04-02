@@ -15,19 +15,19 @@ import { RouteProp } from '@react-navigation/native';
 import LocationDao from '../../_services/database/dao/LocationDao';
 import { InputContainer } from '../../components/Inputs/InputComponents';
 import { MultiInput } from '../../components/Inputs/Input';
-import { TrendsStackParamList } from "../../navigation/Trends/TrendsNavProps";
+import { TrendOptions, TrendsStackParamList } from "../../navigation/Trends/TrendsNavProps";
 import { TabOptions } from "../../components/TabOptions";
 import { GetUpdateContext } from '../../_services/Providers/UpdateProvider';
 
-type homeNavProp = StackNavigationProp<HomeStackParamList, 'LogSeizure'>;
-type homeRouteProp = RouteProp<HomeStackParamList, 'LogSeizure'>;
+type HomeNavProp = StackNavigationProp<HomeStackParamList, 'LogSeizure'>;
+type HomeRouteProp = RouteProp<HomeStackParamList, 'LogSeizure'>;
 
-type trendNavProp = StackNavigationProp<TrendsStackParamList, 'UpdateSeizureLog'>;
-type trendRouteProp = RouteProp<TrendsStackParamList, 'UpdateSeizureLog'>;
+type TrendNavProp = StackNavigationProp<TrendsStackParamList, TrendOptions.UpdateSeizureLog>;
+type TrendRouteProp = RouteProp<TrendsStackParamList, TrendOptions.UpdateSeizureLog>;
 
 type Props = {
-    navigation: homeNavProp | trendNavProp;
-    route: homeRouteProp | trendRouteProp;
+    navigation: HomeNavProp | TrendNavProp;
+    route: HomeRouteProp | TrendRouteProp;
 };
 
 type ErrorObject = {
@@ -158,17 +158,20 @@ export default function AddEditSeizureLog(props: Props) {
                 </InputContainer>
                 <InputContainer title="Location">
                     <Button title="Add Location" onPress={() => {
+                        updateContext.setPageToUpdate(props.route.name);
                         if (props.route.params.tab ===  TabOptions.home) {
-                            const nav = props.navigation as homeNavProp;
-                            updateContext.setPageToUpdate(props.route.name)
-                            nav.navigate("AddLocation", {tab:TabOptions.home})
+                            const nav = props.navigation as HomeNavProp;
+                            nav.navigate("AddLocation", {tab:TabOptions.home});
+                        } else {
+                            const nav = props.navigation as TrendNavProp;
+                            nav.navigate(TrendOptions.UpdateLocation, {tab:TabOptions.trends});
                         }
                     }} />
                     {
                         locations.length ?
                             <Picker
                                 selectedValue={seizureLog.location_id}
-                                onValueChange={(itemValue, itemIndex) => {
+                                onValueChange={(itemValue) => {
                                     updateValue(SeizureLogDb.fields.location_id, itemValue);
                             }}>
                                 {

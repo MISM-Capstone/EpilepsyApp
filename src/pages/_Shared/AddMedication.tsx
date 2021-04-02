@@ -15,13 +15,17 @@ import { SingleInput, MultiInput } from '../../components/Inputs/Input';
 import { InputContainer } from '../../components/Inputs/InputComponents';
 import { TabOptions } from "../../components/TabOptions";
 import { GetUpdateContext } from '../../_services/Providers/UpdateProvider';
+import { TrendOptions, TrendsStackParamList } from '../../navigation/Trends/TrendsNavProps';
 
-type MedicationcreenNavigationProp = StackNavigationProp<HomeStackParamList, 'AddMedication'>;
-type MedicationScreenRouteProp = RouteProp<HomeStackParamList, 'AddMedication'>;
+type HomeNavProp = StackNavigationProp<HomeStackParamList, 'AddMedication'>;
+type HomeRouteProp = RouteProp<HomeStackParamList, 'AddMedication'>;
+
+type TrendNavProp = StackNavigationProp<TrendsStackParamList, TrendOptions.UpdateMed>;
+type TrendRouteProp = RouteProp<TrendsStackParamList, TrendOptions.UpdateMed>;
 
 type Props = {
-    navigation: MedicationcreenNavigationProp;
-    route: MedicationScreenRouteProp;
+    navigation: HomeNavProp | TrendNavProp;
+    route: HomeRouteProp | TrendRouteProp;
 };
 
 
@@ -101,13 +105,19 @@ export default function AddMedication(props: Props) {
                 <InputContainer title="Dosage Unit">
                     <Button title="Add Dosage Unit" onPress={() => {
                         updateContext.setPageToUpdate(props.route.name);
-                        props.navigation.navigate("AddDosageUnit", {tab:TabOptions.home})
+                        if (props.route.params.tab ===  TabOptions.home) {
+                            const nav = props.navigation as HomeNavProp;
+                            nav.navigate("AddDosageUnit", {tab:TabOptions.home});
+                        } else {
+                            const nav = props.navigation as TrendNavProp;
+                            nav.navigate(TrendOptions.UpdateDosageUnit, {tab:TabOptions.trends});
+                        }
                     }} />
                     {
                         dosageUnits.length ?
                             <Picker
                                 selectedValue={medication.dosage_unit_id}
-                                onValueChange={(itemValue, itemIndex) => {
+                                onValueChange={(itemValue) => {
                                     updateValue(MedicationDb.fields.dosage_unit_id, itemValue);
                             }}>
                                 {

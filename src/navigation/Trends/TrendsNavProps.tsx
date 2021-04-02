@@ -14,11 +14,21 @@ export type TrendsStackParamList = {
     DateHistory: DateHistoryProps;
     Charts: TabProps;
     UpdateSeizureLog: TabProps;
+    UpdateSurveyLog: TabProps;
+    UpdateMedLog: TabProps;
+    UpdateMed: TabProps;
+    UpdateDosageUnit: TabProps;
+    UpdateLocation: TabProps;
 };
 
 export enum TrendOptions {
     Trends="Trends",
     DateHistory="DateHistory",
-    Chart="Charts",
-    UpdateSeizureLog="UpdateSeizureLog"
+    Charts="Charts",
+    UpdateSeizureLog="UpdateSeizureLog",
+    UpdateSurveyLog="UpdateSurveyLog",
+    UpdateMedLog="UpdateMedLog",
+    UpdateMed="UpdateMed",
+    UpdateDosageUnit="UpdateDosageUnit",
+    UpdateLocation="UpdateLocation",
 }

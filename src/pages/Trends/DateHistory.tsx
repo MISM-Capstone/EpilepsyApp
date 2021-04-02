@@ -1,51 +1,40 @@
+import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
-import { View, Text, SafeAreaView, Button, Pressable } from 'react-native';
-import { DateObject } from 'react-native-calendars';
+import { View, Text, SafeAreaView, Button } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MedicationLogCard from '../../components/SummaryCards/MedicationLogCard';
+import SeizureLogCard from '../../components/SummaryCards/SeizureLogCard';
 import { TabOptions } from "../../components/TabOptions";
+import DosageUnit from '../../models/DosageUnits';
+import Location from '../../models/Location';
+import Medication from '../../models/Medication/Medication';
+import MedicationLog from '../../models/Medication/MedicationLog';
 import SeizureLog from '../../models/SeizureLog';
+import SurveyLog from '../../models/Surveys/SurveyLog';
 import { TrendsStackParamList } from "../../navigation/Trends/TrendsNavProps";
 import HistoryStyles from '../../styles/HistoryStyles';
+import DosageUnitDao from '../../_services/database/dao/DosageUnitDao';
 import HistoryDao from '../../_services/database/dao/HistoryDao';
+import LocationDao from '../../_services/database/dao/LocationDao';
+import MedicationDao from '../../_services/database/dao/MedicationDao';
 import sleepDatesService from '../../_services/helpers/sleepDates.service';
 import { GetUpdateContext } from '../../_services/Providers/UpdateProvider';
 
+type DateHistNavProp = StackNavigationProp<TrendsStackParamList, 'DateHistory'>;
+type DateHistRouteProp = RouteProp<TrendsStackParamList, 'DateHistory'>;
+
 type Props = {
-    navigation: any;
-    route: any
+    navigation: DateHistNavProp;
+    route: DateHistRouteProp;
 };
 
 type RenderProps = {
     log: any;
     key: number;
-    navigation: TrendsScreenNavigationProp;
+    navigation: DateHistNavProp;
 }
 
-type TrendsScreenNavigationProp = StackNavigationProp<
-    TrendsStackParamList,
-    'Trends'
->;
-
-function SeizureCard(props: RenderProps) {
-    return (
-        <View style={HistoryStyles.HistoryEventCard}>
-            <View style={{ display: 'flex', flexDirection: `row`, justifyContent: 'space-between' }}>
-                <View>
-                    <Text>Time: {props.log.time}</Text>
-                    <Text>Location: {props.log.location}</Text>
-                    <Text>Notes: {props.log.notes}</Text>
-                </View>
-                <Pressable onPress={() => {
-                    return props.navigation.navigate("UpdateSeizureLog", { tab: TabOptions.trends, id: props.log.id });
-                }}>
-                    <MaterialCommunityIcons name="pencil" size={25} color={'#44C2B3'} />
-                </Pressable>
-            </View>
-        </View>
-    )
-}
 
 function SurveyCard(props: RenderProps) {
     const sleepTime = sleepDatesService.getSleepTime(props.log.sleep_start_date, props.log.sleep_end_date);
@@ -63,85 +52,147 @@ function SurveyCard(props: RenderProps) {
     )
 }
 
-function MedicationCard(props: RenderProps) {
-    return (
-        <View style={HistoryStyles.HistoryEventCard}>
-            <View>
-                <Text>Time: {props.log.time}</Text>
-                <Text>Medication: {props.log.medication}</Text>
-                <Text>Dosage: {props.log.dosage}</Text>
-                <Text>Notes: {props.log.notes}</Text>
-            </View>
-        </View>
-    )
-}
-
 const DateHistory = (props: Props) => {
     const updateContext = GetUpdateContext();
     const { date } = props.route.params;
 
-    const [seizures, setSeizures] = useState<SeizureLog[]>([]);
-    const [surveys, setSurveys] = useState<any[]>([]);
-    const [medications, setMedications] = useState<any[]>([]);
+    const [results, setResults] = useState(
+        {
+            seizures: [] as SeizureLog[],
+            surveys: [] as SurveyLog[],
+            medications: [] as MedicationLog[],
+        }
+    );
+    const [locations, setLocations] = useState<Location[]>([]);
+    const [meds, setMeds] = useState<Medication[]>([]);
+    const [dosageUnits, setDosageUnits] = useState<DosageUnit[]>([]);
+
+    async function setEverything() {
+        let sendDate = new Date(date.dateString);
+        const results = await HistoryDao.getAllLogsByDate(sendDate);
+        setResults(results);
+        const locs = await LocationDao.getAll();
+        setLocations(locs);
+        const dbMeds = await MedicationDao.getAll();
+        setMeds(dbMeds);
+        const dos = await DosageUnitDao.getAll();
+        setDosageUnits(dos);
+    }
 
     useEffect(() => {
-        (async () => {
-            let d = date as DateObject;
-            let sendDate = new Date(d.dateString);
-            const results = await HistoryDao.getAllLogsByDate(sendDate);
-            setSeizures(results['seizures']);
-            setSurveys(results['surveys']);
-            setMedications(results['medications']);
-        })();
-    }, [date]);
+        setEverything()
+    }, []);
+
+
+    useEffect(() => {
+        const updateObj = updateContext.getUpdatedObj(props.route.name);
+        if (updateObj) {
+            setEverything();
+        }
+    }, [updateContext.hasObject]);
 
     return (
         <SafeAreaView>
             <ScrollView>
                 <Text style={HistoryStyles.SectionHeader}>Seizures</Text>
-                {seizures.length > 0 ?
-                    seizures.map(function (seizure, key) {
-                        return <SeizureCard log={seizure} key={key} navigation={props.navigation} />
+                {results.seizures.length > 0 ?
+                    results.seizures.map(function (seizure) {
+                        return (
+                            <SeizureLogCard
+                                key={seizure.id}
+                                seizure={seizure}
+                                locations={locations}
+                                onClick={() => {
+                                    updateContext.setPageToUpdate(props.route.name);
+                                    props.navigation.navigate(
+                                        "UpdateSeizureLog",
+                                        {
+                                            tab:TabOptions.trends,
+                                            id:seizure.id!,
+                                        }
+                                    );
+                                }}
+                            />
+                        )
                     })
                     :
                     <View>
                         <Text style={HistoryStyles.HistoryAlternateText}>No Seizure Events recorded for this date.</Text>
-                        { }
-                        <Button
-                            title="Record Seizure for this date."
-                            onPress={() => props.navigation.navigate('LogSeizure', { date: date })}
-                        ></Button>
                     </View>
                 }
+                <Button
+                    title="Record Seizure for this date."
+                    onPress={() => {
+                        updateContext.setPageToUpdate(props.route.name);
+                        props.navigation.navigate(
+                            "UpdateSeizureLog",
+                            {
+                                tab:TabOptions.trends,
+                            }
+                        );
+                    }}
+                />
                 <Text style={HistoryStyles.SectionHeader}>Surveys</Text>
-                {surveys.length > 0 ?
-                    surveys.map(function (survey, key) {
+                {results.surveys.length > 0 ?
+                    results.surveys.map(function (survey, key) {
                         return <SurveyCard log={survey} key={key} navigation={props.navigation} />
                     })
                     :
                     <View>
                         <Text style={HistoryStyles.HistoryAlternateText}>No Surveys recorded for this date.</Text>
-                        <Button
-                            title="Record Survey for this date."
-                            onPress={() => props.navigation.navigate('DailySurvey', { date: date })}
-                        ></Button>
                     </View>
                 }
+                <Button
+                    title="Record Survey for this date."
+                    onPress={() => {
+                        updateContext.setPageToUpdate(props.route.name);
+                        props.navigation.navigate(
+                            "UpdateSurveyLog",
+                            {
+                                tab:TabOptions.trends,
+                            }
+                        );
+                    }}
+                />
                 <Text style={HistoryStyles.SectionHeader}>Medications</Text>
-                {medications.length > 0 ?
-                    medications.map(function (medication, key) {
-                        return <MedicationCard log={medication} key={key} navigation={props.navigation} />
+                {results.medications.length > 0 ?
+                    results.medications.map(function (medication) {
+                        return (
+                            <MedicationLogCard
+                                key={medication.id}
+                                medicationLog={medication}
+                                medications={meds}
+                                dosageUnits={dosageUnits}
+                                onClick={() => {
+                                    updateContext.setPageToUpdate(props.route.name);
+                                    props.navigation.navigate(
+                                        "UpdateMedLog",
+                                        {
+                                            tab:TabOptions.trends,
+                                            id:medication.id!,
+                                        }
+                                    );
+                                }}
+                            />
+                        )
                     })
                     :
                     <View>
                         <Text style={HistoryStyles.HistoryAlternateText}>No Medications recorded for this date.</Text>
-                        <Button
-                            title="Record Medications for this date."
-                            onPress={() => props.navigation.navigate('DailySurvey', { date: date })}
-                        ></Button>
                     </View>
-
                 }
+                <Button
+                    title="Record Medication for this date."
+                    onPress={() => {
+                        updateContext.setPageToUpdate(props.route.name);
+                        props.navigation.navigate(
+                            "UpdateMedLog",
+                            {
+                                tab:TabOptions.trends,
+                            }
+                        );
+                    }}
+                />
             </ScrollView>
         </SafeAreaView >
     )

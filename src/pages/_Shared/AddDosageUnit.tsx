@@ -9,15 +9,18 @@ import { RouteProp } from '@react-navigation/native';
 import DosageUnit, { DosageUnitDb } from '../../models/DosageUnits';
 import DosageUnitDao from '../../_services/database/dao/DosageUnitDao';
 import { MultiInput, SingleInput } from '../../components/Inputs/Input';
-import { TabOptions } from "../../components/TabOptions";
 import { GetUpdateContext } from '../../_services/Providers/UpdateProvider';
+import { TrendOptions, TrendsStackParamList } from '../../navigation/Trends/TrendsNavProps';
 
-type DosageUnitScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'AddDosageUnit'>;
-type DosageUnitScreenRouteProp = RouteProp<HomeStackParamList, 'AddDosageUnit'>;
+type HomeNavProp = StackNavigationProp<HomeStackParamList, 'AddDosageUnit'>;
+type HomeRouteProp = RouteProp<HomeStackParamList, 'AddDosageUnit'>;
+
+type TrendNavProp = StackNavigationProp<TrendsStackParamList, TrendOptions.UpdateDosageUnit>;
+type TrendRouteProp = RouteProp<TrendsStackParamList, TrendOptions.UpdateDosageUnit>;
 
 type Props = {
-    navigation: DosageUnitScreenNavigationProp;
-    route: DosageUnitScreenRouteProp;
+    navigation: HomeNavProp | TrendNavProp;
+    route: HomeRouteProp | TrendRouteProp;
 };
 
 

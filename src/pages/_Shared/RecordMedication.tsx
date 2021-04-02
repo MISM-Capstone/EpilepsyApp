@@ -21,13 +21,17 @@ import { InputContainer } from '../../components/Inputs/InputComponents';
 import { SingleInput } from '../../components/Inputs/Input';
 import { TabOptions } from "../../components/TabOptions";
 import { GetUpdateContext } from '../../_services/Providers/UpdateProvider';
+import { TrendOptions, TrendsStackParamList } from '../../navigation/Trends/TrendsNavProps';
 
-type MedLogNavProps = StackNavigationProp<HomeStackParamList, 'RecordMedication'>;
-type MedLogRouteProps = RouteProp<HomeStackParamList, 'RecordMedication'>;
+type HomeNavProp = StackNavigationProp<HomeStackParamList, 'RecordMedication'>;
+type HomeRouteProps = RouteProp<HomeStackParamList, 'RecordMedication'>;
+
+type trendNavProp = StackNavigationProp<TrendsStackParamList, TrendOptions.UpdateMedLog>;
+type trendRouteProp = RouteProp<TrendsStackParamList, TrendOptions.UpdateMedLog>;
 
 type Props = {
-    navigation: MedLogNavProps;
-    route: MedLogRouteProps;
+    navigation: HomeNavProp | trendNavProp;
+    route: HomeRouteProps | trendRouteProp;
 };
 
 
@@ -112,7 +116,7 @@ export default function RecordMedication(props: Props) {
     }, [medicationLog.medication_id]);
 
     useEffect(() => {
-        if (props.route.params && props.route.params.date) {
+        if (props.route.params.tab === TabOptions.home && props.route.params.date) {
             // TODO - Figure out what object type date is
             let date: any = props.route.params.date;
             let paramDate = new Date(date.dateString.replace(/-/g, '\/'));
@@ -184,13 +188,19 @@ export default function RecordMedication(props: Props) {
                     <InputContainer title="Medication">
                         <Button title="Add Medication" onPress={() => {
                             updateContext.setPageToUpdate(props.route.name)
-                            props.navigation.navigate("AddMedication", {tab:TabOptions.home})
+                            if (props.route.params.tab ===  TabOptions.home) {
+                                const nav = props.navigation as HomeNavProp;
+                                nav.navigate("AddMedication", {tab:TabOptions.home});
+                            } else {
+                                const nav = props.navigation as trendNavProp;
+                                nav.navigate(TrendOptions.UpdateMed, {tab:TabOptions.trends});
+                            }
                         }} />
                         {
                             medications.length ?
                                 <Picker
                                     selectedValue={medicationLog.medication_id}
-                                    onValueChange={(itemValue, itemIndex) => {
+                                    onValueChange={(_, itemIndex) => {
                                         updateMedication(medications[itemIndex]);
                                 }}>
                                     {
@@ -214,13 +224,19 @@ export default function RecordMedication(props: Props) {
                     <InputContainer title="Dosage Unit">
                         <Button title="Add Dosage Unit" onPress={() => {
                             updateContext.setPageToUpdate(props.route.name)
-                            props.navigation.navigate("AddDosageUnit", {tab:TabOptions.home})
+                            if (props.route.params.tab ===  TabOptions.home) {
+                                const nav = props.navigation as HomeNavProp;
+                                nav.navigate("AddDosageUnit", {tab:TabOptions.home});
+                            } else {
+                                const nav = props.navigation as trendNavProp;
+                                nav.navigate(TrendOptions.UpdateDosageUnit, {tab:TabOptions.trends});
+                            }
                         }} />
                         {
                             dosageUnits.length ?
                                 <Picker
                                     selectedValue={medicationLog.dosage_unit_id}
-                                    onValueChange={(itemValue, itemIndex) => {
+                                    onValueChange={(itemValue) => {
                                         update(medicationLog.db.fields.dosage_unit_id, itemValue);
                                 }}>
                                     {

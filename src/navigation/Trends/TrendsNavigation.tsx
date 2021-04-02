@@ -6,8 +6,12 @@ import Trends from "../../pages/Trends/Trends";
 import HeaderStyle from "../../styles/HeaderStyle";
 import DateHistory from '../../pages/Trends/DateHistory';
 import Charts from '../../pages/Trends/Charts';
-import AddEditSeizureLog from '../../pages/Home/AddEditSeizureLog';
-import { TrendsStackParamList } from './TrendsNavProps';
+import AddEditSeizureLog from '../../pages/_Shared/AddEditSeizureLog';
+import { TrendOptions, TrendsStackParamList } from './TrendsNavProps';
+import DailySurvey from '../../pages/Home/DailySurvey';
+import RecordMedication from '../../pages/_Shared/RecordMedication';
+import AddMedication from '../../pages/_Shared/AddMedication';
+import AddDosageUnit from '../../pages/_Shared/AddDosageUnit';
 
 const Stack = createStackNavigator<TrendsStackParamList>();
 
@@ -15,26 +19,46 @@ const HomeNavigation = () => {
     return (
         <>
             <Stack.Navigator
-                initialRouteName="Trends"
+                initialRouteName={TrendOptions.Trends}
                 screenOptions={HeaderStyle}
             >
                 <Stack.Screen
-                    name="Trends"
+                    name={TrendOptions.Trends}
                     component={Trends}
                 />
                 <Stack.Screen
-                    name="DateHistory"
+                    name={TrendOptions.DateHistory}
                     component={DateHistory}
                     options={({ route }) => ({title: route.params.date.dateString})}
                 />
                 <Stack.Screen
-                    name="Charts"
+                    name={TrendOptions.Charts}
                     component={Charts}
                 />
                 <Stack.Screen
-                    name="UpdateSeizureLog"
+                    name={TrendOptions.UpdateSeizureLog}
                     options={() => ({title: "Update Seizure"})}
                     component={AddEditSeizureLog}
+                />
+                <Stack.Screen
+                    name={TrendOptions.UpdateSurveyLog}
+                    options={() => ({title: "Update Survey"})}
+                    component={DailySurvey}
+                />
+                <Stack.Screen
+                    name={TrendOptions.UpdateMedLog}
+                    options={() => ({title: "Update Medication Log"})}
+                    component={RecordMedication}
+                />
+                <Stack.Screen
+                    name={TrendOptions.UpdateMed}
+                    options={() => ({title: "Update Medication"})}
+                    component={AddMedication}
+                />
+                <Stack.Screen
+                    name={TrendOptions.UpdateDosageUnit}
+                    options={() => ({title: "Update Dosage Unit"})}
+                    component={AddDosageUnit}
                 />
             </Stack.Navigator>
         </>

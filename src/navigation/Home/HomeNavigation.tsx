@@ -4,14 +4,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Home from "../../pages/Home/Home";
 import DailySurvey from "../../pages/Home/DailySurvey";
 import SurveyHistory from "../../pages/Home/SurveyHistory";
-import AddEditSeizureLog from "../../pages/Home/AddEditSeizureLog";
-import RecordMedication from "../../pages/Home/RecordMedication";
+import AddEditSeizureLog from "../../pages/_Shared/AddEditSeizureLog";
+import RecordMedication from "../../pages/_Shared/RecordMedication";
 
 import HeaderStyle from "../../styles/HeaderStyle";
 import HealthKitTest from '../../pages/Home/HealthKitTest';
-import AddLocation from '../../pages/Home/AddLocation';
-import AddMedication from '../../pages/Home/AddMedication';
-import AddDosageUnit from '../../pages/Home/AddDosageUnit';
+import AddLocation from '../../pages/_Shared/AddLocation';
+import AddMedication from '../../pages/_Shared/AddMedication';
+import AddDosageUnit from '../../pages/_Shared/AddDosageUnit';
 import PersonalSurveys from '../../pages/Home/PersonalSurveys';
 import AddEditSurvey from '../../pages/Home/AddEditSurvey';
 import { HomeStackParamList } from './HomeNavProps';
@@ -54,7 +54,7 @@ const HomeNavigation = () => {
                 <Stack.Screen
                     name="PersonalSurveys"
                     component={PersonalSurveys}
-                    options={({navigation, route}) => {
+                    options={() => {
                         return {
                             title: 'Personal Surveys',
                         }

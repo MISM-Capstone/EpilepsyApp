@@ -9,14 +9,18 @@ import Location, { LocationDb } from '../../models/Location';
 import { RouteProp } from '@react-navigation/native';
 import LocationDao from '../../_services/database/dao/LocationDao';
 import { MultiInput, SingleInput } from '../../components/Inputs/Input';
-import { GetUpdateContext, UpdateProviderContext } from '../../_services/Providers/UpdateProvider';
+import { GetUpdateContext } from '../../_services/Providers/UpdateProvider';
+import { TrendOptions, TrendsStackParamList } from '../../navigation/Trends/TrendsNavProps';
 
-type LocNavProp = StackNavigationProp<HomeStackParamList, 'AddLocation'>;
-type LocRouteProp = RouteProp<HomeStackParamList, 'AddLocation'>;
+type HomeNavProp = StackNavigationProp<HomeStackParamList, 'AddLocation'>;
+type HomeRouteProp = RouteProp<HomeStackParamList, 'AddLocation'>;
+
+type trendNavProp = StackNavigationProp<TrendsStackParamList, TrendOptions.UpdateLocation>;
+type trendRouteProp = RouteProp<TrendsStackParamList, TrendOptions.UpdateLocation>;
 
 type Props = {
-    navigation: LocNavProp;
-    route: LocRouteProp;
+    navigation: HomeNavProp | trendNavProp;
+    route: HomeRouteProp | trendRouteProp;
 };
 
 
