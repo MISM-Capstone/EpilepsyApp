@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
-import AppleHealthKit, { HealthValue, HealthKitPermissions, HealthInputOptions, HealthUnit } from 'react-native-health';
-
-type Props = {
-    navigation: any;
-};
+import AppleHealthKit, { HealthValue, HealthKitPermissions } from 'react-native-health';
 
 const permissions = {
     permissions: {
@@ -25,7 +21,7 @@ AppleHealthKit.initHealthKit(permissions, (error: string) => {
     }
 });
 
-export default function HealthKitTest(props: Props) {
+export default function HealthKitTest() {
     const options: any = { startDate: (new Date(2020, 1, 1)).toISOString() }
     const [sleep, setSleep] = useState<HealthValue>();
     const [sleepLoaded, setSleepLoaded] = useState<boolean>(false);

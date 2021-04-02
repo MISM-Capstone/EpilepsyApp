@@ -162,12 +162,12 @@ export class DatabaseInitialization {
             transaction.executeSql("INSERT INTO Version (version) VALUES (1);");
       }
       // This function should be called when the version of the db is < 2
-      private static async preVersion2Inserts(transaction: SQLite.Transaction) {
-          console.info("Running pre-version 2 DB inserts");
+    //   private static async preVersion2Inserts(transaction: SQLite.Transaction) {
+    //       console.info("Running pre-version 2 DB inserts");
           
-          // Make schema changes
-          transaction.executeSql("ALTER TABLE ...");
-          // Lastly, update the database version
-          transaction.executeSql("INSERT INTO Version (version) VALUES (2);");
-      }
+    //       // Make schema changes
+    //       transaction.executeSql("ALTER TABLE ...");
+    //       // Lastly, update the database version
+    //       transaction.executeSql("INSERT INTO Version (version) VALUES (2);");
+    //   }
   }

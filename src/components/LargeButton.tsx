@@ -1,6 +1,5 @@
 import React from "react";
-import { Pressable, Text, View } from "react-native";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Pressable, Text } from "react-native";
 import ButtonStyles from "../styles/ButtonStyles";
 
 interface ButtonProps {

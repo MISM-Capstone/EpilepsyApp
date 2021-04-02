@@ -9,6 +9,9 @@ import { GenerateReportProps } from './GenerateReport';
 import SurveyLogDao from '../../_services/database/dao/SurveyLogDao';
 import MedicationLogDao from '../../_services/database/dao/MedicationLogDao';
 import SeizureLogDao from '../../_services/database/dao/SeizureLogDao';
+import LocationDao from '../../_services/database/dao/LocationDao';
+import MedicationDao from '../../_services/database/dao/MedicationDao';
+import DosageUnitDao from '../../_services/database/dao/DosageUnitDao';
 
 export default class PDF {
     static displayPDF(wasShown: React.MutableRefObject<boolean>, pdfURI: string, props: GenerateReportProps) {
@@ -35,7 +38,7 @@ export default class PDF {
                     });
                 })
                 .catch(error => {
-                    // error
+                    console.warn("ERROR:", error);
                 });
             wasShown.current = true;
         }
@@ -45,13 +48,17 @@ export default class PDF {
         const dbSeizures = await SeizureLogDao.getInDateRange(startDate, endDate);
         const dbSurveys = await SurveyLogDao.getSurveysInDateRange(startDate, endDate);
         const dbMedication = await MedicationLogDao.getInDateRange(startDate, endDate);
+        const locs = await LocationDao.getAll();
+        const dbMeds = await MedicationDao.getAll();
+        const dos = await DosageUnitDao.getAll();
+        
         let html = "";
         imageLinks.forEach((image) => {
             html += `<img src="${image}" />`;
         });
         html += "<h2>Seizures</h2>";
         dbSeizures.forEach((seizure) => {
-            let test = <RenderSeizure seizure={seizure} />;
+            let test = <RenderSeizure seizure={seizure} locations={locs} />;
             html += renderToString(test);
         });
         html += "<h2>Surveys</h2>";
@@ -61,7 +68,7 @@ export default class PDF {
         });
         html += "<h2>Medication</h2>";
         dbMedication.forEach((medication) => {
-            let test = <RenderMedication log={medication} />;
+            let test = <RenderMedication medLog={medication} medications={dbMeds} dosageUnits={dos} />;
             html += renderToString(test);
         });
         let today = new Date();

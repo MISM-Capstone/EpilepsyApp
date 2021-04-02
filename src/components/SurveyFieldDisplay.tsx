@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { View } from "react-native";
-import SurveyField, { FIELD_TYPES, SurveyFieldDb, SURVEY_FIELD_TYPE } from "../models/Surveys/SurveyField";
+import SurveyField, { FIELD_TYPES, SurveyFieldDb } from "../models/Surveys/SurveyField";
 import { SingleInput } from "./Inputs/Input";
 import { InputContainer } from "./Inputs/InputComponents";
 import ModalDropdown from 'react-native-modal-dropdown';
@@ -39,7 +39,7 @@ export default function SurveyFieldDisplay(props:SurveyFieldProps) {
                 defaultIndex={defaultIndex}
                 defaultValue={props.field.field_display}
                 options={options}
-                onSelect={(strIndex, option) => {
+                onSelect={(strIndex) => {
                     const index = parseInt(strIndex);
                     const selectedType = FIELD_TYPES[index];
                     props.updateField(props.field, SurveyFieldDb.fields.field_type, selectedType.db)
