@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View,Button } from 'react-native';
-import { COLORS } from '../constants';
+import { COLORS } from '../../constants';
 
 const ButtonSet = (params: any) => {
     const [activeChoice, setActive] = useState<any>();

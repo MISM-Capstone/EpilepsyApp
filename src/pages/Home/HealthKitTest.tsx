@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
-import AppleHealthKit, { HealthValue, HealthKitPermissions, HealthInputOptions, HealthUnit } from 'react-native-health';
-
-type Props = {
-    navigation: any;
-};
+import AppleHealthKit, { HealthValue, HealthKitPermissions } from 'react-native-health';
 
 const permissions = {
     permissions: {
@@ -21,11 +17,11 @@ const permissions = {
 
 AppleHealthKit.initHealthKit(permissions, (error: string) => {
     if (error) {
-        console.log('[ERROR] Cannot grant permissions!')
+        console.warn('[ERROR] Cannot grant permissions!')
     }
 });
 
-export default function HealthKitTest(props: Props) {
+export default function HealthKitTest() {
     const options: any = { startDate: (new Date(2020, 1, 1)).toISOString() }
     const [sleep, setSleep] = useState<HealthValue>();
     const [sleepLoaded, setSleepLoaded] = useState<boolean>(false);
@@ -38,7 +34,6 @@ export default function HealthKitTest(props: Props) {
     useEffect(() => {
         AppleHealthKit.getSleepSamples(options, (err: string, results: HealthValue) => {
             try {
-                console.log(results);
                 setSleep(results);
                 setSleepLoaded(true);
             } catch {
@@ -47,7 +42,6 @@ export default function HealthKitTest(props: Props) {
         });
         AppleHealthKit.getActiveEnergyBurned(options, (err: string, results: HealthValue[]) => {
             try {
-                console.log(results);
                 setEnergyBurned(results);
                 setEnergyLoaded(true);
             } catch {
@@ -56,7 +50,6 @@ export default function HealthKitTest(props: Props) {
         });
         AppleHealthKit.getLatestWeight(options, (err: string, results: HealthValue) => {
             try {
-                console.log(results);
                 if (results !== undefined){
 
                     setWeight(results);
