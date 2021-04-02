@@ -5,7 +5,7 @@ import SafeAreaView from 'react-native-safe-area-view';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { ScrollView } from 'react-native-gesture-handler';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { HomeStackParamList } from "../../navigation/Home/HomeNavProps";
+import { HomeOptions, HomeStackParamList } from "../../navigation/Home/HomeNavProps";
 import MedicationLogDao from '../../_services/database/dao/MedicationLogDao';
 import SurveyStyles from '../../styles/SurveyStyles';
 import MedicationLog from '../../models/Medication/MedicationLog';
@@ -23,8 +23,8 @@ import { TabOptions } from "../../components/TabOptions";
 import { GetUpdateContext } from '../../_services/Providers/UpdateProvider';
 import { TrendOptions, TrendsStackParamList } from '../../navigation/Trends/TrendsNavProps';
 
-type HomeNavProp = StackNavigationProp<HomeStackParamList, 'RecordMedication'>;
-type HomeRouteProps = RouteProp<HomeStackParamList, 'RecordMedication'>;
+type HomeNavProp = StackNavigationProp<HomeStackParamList, HomeOptions.RecordMedication>;
+type HomeRouteProps = RouteProp<HomeStackParamList, HomeOptions.RecordMedication>;
 
 type trendNavProp = StackNavigationProp<TrendsStackParamList, TrendOptions.UpdateMedLog>;
 type trendRouteProp = RouteProp<TrendsStackParamList, TrendOptions.UpdateMedLog>;
@@ -190,7 +190,7 @@ export default function RecordMedication(props: Props) {
                             updateContext.setPageToUpdate(props.route.name)
                             if (props.route.params.tab ===  TabOptions.home) {
                                 const nav = props.navigation as HomeNavProp;
-                                nav.navigate("AddMedication", {tab:TabOptions.home});
+                                nav.navigate(HomeOptions.AddMedication, {tab:TabOptions.home});
                             } else {
                                 const nav = props.navigation as trendNavProp;
                                 nav.navigate(TrendOptions.UpdateMed, {tab:TabOptions.trends});
@@ -226,7 +226,7 @@ export default function RecordMedication(props: Props) {
                             updateContext.setPageToUpdate(props.route.name)
                             if (props.route.params.tab ===  TabOptions.home) {
                                 const nav = props.navigation as HomeNavProp;
-                                nav.navigate("AddDosageUnit", {tab:TabOptions.home});
+                                nav.navigate(HomeOptions.AddDosageUnit, {tab:TabOptions.home});
                             } else {
                                 const nav = props.navigation as trendNavProp;
                                 nav.navigate(TrendOptions.UpdateDosageUnit, {tab:TabOptions.trends});

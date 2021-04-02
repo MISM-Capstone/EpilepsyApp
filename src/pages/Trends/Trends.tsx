@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import { TrendsStackParamList } from "../../navigation/Trends/TrendsNavProps";
+import { TrendOptions, TrendsStackParamList } from "../../navigation/Trends/TrendsNavProps";
 
 import { default as mainStyle } from "../../styles/MainStyles";
 import { CalendarList } from 'react-native-calendars';
@@ -14,7 +14,7 @@ import { useIsFocused } from '@react-navigation/core';
 
 type TrendsScreenNavigationProp = StackNavigationProp<
     TrendsStackParamList,
-    'Trends'
+    TrendOptions.Trends
 >;
 
 type Props = {
@@ -39,7 +39,7 @@ const Trends = (props: Props) => {
     return (
         <SafeAreaView style={mainStyle.container}>
             <View style={{paddingBottom: 20}}>
-                <LargeButton title="View Charts" navigate={() => props.navigation.navigate("Charts", {tab:TabOptions.trends})} />
+                <LargeButton title="View Charts" navigate={() => props.navigation.navigate(TrendOptions.Charts, {tab:TabOptions.trends})} />
             </View>
             {/* Docs: https://github.com/wix/react-native-calendars */}
             <CalendarList
@@ -53,7 +53,7 @@ const Trends = (props: Props) => {
                 showScrollIndicator={true}
 
                 onDayPress={(day) => {
-                    props.navigation.navigate('DateHistory', {
+                    props.navigation.navigate(TrendOptions.DateHistory, {
                         tab:TabOptions.trends,
                         date: day
                     });

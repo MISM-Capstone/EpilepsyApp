@@ -7,14 +7,14 @@ import { MultiInput, SingleInput } from "../../components/Inputs/Input";
 import { CopyAndSetKey, returnToPreviousPage } from "../../functions";
 import Survey, { SurveyDb } from "../../models/Surveys/Survey";
 import SurveyField from "../../models/Surveys/SurveyField";
-import { HomeStackParamList } from "../../navigation/Home/HomeNavProps";
+import { HomeOptions, HomeStackParamList } from "../../navigation/Home/HomeNavProps";
 import SurveyDao from "../../_services/database/dao/SurveyDao";
 import SurveyFieldDao from "../../_services/database/dao/SurveyFieldDao";
 import SurveyFieldDisplay from "../../components/SurveyFieldDisplay";
 import { GetUpdateContext } from "../../_services/Providers/UpdateProvider";
 
-type AddEditSurveyScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'AddEditSurvey'>;
-type AddEditSurveyScreenRouteProp = RouteProp<HomeStackParamList, 'AddEditSurvey'>;
+type AddEditSurveyScreenNavigationProp = StackNavigationProp<HomeStackParamList, HomeOptions.AddEditSurvey>;
+type AddEditSurveyScreenRouteProp = RouteProp<HomeStackParamList, HomeOptions.AddEditSurvey>;
 
 type Props = {
     navigation: AddEditSurveyScreenNavigationProp;

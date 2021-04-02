@@ -4,7 +4,7 @@ import { Text, View, Button } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { HomeStackParamList } from "../../navigation/Home/HomeNavProps";
+import { HomeOptions, HomeStackParamList } from "../../navigation/Home/HomeNavProps";
 import SurveyLogDao from '../../_services/database/dao/SurveyLogDao';
 import ButtonSet from '../../components/Inputs/ButtonSet';
 import AppleHealthKit, { } from 'react-native-health';
@@ -14,7 +14,7 @@ import calendarService from '../../_services/helpers/calendar.service';
 import { InputContainer } from '../../components/Inputs/InputComponents';
 import SurveyLog from '../../models/Surveys/SurveyLog';
 
-type DailySurveyScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'DailySurvey'>;
+type DailySurveyScreenNavigationProp = StackNavigationProp<HomeStackParamList, HomeOptions.DailySurvey>;
 
 type Props = {
     navigation: DailySurveyScreenNavigationProp;

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Button } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { HomeStackParamList } from "../../navigation/Home/HomeNavProps";
+import { HomeOptions, HomeStackParamList } from "../../navigation/Home/HomeNavProps";
 import { CopyAndSetKey, returnToPreviousPage } from '../../functions';
 import Location, { LocationDb } from '../../models/Location';
 import { RouteProp } from '@react-navigation/native';
@@ -12,8 +12,8 @@ import { MultiInput, SingleInput } from '../../components/Inputs/Input';
 import { GetUpdateContext } from '../../_services/Providers/UpdateProvider';
 import { TrendOptions, TrendsStackParamList } from '../../navigation/Trends/TrendsNavProps';
 
-type HomeNavProp = StackNavigationProp<HomeStackParamList, 'AddLocation'>;
-type HomeRouteProp = RouteProp<HomeStackParamList, 'AddLocation'>;
+type HomeNavProp = StackNavigationProp<HomeStackParamList, HomeOptions.AddLocation>;
+type HomeRouteProp = RouteProp<HomeStackParamList, HomeOptions.AddLocation>;
 
 type trendNavProp = StackNavigationProp<TrendsStackParamList, TrendOptions.UpdateLocation>;
 type trendRouteProp = RouteProp<TrendsStackParamList, TrendOptions.UpdateLocation>;

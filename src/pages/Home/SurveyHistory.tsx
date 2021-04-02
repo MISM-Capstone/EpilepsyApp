@@ -12,7 +12,7 @@ import Medication from '../../models/Medication/Medication';
 import MedicationLog from '../../models/Medication/MedicationLog';
 import SeizureLog from '../../models/SeizureLog';
 import SurveyLog from '../../models/Surveys/SurveyLog';
-import { HomeStackParamList } from '../../navigation/Home/HomeNavProps';
+import { HomeOptions, HomeStackParamList } from '../../navigation/Home/HomeNavProps';
 import HistoryStyles from '../../styles/HistoryStyles';
 import DosageUnitDao from '../../_services/database/dao/DosageUnitDao';
 import HistoryDao from '../../_services/database/dao/HistoryDao';
@@ -21,8 +21,8 @@ import MedicationDao from '../../_services/database/dao/MedicationDao';
 import sleepDatesService from '../../_services/helpers/sleepDates.service';
 import { GetUpdateContext } from '../../_services/Providers/UpdateProvider';
 
-type HistNavProp = StackNavigationProp<HomeStackParamList, 'SurveyHistory'>;
-type HistRouteProp = RouteProp<HomeStackParamList, 'SurveyHistory'>;
+type HistNavProp = StackNavigationProp<HomeStackParamList, HomeOptions.SurveyHistory>;
+type HistRouteProp = RouteProp<HomeStackParamList, HomeOptions.SurveyHistory>;
 
 type Props = {
     navigation: HistNavProp;
@@ -99,7 +99,7 @@ export default function SurveyHistory(props: Props) {
                                 onClick={() => {
                                     updateContext.setPageToUpdate(props.route.name);
                                     props.navigation.navigate(
-                                        "LogSeizure",
+                                        HomeOptions.LogSeizure,
                                         {
                                             tab:TabOptions.home,
                                             id:seizure.id!,
@@ -136,7 +136,7 @@ export default function SurveyHistory(props: Props) {
                                 onClick={() => {
                                     updateContext.setPageToUpdate(props.route.name);
                                     props.navigation.navigate(
-                                        "RecordMedication",
+                                        HomeOptions.RecordMedication,
                                         {
                                             tab:TabOptions.home,
                                             id:medication.id!,

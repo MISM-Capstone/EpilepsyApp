@@ -7,13 +7,13 @@ import SafeAreaView from 'react-native-safe-area-view';
 import { TabOptions } from "../../components/TabOptions";
 import SurveyCard from "../../components/SummaryCards/SurveyCard";
 import Survey from "../../models/Surveys/Survey";
-import { HomeStackParamList } from "../../navigation/Home/HomeNavProps";
+import { HomeOptions, HomeStackParamList } from "../../navigation/Home/HomeNavProps";
 import HistoryStyles from "../../styles/HistoryStyles";
 import SurveyDao from "../../_services/database/dao/SurveyDao";
 import { GetUpdateContext } from "../../_services/Providers/UpdateProvider";
 
-type PersonalSurveyScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'PersonalSurveys'>;
-type PersonalSurveyScreenRouteProp = RouteProp<HomeStackParamList, 'PersonalSurveys'>;
+type PersonalSurveyScreenNavigationProp = StackNavigationProp<HomeStackParamList, HomeOptions.PersonalSurveys>;
+type PersonalSurveyScreenRouteProp = RouteProp<HomeStackParamList, HomeOptions.PersonalSurveys>;
 
 type Props = {
     navigation: PersonalSurveyScreenNavigationProp;
@@ -30,7 +30,7 @@ export default function PersonalSurveys(props:Props) {
                 return <Button title="Add" onPress={() => {
                     updateContext.setPageToUpdate(props.route.name)
                     props.navigation.navigate(
-                        "AddEditSurvey",
+                        HomeOptions.AddEditSurvey,
                         {
                             tab: TabOptions.home,
                         }
@@ -78,7 +78,7 @@ export default function PersonalSurveys(props:Props) {
                                 onClick={() => {
                                     updateContext.setPageToUpdate(props.route.name)
                                     props.navigation.navigate(
-                                        "AddEditSurvey",
+                                        HomeOptions.AddEditSurvey,
                                         {
                                             tab: TabOptions.home,
                                             id: survey.id!,

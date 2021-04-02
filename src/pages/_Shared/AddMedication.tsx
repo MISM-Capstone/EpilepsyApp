@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Text, View, Button } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { HomeStackParamList } from "../../navigation/Home/HomeNavProps";
+import { HomeOptions, HomeStackParamList } from "../../navigation/Home/HomeNavProps";
 import { CopyAndSetKey, returnToPreviousPage } from '../../functions';
 import { RouteProp } from '@react-navigation/native';
 import Medication, { MedicationDb } from '../../models/Medication/Medication';
@@ -17,8 +17,8 @@ import { TabOptions } from "../../components/TabOptions";
 import { GetUpdateContext } from '../../_services/Providers/UpdateProvider';
 import { TrendOptions, TrendsStackParamList } from '../../navigation/Trends/TrendsNavProps';
 
-type HomeNavProp = StackNavigationProp<HomeStackParamList, 'AddMedication'>;
-type HomeRouteProp = RouteProp<HomeStackParamList, 'AddMedication'>;
+type HomeNavProp = StackNavigationProp<HomeStackParamList, HomeOptions.AddMedication>;
+type HomeRouteProp = RouteProp<HomeStackParamList, HomeOptions.AddMedication>;
 
 type TrendNavProp = StackNavigationProp<TrendsStackParamList, TrendOptions.UpdateMed>;
 type TrendRouteProp = RouteProp<TrendsStackParamList, TrendOptions.UpdateMed>;
@@ -107,7 +107,7 @@ export default function AddMedication(props: Props) {
                         updateContext.setPageToUpdate(props.route.name);
                         if (props.route.params.tab ===  TabOptions.home) {
                             const nav = props.navigation as HomeNavProp;
-                            nav.navigate("AddDosageUnit", {tab:TabOptions.home});
+                            nav.navigate(HomeOptions.AddDosageUnit, {tab:TabOptions.home});
                         } else {
                             const nav = props.navigation as TrendNavProp;
                             nav.navigate(TrendOptions.UpdateDosageUnit, {tab:TabOptions.trends});

@@ -14,7 +14,7 @@ import AddMedication from '../../pages/_Shared/AddMedication';
 import AddDosageUnit from '../../pages/_Shared/AddDosageUnit';
 import PersonalSurveys from '../../pages/Home/PersonalSurveys';
 import AddEditSurvey from '../../pages/Home/AddEditSurvey';
-import { HomeStackParamList } from './HomeNavProps';
+import { HomeOptions, HomeStackParamList } from './HomeNavProps';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -22,37 +22,37 @@ const HomeNavigation = () => {
     return (
         <>
             <Stack.Navigator
-                initialRouteName="Home"
+                initialRouteName={HomeOptions.Home}
                 screenOptions={HeaderStyle}
                 // mode="modal"
             >
                 <Stack.Screen
-                    name="Home"
+                    name={HomeOptions.Home}
                     component={Home}
                 />
                 <Stack.Screen
-                    name="DailySurvey"
+                    name={HomeOptions.DailySurvey}
                     component={DailySurvey}
                     options={{
                         title: 'Daily Survey'
                     }}
                 />
                 <Stack.Screen
-                    name="SurveyHistory"
+                    name={HomeOptions.SurveyHistory}
                     component={SurveyHistory}
                     options={{
                         title: 'Survey History'
                     }}
                 />
                 <Stack.Screen
-                    name="LogSeizure"
+                    name={HomeOptions.LogSeizure}
                     component={AddEditSeizureLog}
                     options={{
                         title: 'Log a Seizure'
                     }}
                 />
                 <Stack.Screen
-                    name="PersonalSurveys"
+                    name={HomeOptions.PersonalSurveys}
                     component={PersonalSurveys}
                     options={() => {
                         return {
@@ -61,42 +61,42 @@ const HomeNavigation = () => {
                     }}
                 />
                 <Stack.Screen
-                    name="AddEditSurvey"
+                    name={HomeOptions.AddEditSurvey}
                     component={AddEditSurvey}
                     options={{
                         title: 'Edit Survey'
                     }}
                 />
                 <Stack.Screen
-                    name="RecordMedication"
+                    name={HomeOptions.RecordMedication}
                     component={RecordMedication}
                     options={{
                         title: 'Record Medication'
                     }}
                 />
                 <Stack.Screen
-                    name="HealthKitTest"
+                    name={HomeOptions.HealthKitTest}
                     component={HealthKitTest}
                     options={{
                         title: 'Health Kit Test'
                     }}
                 />
                 <Stack.Screen
-                    name="AddLocation"
+                    name={HomeOptions.AddLocation}
                     component={AddLocation}
                     options={{
                         title: 'Add Location'
                     }}
                 />
                 <Stack.Screen
-                    name="AddMedication"
+                    name={HomeOptions.AddMedication}
                     component={AddMedication}
                     options={{
                         title: 'Add Medication'
                     }}
                 />
                 <Stack.Screen
-                    name="AddDosageUnit"
+                    name={HomeOptions.AddDosageUnit}
                     component={AddDosageUnit}
                     options={{
                         title: 'Add Dosage Unit'

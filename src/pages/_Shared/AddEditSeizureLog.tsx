@@ -4,7 +4,7 @@ import { Text, View, Button } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { HomeStackParamList } from "../../navigation/Home/HomeNavProps";
+import { HomeOptions, HomeStackParamList } from "../../navigation/Home/HomeNavProps";
 import SeizureLogDao from '../../_services/database/dao/SeizureLogDao';
 import SeizureLog, { SeizureLogDb } from '../../models/SeizureLog';
 import { CopyAndSetKey, returnToPreviousPage } from '../../functions';
@@ -19,8 +19,8 @@ import { TrendOptions, TrendsStackParamList } from "../../navigation/Trends/Tren
 import { TabOptions } from "../../components/TabOptions";
 import { GetUpdateContext } from '../../_services/Providers/UpdateProvider';
 
-type HomeNavProp = StackNavigationProp<HomeStackParamList, 'LogSeizure'>;
-type HomeRouteProp = RouteProp<HomeStackParamList, 'LogSeizure'>;
+type HomeNavProp = StackNavigationProp<HomeStackParamList, HomeOptions.LogSeizure>;
+type HomeRouteProp = RouteProp<HomeStackParamList, HomeOptions.LogSeizure>;
 
 type TrendNavProp = StackNavigationProp<TrendsStackParamList, TrendOptions.UpdateSeizureLog>;
 type TrendRouteProp = RouteProp<TrendsStackParamList, TrendOptions.UpdateSeizureLog>;
@@ -162,7 +162,7 @@ export default function AddEditSeizureLog(props: Props) {
                         updateContext.setPageToUpdate(props.route.name);
                         if (props.route.params.tab ===  TabOptions.home) {
                             const nav = props.navigation as HomeNavProp;
-                            nav.navigate("AddLocation", {tab:TabOptions.home});
+                            nav.navigate(HomeOptions.AddLocation, {tab:TabOptions.home});
                         } else {
                             const nav = props.navigation as TrendNavProp;
                             nav.navigate(TrendOptions.UpdateLocation, {tab:TabOptions.trends});

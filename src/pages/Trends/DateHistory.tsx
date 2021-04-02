@@ -12,7 +12,7 @@ import Medication from '../../models/Medication/Medication';
 import MedicationLog from '../../models/Medication/MedicationLog';
 import SeizureLog from '../../models/SeizureLog';
 import SurveyLog from '../../models/Surveys/SurveyLog';
-import { TrendsStackParamList } from "../../navigation/Trends/TrendsNavProps";
+import { TrendOptions, TrendsStackParamList } from "../../navigation/Trends/TrendsNavProps";
 import HistoryStyles from '../../styles/HistoryStyles';
 import DosageUnitDao from '../../_services/database/dao/DosageUnitDao';
 import HistoryDao from '../../_services/database/dao/HistoryDao';
@@ -21,8 +21,8 @@ import MedicationDao from '../../_services/database/dao/MedicationDao';
 import sleepDatesService from '../../_services/helpers/sleepDates.service';
 import { GetUpdateContext } from '../../_services/Providers/UpdateProvider';
 
-type DateHistNavProp = StackNavigationProp<TrendsStackParamList, 'DateHistory'>;
-type DateHistRouteProp = RouteProp<TrendsStackParamList, 'DateHistory'>;
+type DateHistNavProp = StackNavigationProp<TrendsStackParamList, TrendOptions.DateHistory>;
+type DateHistRouteProp = RouteProp<TrendsStackParamList, TrendOptions.DateHistory>;
 
 type Props = {
     navigation: DateHistNavProp;
@@ -105,7 +105,7 @@ const DateHistory = (props: Props) => {
                                 onClick={() => {
                                     updateContext.setPageToUpdate(props.route.name);
                                     props.navigation.navigate(
-                                        "UpdateSeizureLog",
+                                        TrendOptions.UpdateSeizureLog,
                                         {
                                             tab:TabOptions.trends,
                                             id:seizure.id!,
@@ -125,7 +125,7 @@ const DateHistory = (props: Props) => {
                     onPress={() => {
                         updateContext.setPageToUpdate(props.route.name);
                         props.navigation.navigate(
-                            "UpdateSeizureLog",
+                            TrendOptions.UpdateSeizureLog,
                             {
                                 tab:TabOptions.trends,
                             }
@@ -147,7 +147,7 @@ const DateHistory = (props: Props) => {
                     onPress={() => {
                         updateContext.setPageToUpdate(props.route.name);
                         props.navigation.navigate(
-                            "UpdateSurveyLog",
+                            TrendOptions.UpdateSurveyLog,
                             {
                                 tab:TabOptions.trends,
                             }
@@ -166,7 +166,7 @@ const DateHistory = (props: Props) => {
                                 onClick={() => {
                                     updateContext.setPageToUpdate(props.route.name);
                                     props.navigation.navigate(
-                                        "UpdateMedLog",
+                                        TrendOptions.UpdateMedLog,
                                         {
                                             tab:TabOptions.trends,
                                             id:medication.id!,
@@ -186,7 +186,7 @@ const DateHistory = (props: Props) => {
                     onPress={() => {
                         updateContext.setPageToUpdate(props.route.name);
                         props.navigation.navigate(
-                            "UpdateMedLog",
+                            TrendOptions.UpdateMedLog,
                             {
                                 tab:TabOptions.trends,
                             }

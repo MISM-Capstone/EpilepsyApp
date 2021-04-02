@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Button } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { HomeStackParamList } from "../../navigation/Home/HomeNavProps";
+import { HomeOptions, HomeStackParamList } from "../../navigation/Home/HomeNavProps";
 import { CopyAndSetKey, returnToPreviousPage } from '../../functions';
 import { RouteProp } from '@react-navigation/native';
 import DosageUnit, { DosageUnitDb } from '../../models/DosageUnits';
@@ -12,8 +12,8 @@ import { MultiInput, SingleInput } from '../../components/Inputs/Input';
 import { GetUpdateContext } from '../../_services/Providers/UpdateProvider';
 import { TrendOptions, TrendsStackParamList } from '../../navigation/Trends/TrendsNavProps';
 
-type HomeNavProp = StackNavigationProp<HomeStackParamList, 'AddDosageUnit'>;
-type HomeRouteProp = RouteProp<HomeStackParamList, 'AddDosageUnit'>;
+type HomeNavProp = StackNavigationProp<HomeStackParamList, HomeOptions.AddDosageUnit>;
+type HomeRouteProp = RouteProp<HomeStackParamList, HomeOptions.AddDosageUnit>;
 
 type TrendNavProp = StackNavigationProp<TrendsStackParamList, TrendOptions.UpdateDosageUnit>;
 type TrendRouteProp = RouteProp<TrendsStackParamList, TrendOptions.UpdateDosageUnit>;
