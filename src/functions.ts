@@ -1,8 +1,5 @@
-import { StackNavigationProp } from "@react-navigation/stack";
 import { ResultSet } from "react-native-sqlite-storage";
 import Db from "./models/AbstractClasses/Db";
-import { HomeStackParamList } from "./navigation/Home/HomeNavProps";
-import { TrendsStackParamList } from "./navigation/Trends/TrendsNavProps";
 import { UpdateProviderContext } from "./_services/Providers/UpdateProvider";
 
 export function IterateThroughKeys(obj:any, action:(key:string, value:any)=>void) {
