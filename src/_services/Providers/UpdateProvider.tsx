@@ -47,8 +47,6 @@ export default function UpdateProvider(props:AuthProviderProps) {
         }
     }, [state, dispatch]);
 
-    console.log("State:", state);
-
     return (
         <UpdateContext.Provider value={updateContext}>
             {props.children}

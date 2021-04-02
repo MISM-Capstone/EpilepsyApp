@@ -43,7 +43,6 @@ export default function RecordMedication(props: Props) {
     }
 
     function updateMedication(medication:Medication) {
-        console.log("Medication:", medication);
         let keyList:(keyof MedicationLog)[] = [];
         let valueList:any[] = [];
 
@@ -60,8 +59,6 @@ export default function RecordMedication(props: Props) {
             keyList.push(medicationLog.db.fields.dosage_unit_id);
             valueList.push(medication.dosage_unit_id);
         }
-        console.log(keyList, valueList);
-
 
         updateValues(medicationLog, keyList, valueList, setMedicationLog);
     }
@@ -95,7 +92,6 @@ export default function RecordMedication(props: Props) {
     }, [medicationLog.dosage_unit_id])
 
     useEffect(() => {
-        console.log("Called:", medicationLog.medication_id);
         getMedications();
     }, [medicationLog.medication_id]);
 

@@ -40,12 +40,30 @@ export default function PersonalSurveys(props:Props) {
         });
     }), [props.navigation];
 
+    async function getSurveys() {
+        const dbSurveys = await SurveyDao.getAll();
+        setSurveys(dbSurveys);
+    }
+
     useEffect(() => {
-        (async () => {
-            const dbSurveys = await SurveyDao.getAll();
-            setSurveys(dbSurveys);
-        })();
-    }, [props.route.params.survey_id]);
+        getSurveys();
+    }, []);
+
+    useEffect(() => {
+        const updatedObj = updateContext.getUpdatedObj(props.route.name, Survey);
+        if (updatedObj) {
+            const newSurveys = [...surveys];
+            if (updatedObj.obj.id) {
+                let index = newSurveys.findIndex((su) => {
+                    return su.id === updatedObj.obj.id;
+                });
+                newSurveys[index] = updatedObj.obj;
+                setSurveys(newSurveys);
+            } else {
+                getSurveys();
+            }
+        }
+    }, [updateContext.hasObject]);
 
     return (
         <SafeAreaView>
