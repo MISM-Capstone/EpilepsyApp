@@ -10,6 +10,7 @@ import { CalendarList } from 'react-native-calendars';
 import HistoryDao from '../../_services/database/dao/HistoryDao';
 import LargeButton from '../../components/LargeButton';
 import { TabOptions } from "../../components/TabOptions";
+import { useIsFocused } from '@react-navigation/core';
 
 type TrendsScreenNavigationProp = StackNavigationProp<
     TrendsStackParamList,
@@ -21,6 +22,7 @@ type Props = {
 };
 
 const Trends = (props: Props) => {
+    const isFocused = useIsFocused();
     const [markedDates, setMarkedDates] = useState<any>({});
 
     useEffect(() => {
@@ -29,8 +31,10 @@ const Trends = (props: Props) => {
             setMarkedDates(dates);
         }
 
-        getMarkedDates();
-    }, []);
+        if (isFocused) {
+            getMarkedDates();
+        }
+    }, [isFocused]);
 
     return (
         <SafeAreaView style={mainStyle.container}>

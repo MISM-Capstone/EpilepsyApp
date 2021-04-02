@@ -1,6 +1,7 @@
 
 export default abstract class Db {
     id: number | null = null;
+    date_modified: Date = new Date();
 
     copy() {
         let objCopy = Object.create(this);
@@ -12,7 +13,11 @@ export default abstract class Db {
     abstract get db():DBObj;
 }
 
-export type DBObjFields = {[k:string]:string}
+export type DBObjFields = {
+    id:"id",
+    date_modified:"date_modified",
+    [k:string]:string
+}
 
 export type DBObj = {
     table:string;
@@ -21,4 +26,5 @@ export type DBObj = {
 
 export const DbFields = {
     id: "id",
+    date_modified:"date_modified",
 } as const;

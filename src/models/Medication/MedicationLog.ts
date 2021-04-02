@@ -2,7 +2,6 @@ import Log, { LogFields } from "../AbstractClasses/Log";
 import Medication from "./Medication";
 
 export default class MedicationLog extends Log {
-    time: string = "";
     dosage: number = 0;
     dosage_unit_id: number = 0;
     medication_id: number = 0;
@@ -12,7 +11,6 @@ export default class MedicationLog extends Log {
     
     constructor(userId: number = 0, medication?:Medication) {
         super(userId);
-        this.time = this.date.toLocaleTimeString();
         if (medication) {
             this.medication_id = medication.id!;
             this.dosage = medication.dosage;

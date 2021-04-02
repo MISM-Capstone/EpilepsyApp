@@ -35,6 +35,7 @@ export class DatabaseInitialization {
             transaction.executeSql("DROP TABLE IF EXISTS medication_log;");
         }
         const dropAllTables = false;
+        // const dropAllTables = true;
         if (dropAllTables) {
             transaction.executeSql("DROP TABLE IF EXISTS medication_log;");
             transaction.executeSql("DROP TABLE IF EXISTS medication;");
@@ -103,64 +104,65 @@ export class DatabaseInitialization {
     }
   
     // Once the app has shipped, use the following functions as a template for updating the database:
-      // This function should be called when the version of the db is < 1
-      private static async preVersion1Inserts(transaction: SQLite.Transaction) {
-            console.info("Running pre-version 1 DB inserts");
-            // Make schema changes
-            transaction.executeSql(`
-                INSERT INTO epilepsy_type
-                    (name, description)
-                VALUES
-                    ('Focal Epilepsy, Type Unknown', ''),
-                    ('Focal Seizure with Loss of Awareness', ''),
-                    ('Generalized Epilepsy, Type Unknown', ''),
-                    ('Absence', 'Blank Staring, Spacing Out'),
-                    ('Atonic', 'Drop Attacks'),
-                    ('Myoclonic', 'Brief Muscle Jerking'),
-                    ('Tonic Clonic', 'Convulsion or Grande Mal'),
-                    ('Rare Epilepsy Subtype', ''),
-                    ('No Specific Diagnosis', ''),
-                    ('Not Sure', '');
-            `);
-            transaction.executeSql(`
-                INSERT INTO dosage_unit
-                    (name, description, is_default)
-                VALUES
-                    ('pill', '', false),
-                    ('tsp', 'Teaspoon', false),
-                    ('mg', 'Milligram', true),
-                    ('ml', 'Milliliter', false);
-            `);
-            transaction.executeSql(`
-                INSERT INTO survey
-                    (name, description)
-                VALUES
-                    ('Daily Survey', 'A survey for you to take each day'),
-                    ('Monthly Survey', 'A survey for you to take each month');
-            `);
-            transaction.executeSql(`
-                INSERT INTO survey_field
-                    (question, field_type, survey_id)
-                VALUES
-                    ('What time did you go to sleep last night?', 'Date', 1),
-                    ('What time did you wake up today?', 'Date', 1),
-                    ('Have you felt sick today?', 'boolean', 1),
-                    ('Have you had a fever?', 'boolean', 1),
-                    ('Have you missed any meals?', 'boolean', 1),
-                    ('Have you taken proper medications?', 'boolean', 1);
-            `);
-            transaction.executeSql(`
-                INSERT INTO survey_field
-                    (question, field_type, survey_id)
-                VALUES
-                    ('In the last month, how often have you felt that you were unable to control the important things in your life?', 'integer', 2),
-                    ('In the last month, how often have you felt confident about your ability to handle your personal problems?', 'integer', 2),
-                    ('In the last month, how often have you felt that things were going your way?', 'integer', 2),
-                    ('In the last month, how often have you felt difficulties were piling up so high that you could not overcome them?', 'integer', 2);
-            `);
-            // Lastly, update the database version
-            transaction.executeSql("INSERT INTO Version (version) VALUES (1);");
-      }
+    // This function should be called when the version of the db is < 1
+    private static async preVersion1Inserts(transaction: SQLite.Transaction) {
+        let time = (new Date()).getTime();
+        console.info("Running pre-version 1 DB inserts");
+        // Make schema changes
+        transaction.executeSql(`
+            INSERT INTO epilepsy_type
+                (name, description, date_modified)
+            VALUES
+                ('Focal Epilepsy, Type Unknown', '', ${time}),
+                ('Focal Seizure with Loss of Awareness', '', ${time}),
+                ('Generalized Epilepsy, Type Unknown', '', ${time}),
+                ('Absence', 'Blank Staring, Spacing Out', ${time}),
+                ('Atonic', 'Drop Attacks', ${time}),
+                ('Myoclonic', 'Brief Muscle Jerking', ${time}),
+                ('Tonic Clonic', 'Convulsion or Grande Mal', ${time}),
+                ('Rare Epilepsy Subtype', '', ${time}),
+                ('No Specific Diagnosis', '', ${time}),
+                ('Not Sure', '', ${time});
+        `);
+        transaction.executeSql(`
+            INSERT INTO dosage_unit
+                (name, description, is_default, date_modified)
+            VALUES
+                ('pill', '', false, ${time}),
+                ('tsp', 'Teaspoon', false, ${time}),
+                ('mg', 'Milligram', true, ${time}),
+                ('ml', 'Milliliter', false, ${time});
+        `);
+        transaction.executeSql(`
+            INSERT INTO survey
+                (name, description, date_modified)
+            VALUES
+                ('Daily Survey', 'A survey for you to take each day', ${time}),
+                ('Monthly Survey', 'A survey for you to take each month', ${time});
+        `);
+        transaction.executeSql(`
+            INSERT INTO survey_field
+                (question, field_type, survey_id, date_modified)
+            VALUES
+                ('What time did you go to sleep last night?', 'Date', 1, ${time}),
+                ('What time did you wake up today?', 'Date', 1, ${time}),
+                ('Have you felt sick today?', 'boolean', 1, ${time}),
+                ('Have you had a fever?', 'boolean', 1, ${time}),
+                ('Have you missed any meals?', 'boolean', 1, ${time}),
+                ('Have you taken proper medications?', 'boolean', 1, ${time});
+        `);
+        transaction.executeSql(`
+            INSERT INTO survey_field
+                (question, field_type, survey_id, date_modified)
+            VALUES
+                ('In the last month, how often have you felt that you were unable to control the important things in your life?', 'integer', 2, ${time}),
+                ('In the last month, how often have you felt confident about your ability to handle your personal problems?', 'integer', 2, ${time}),
+                ('In the last month, how often have you felt that things were going your way?', 'integer', 2, ${time}),
+                ('In the last month, how often have you felt difficulties were piling up so high that you could not overcome them?', 'integer', 2, ${time});
+        `);
+        // Lastly, update the database version
+        transaction.executeSql("INSERT INTO Version (version) VALUES (1);");
+    }
       // This function should be called when the version of the db is < 2
     //   private static async preVersion2Inserts(transaction: SQLite.Transaction) {
     //       console.info("Running pre-version 2 DB inserts");

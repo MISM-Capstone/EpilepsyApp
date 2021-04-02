@@ -150,13 +150,16 @@ export default abstract class DAO {
         return false;
     }
 
-    private static getObjParamsForInsert(obj:any) {
+    private static getObjParamsForInsert(obj:Db) {
         let statement = {
             attributes:"",
             values:"",
             params:[] as any[],
         };
         IterateThroughKeys(obj, (key, value) => {
+            if (key === obj.db.fields.date_modified) {
+                value = new Date();
+            }
             if (key !== "id") {
                 statement.attributes += (key + ",");
                 statement.values += "?,";
@@ -169,12 +172,15 @@ export default abstract class DAO {
         return statement;
     }
 
-    private static getObjParamsForUpdate(obj:any) {
+    private static getObjParamsForUpdate(obj:Db) {
         let statement = {
             setSQL: "",
             params:[] as any[],
         };
         IterateThroughKeys(obj, (key, value) => {
+            if (key === obj.db.fields.date_modified) {
+                value = new Date();
+            }
             if (key !== "id") {
                 statement.setSQL += ` ${key}=?,`;
                 value = this.convertValueToString(value);

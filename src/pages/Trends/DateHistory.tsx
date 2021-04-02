@@ -68,7 +68,7 @@ const DateHistory = (props: Props) => {
     const [dosageUnits, setDosageUnits] = useState<DosageUnit[]>([]);
 
     async function setEverything() {
-        let sendDate = new Date(date.dateString);
+        let sendDate = new Date(date.year, date.month - 1, date.day);
         const results = await HistoryDao.getAllLogsByDate(sendDate);
         setResults(results);
         const locs = await LocationDao.getAll();

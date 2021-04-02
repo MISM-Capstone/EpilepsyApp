@@ -7,7 +7,7 @@ export async function getUser(dispatch:React.Dispatch<AuthAction>) {
     try {
         user = await UserDao.getFirst();
     } catch (e) {
-        console.warn("Error getting user");
+        console.warn("Error getting user:", e);
     }
     dispatch({type: AUTH_REDUCER_OPTIONS.setUser, user: user});
 }

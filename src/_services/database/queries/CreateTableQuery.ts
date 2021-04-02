@@ -4,6 +4,7 @@ const CreateTableQuery = {
             "id"	INTEGER NOT NULL UNIQUE,
             "first_name"	TEXT NOT NULL,
             "last_name"	TEXT NOT NULL,
+            "date_modified"	INTEGER NOT NULL,
             PRIMARY KEY("id" AUTOINCREMENT)
         );
     `,
@@ -12,6 +13,7 @@ const CreateTableQuery = {
             "id"	INTEGER NOT NULL UNIQUE,
             "name"	TEXT NOT NULL,
             "description"	TEXT,
+            "date_modified"	INTEGER NOT NULL,
             PRIMARY KEY("id" AUTOINCREMENT)
         );
     `,
@@ -20,6 +22,7 @@ const CreateTableQuery = {
             "id"	INTEGER NOT NULL UNIQUE,
             "user_id"	INTEGER NOT NULL,
             "epilepsy_type_id"	INTEGER NOT NULL,
+            "date_modified"	INTEGER NOT NULL,
             FOREIGN KEY("user_id") REFERENCES "user"("id"),
             FOREIGN KEY("epilepsy_type_id") REFERENCES "epilepsy_type"("id"),
             PRIMARY KEY("id" AUTOINCREMENT)
@@ -30,6 +33,7 @@ const CreateTableQuery = {
             "id"	INTEGER NOT NULL UNIQUE,
             "name"	TEXT NOT NULL,
             "description"	TEXT,
+            "date_modified"	INTEGER NOT NULL,
             PRIMARY KEY("id" AUTOINCREMENT)
         );
     `,
@@ -37,12 +41,11 @@ const CreateTableQuery = {
         CREATE TABLE IF NOT EXISTS "seizure_log" (
             "id"	INTEGER NOT NULL UNIQUE,
             "date_recorded"	INTEGER NOT NULL,
-            "date_modified"	INTEGER NOT NULL,
             "date"	INTEGER NOT NULL,
-            "time"	TEXT NOT NULL,
             "notes"	TEXT,
             "location_id"	INTEGER NOT NULL,
             "user_id"	INTEGER NOT NULL,
+            "date_modified"	INTEGER NOT NULL,
             FOREIGN KEY("location_id") REFERENCES "location"("id"),
             FOREIGN KEY("user_id") REFERENCES "user"("id"),
             PRIMARY KEY("id" AUTOINCREMENT)
@@ -53,6 +56,7 @@ const CreateTableQuery = {
             "id"	INTEGER NOT NULL UNIQUE,
             "name"	TEXT NOT NULL,
             "description"	TEXT,
+            "date_modified"	INTEGER NOT NULL,
             PRIMARY KEY("id" AUTOINCREMENT)
         );
     `,
@@ -62,6 +66,7 @@ const CreateTableQuery = {
             "question"	TEXT NOT NULL,
             "field_type"	TEXT NOT NULL,
             "survey_id"	INTEGER NOT NULL,
+            "date_modified"	INTEGER NOT NULL,
             FOREIGN KEY("survey_id") REFERENCES "survey"("id"),
             PRIMARY KEY("id" AUTOINCREMENT)
         );
@@ -70,10 +75,10 @@ const CreateTableQuery = {
         CREATE TABLE IF NOT EXISTS "survey_log" (
             "id"	INTEGER NOT NULL UNIQUE,
             "date_recorded"	INTEGER NOT NULL,
-            "date_modified"	INTEGER NOT NULL,
             "date"	INTEGER NOT NULL,
             "survey_id"	INTEGER NOT NULL,
             "user_id"	INTEGER NOT NULL,
+            "date_modified"	INTEGER NOT NULL,
             FOREIGN KEY("survey_id") REFERENCES "survey"("id"),
             FOREIGN KEY("user_id") REFERENCES "user"("id"),
             PRIMARY KEY("id" AUTOINCREMENT)
@@ -85,6 +90,7 @@ const CreateTableQuery = {
             "answer"	TEXT NOT NULL,
             "survey_log_id"	INTEGER NOT NULL,
             "survey_field_id"	INTEGER NOT NULL,
+            "date_modified"	INTEGER NOT NULL,
             FOREIGN KEY("survey_field_id") REFERENCES "survey_field"("id"),
             FOREIGN KEY("survey_log_id") REFERENCES "survey_log"("id"),
             PRIMARY KEY("id" AUTOINCREMENT)
@@ -96,6 +102,7 @@ const CreateTableQuery = {
             "name"	TEXT NOT NULL,
             "description"	TEXT,
             "is_default"	BOOLEAN NOT NULL DEFAULT 0 CHECK(is_default IN (0, 1)),
+            "date_modified"	INTEGER NOT NULL,
             PRIMARY KEY("id" AUTOINCREMENT)
         );
     `,
@@ -106,6 +113,7 @@ const CreateTableQuery = {
             "description"	TEXT,
             "dosage"	INTEGER NOT NULL,
             "dosage_unit_id"	INTEGER NOT NULL,
+            "date_modified"	INTEGER NOT NULL,
             FOREIGN KEY("dosage_unit_id") REFERENCES "dosage_unit"("id"),
             PRIMARY KEY("id" AUTOINCREMENT)
         );
@@ -114,13 +122,12 @@ const CreateTableQuery = {
         CREATE TABLE IF NOT EXISTS "medication_log" (
             "id"	INTEGER NOT NULL UNIQUE,
             "date_recorded"	INTEGER NOT NULL,
-            "date_modified"	INTEGER NOT NULL,
             "date"	INTEGER NOT NULL,
-            "time"	TEXT NOT NULL,
             "dosage" INTEGER NOT NULL,
             "dosage_unit_id"	INTEGER NOT NULL,
             "medication_id" INTEGER NOT NULL,
             "user_id"	INTEGER NOT NULL,
+            "date_modified"	INTEGER NOT NULL,
             FOREIGN KEY("dosage_unit_id") REFERENCES "dosage_unit"("id"),
             FOREIGN KEY("medication_id") REFERENCES "medication"("id"),
             FOREIGN KEY("user_id") REFERENCES "user"("id"),

@@ -1,7 +1,6 @@
 import Log, { LogFields } from "./AbstractClasses/Log";
 
 export default class SeizureLog extends Log {
-    time: string = "";
     notes: string = "";
     location_id: number;
     get db() {
@@ -11,7 +10,6 @@ export default class SeizureLog extends Log {
     constructor(user:number=0, locationId:number=0) {
         super(user);
         this.location_id = locationId;
-        this.time = this.date.toLocaleTimeString();
     }
 }
 

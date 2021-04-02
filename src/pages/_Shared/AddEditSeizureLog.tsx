@@ -40,18 +40,18 @@ export default function AddEditSeizureLog(props: Props) {
     const updateContext = GetUpdateContext();
     const [seizureLog, setSeizureLog] = useState(new SeizureLog(user!.id!));
     const [locations, setLocations] = useState<Location[]>([]);
+    const id = props.route.params.id;
 
     useEffect(() => {
         (async () => {
-            if (props.route.params.id) {
-                const id = props.route.params.id;
+            if (id) {
                 const foundSeizure = await SeizureLogDao.getById(id);
                 if (foundSeizure) {
                     setSeizureLog(foundSeizure);
                 }
             }
         })();
-    }, [props.route.params.id]);
+    }, [id]);
 
     function updateValue(key:keyof SeizureLog, value:any){
         const seizLog = CopyAndSetKey(seizureLog, key, value);
@@ -80,7 +80,9 @@ export default function AddEditSeizureLog(props: Props) {
     }, []);
 
     useEffect(() => {
-        getLocations()
+        if (!id || id === seizureLog.id) {
+            getLocations();
+        }
     }, [seizureLog.location_id]);
 
     useEffect(() => {
@@ -115,7 +117,6 @@ export default function AddEditSeizureLog(props: Props) {
     // TODO: find way for errors to be displayed
     const checkErrors = () => {
         (seizureLog.location_id && seizureLog.location_id === 0) ? errors.location = "Please Add a Location." : null;
-        console.log(errors);
 
         if (Object.keys(errors).length == 0) {
             insertQuery();

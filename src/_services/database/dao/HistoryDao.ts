@@ -40,7 +40,10 @@ export default class HistoryDao extends Dao {
         const result = await this.runQuery(sql);
         let marked = result.reduce((c: any, v: any) => {
             const date = new Date(v.date);
-            return Object.assign(c, { [date.toJSON().substring(0,10)]: { marked: true } });
+            const year = date.getFullYear();
+            const month = date.getMonth()+1;
+            const day = date.getDate()
+            return Object.assign(c, { [`${year}-${month<10?"0"+month:month}-${day<10?"0"+day:day}`]: { marked: true } });
         }, {});
         return marked;
     }
