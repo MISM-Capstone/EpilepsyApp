@@ -7,8 +7,12 @@ export interface UpdateProviderContext {
     hasObject:boolean;
     setPageToUpdate: (page:PageType) => void;
     setUpdateObj: (obj:Db, id:number) => void;
-    getUpdatedObj: <T extends Db>(page:PageType, type: (new (...args: any[]) => T)) => {
+    getUpdatedObjbyType: <T extends Db>(page:PageType, type: (new (...args: any[]) => T)) => {
         obj: T,
+        id:number,
+    } | null,
+    getUpdatedObj: (page:PageType) => {
+        obj: Db,
         id:number,
     } | null,
 }
@@ -33,13 +37,21 @@ export default function UpdateProvider(props:AuthProviderProps) {
             setUpdateObj: (obj, id) => {
                 dispatch({type:UPDATE_REDUCER_OPTIONS.setObj, updatedObj:obj, updateId:id})
             },
-            getUpdatedObj: <T extends Db>(currPage:PageType, type: (new (...args: any[]) => T)) => {
+            getUpdatedObjbyType: <T extends Db>(currPage:PageType, type: (new (...args: any[]) => T)) => {
                 let updateObj = null;
                 if (currPage === page && state.updatedObj && state.updatedObj.obj instanceof type) {
                     updateObj = {
                         obj: state.updatedObj.obj as T,
                         id: state.updatedObj.id
                     }
+                    dispatch({type:UPDATE_REDUCER_OPTIONS.removePage, pageToRemove:currPage});
+                }
+                return updateObj;
+            },
+            getUpdatedObj: (currPage:PageType) => {
+                let updateObj = null;
+                if (currPage === page && state.updatedObj) {
+                    updateObj = state.updatedObj
                     dispatch({type:UPDATE_REDUCER_OPTIONS.removePage, pageToRemove:currPage});
                 }
                 return updateObj;

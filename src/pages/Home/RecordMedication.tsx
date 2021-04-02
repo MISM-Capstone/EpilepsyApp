@@ -10,7 +10,7 @@ import MedicationLogDao from '../../_services/database/dao/MedicationLogDao';
 import SurveyStyles from '../../styles/SurveyStyles';
 import MedicationLog from '../../models/Medication/MedicationLog';
 import { GetAuthContext } from '../../_services/Providers/AuthProvider';
-import { updateValue, updateValues } from '../../functions';
+import { returnToPreviousPage, updateValue, updateValues } from '../../functions';
 import { RouteProp } from '@react-navigation/native';
 import MedicationDao from '../../_services/database/dao/MedicationDao';
 import Medication from '../../models/Medication/Medication';
@@ -37,6 +37,18 @@ export default function RecordMedication(props: Props) {
     const [medicationLog, setMedicationLog] = useState<MedicationLog>(new MedicationLog(user!.id!));
     const [medications, setMedications] = useState<Medication[]>([]);
     const [dosageUnits, setDosageUnits] = useState<DosageUnit[]>([]);
+    const id = props.route.params.medication_log_id;
+
+    useEffect(() => {
+        (async () => {
+            if (id) {
+                const foundMedLog = await MedicationLogDao.getById(id);
+                if (foundMedLog) {
+                    setMedicationLog(foundMedLog);
+                }
+            }
+        })();
+    }, [props.route.params.medication_log_id]);
 
     function update<TProp extends keyof MedicationLog>(key:TProp, value:MedicationLog[TProp]){
         updateValue(medicationLog, key, value, setMedicationLog);
@@ -88,11 +100,15 @@ export default function RecordMedication(props: Props) {
     }
 
     useEffect(() => {
-        getDosageUnits();
+        if (!id || id === medicationLog.id) {
+            getDosageUnits();
+        }
     }, [medicationLog.dosage_unit_id])
 
     useEffect(() => {
-        getMedications();
+        if (!id || id === medicationLog.id) {
+            getMedications();
+        }
     }, [medicationLog.medication_id]);
 
     useEffect(() => {
@@ -106,20 +122,18 @@ export default function RecordMedication(props: Props) {
     }, []);
 
     useEffect(() => {
-        const updatedObj = updateContext.getUpdatedObj(props.route.name, Medication);
+        const updatedObj = updateContext.getUpdatedObjbyType(props.route.name, Medication);
         if (updatedObj) {
             update(medicationLog.db.fields.medication_id, updatedObj.id);
         }
     }, [updateContext.hasObject]);
 
     useEffect(() => {
-        const updatedObj = updateContext.getUpdatedObj(props.route.name, DosageUnit);
+        const updatedObj = updateContext.getUpdatedObjbyType(props.route.name, DosageUnit);
         if (updatedObj) {
             update(medicationLog.db.fields.dosage_unit_id, updatedObj.id);
         }
     }, [updateContext.hasObject]);
-
-
 
     const onChangeDate = (_event: Event, selectedDate: Date | undefined) => {
         const currentDate = selectedDate || medicationLog.date;
@@ -134,7 +148,14 @@ export default function RecordMedication(props: Props) {
 
     const insertQuery = async () => {
         let results = await MedicationLogDao.save(medicationLog);
-        props.navigation.goBack();
+        if (results) {
+            returnToPreviousPage(
+                medicationLog,
+                results,
+                updateContext,
+                props.navigation.goBack
+            );
+        }
     }
 
     return (

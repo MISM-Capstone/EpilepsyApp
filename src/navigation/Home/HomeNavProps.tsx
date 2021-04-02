@@ -2,19 +2,15 @@ import { TabOptions } from "../../components/TabOptions";
 
 type TabProps = {
     tab: TabOptions.home;
-    previousPage?: keyof HomeStackParamList;
 };
 interface EditLogProps extends TabProps {
     date?: Date;
 }
 interface AddEditSeizureLog extends EditLogProps {
     seizure_id?: number;
-    location_id?: number;
 }
 interface AddEditMedicationLog extends EditLogProps {
     medication_log_id?: number;
-    medication_id?: number;
-    dosage_unit_id?: number;
 }
 interface AddEditMedication extends TabProps {
     medication_id?: number;

@@ -1,48 +1,36 @@
+import { RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, Text, View } from 'react-native';
-import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
+import MedicationLogCard from '../../components/SummaryCards/MedicationLogCard';
+import SeizureLogCard from '../../components/SummaryCards/SeizureLogCard';
+import { TabOptions } from '../../components/TabOptions';
 import DosageUnit from '../../models/DosageUnits';
 import Location from '../../models/Location';
 import Medication from '../../models/Medication/Medication';
 import MedicationLog from '../../models/Medication/MedicationLog';
 import SeizureLog from '../../models/SeizureLog';
 import SurveyLog from '../../models/Surveys/SurveyLog';
+import { HomeStackParamList } from '../../navigation/Home/HomeNavProps';
 import HistoryStyles from '../../styles/HistoryStyles';
 import DosageUnitDao from '../../_services/database/dao/DosageUnitDao';
 import HistoryDao from '../../_services/database/dao/HistoryDao';
 import LocationDao from '../../_services/database/dao/LocationDao';
 import MedicationDao from '../../_services/database/dao/MedicationDao';
 import sleepDatesService from '../../_services/helpers/sleepDates.service';
+import { GetUpdateContext } from '../../_services/Providers/UpdateProvider';
+
+type HistNavProp = StackNavigationProp<HomeStackParamList, 'SurveyHistory'>;
+type HistRouteProp = RouteProp<HomeStackParamList, 'SurveyHistory'>;
 
 type Props = {
-    navigation: any;
+    navigation: HistNavProp;
+    route: HistRouteProp;
 };
 
 type RenderProps = {
     log: any;
-}
-
-type RenderSeizureLog = {
-    seizure:SeizureLog;
-    locations:Location[];
-}
-
-function SeizureCard(props: RenderSeizureLog) {
-
-    const currentLocation = props.locations.find((loc) => {
-        return loc.id === props.seizure.location_id;
-    });
-    const location = currentLocation?currentLocation.name:"";
-    return (
-        <View style={HistoryStyles.HistoryEventCard}>
-            <Text style={HistoryStyles.HistoryCardTitle}>{props.seizure.date.toString()}</Text>
-            <View>
-                <Text>Time: {props.seizure.time}</Text>
-                <Text>Location: {location}</Text>
-                <Text>Notes: {props.seizure.notes}</Text>
-            </View>
-        </View>
-    )
 }
 
 function SurveyCard(props: RenderProps) {
@@ -62,35 +50,8 @@ function SurveyCard(props: RenderProps) {
     )
 }
 
-type RenderMedicationLog = {
-    log:MedicationLog;
-    medications:Medication[];
-    dosageUnits:DosageUnit[];
-}
-
-function MedicationCard(props: RenderMedicationLog) {
-    const currentMed = props.medications.find((med) => {
-        return med.id === props.log.medication_id;
-    });
-    const medication = currentMed?currentMed.name:"";
-
-    const currentDos = props.dosageUnits.find((dos) => {
-        return dos.id === props.log.dosage_unit_id;
-    });
-    const dosageUnit = currentDos?currentDos.name:"";
-    return (
-        <View style={HistoryStyles.HistoryEventCard}>
-            <Text style={HistoryStyles.HistoryCardTitle}>{props.log.date}</Text>
-            <View>
-                <Text>Time: {props.log.time}</Text>
-                <Text>Medication: {medication}</Text>
-                <Text>Dosage: {props.log.dosage} {dosageUnit}</Text>
-            </View>
-        </View>
-    )
-}
-
 export default function SurveyHistory(props: Props) {
+    const updateContext = GetUpdateContext();
     const [results, setResults] = useState(
         {
             seizures: [] as SeizureLog[],
@@ -99,26 +60,30 @@ export default function SurveyHistory(props: Props) {
         }
     );
     const [locations, setLocations] = useState<Location[]>([]);
-    const [medications, setMedications] = useState<Medication[]>([]);
+    const [meds, setMeds] = useState<Medication[]>([]);
     const [dosageUnits, setDosageUnits] = useState<DosageUnit[]>([]);
 
+    async function setEverything() {
+        const results = await HistoryDao.getAllLogs();
+        setResults(results);
+        const locs = await LocationDao.getAll();
+        setLocations(locs);
+        const dbMeds = await MedicationDao.getAll();
+        setMeds(dbMeds);
+        const dos = await DosageUnitDao.getAll();
+        setDosageUnits(dos);
+    }
+
     useEffect(() => {
-        (async () => {
-            const results = await HistoryDao.getAllLogs();
-            setResults(results);
-        })();
+        setEverything()
     }, []);
 
     useEffect(() => {
-        (async () => {
-            const locs = await LocationDao.getAll();
-            setLocations(locs);
-            const meds = await MedicationDao.getAll();
-            setMedications(meds);
-            const dos = await DosageUnitDao.getAll();
-            setDosageUnits(dos);
-        })();
-    }, []);
+        const updateObj = updateContext.getUpdatedObj(props.route.name);
+        if (updateObj) {
+            setEverything();
+        }
+    }, [updateContext.hasObject]);
 
     return (
         <SafeAreaView>
@@ -127,10 +92,20 @@ export default function SurveyHistory(props: Props) {
                 {results.seizures.length > 0 ?
                     results.seizures.map(function (seizure, key) {
                         return (
-                            <SeizureCard
+                            <SeizureLogCard
+                                key={key}
                                 seizure={seizure}
                                 locations={locations}
-                                key={key}
+                                onClick={() => {
+                                    updateContext.setPageToUpdate(props.route.name);
+                                    props.navigation.navigate(
+                                        "LogSeizure",
+                                        {
+                                            tab:TabOptions.home,
+                                            seizure_id:seizure.id!,
+                                        }
+                                    );
+                                }}
                             />
                         );
                     })
@@ -153,11 +128,21 @@ export default function SurveyHistory(props: Props) {
                 {results.medications.length > 0 ?
                     results.medications.map(function (medication, key) {
                         return (
-                            <MedicationCard
-                                log={medication}
-                                dosageUnits={dosageUnits}
-                                medications={medications}
+                            <MedicationLogCard
                                 key={key}
+                                medicationLog={medication}
+                                medications={meds}
+                                dosageUnits={dosageUnits}
+                                onClick={() => {
+                                    updateContext.setPageToUpdate(props.route.name);
+                                    props.navigation.navigate(
+                                        "RecordMedication",
+                                        {
+                                            tab:TabOptions.home,
+                                            medication_log_id:medication.id!,
+                                        }
+                                    );
+                                }}
                             />
                         );
                     })

@@ -51,7 +51,7 @@ export default function AddMedication(props: Props) {
     },[medication.dosage_unit_id]);
 
     useEffect(() => {
-        const updatedObj = updateContext.getUpdatedObj(props.route.name, DosageUnit);
+        const updatedObj = updateContext.getUpdatedObjbyType(props.route.name, DosageUnit);
         if (updatedObj) {
             updateValue(MedicationDb.fields.dosage_unit_id, updatedObj.id);
         }

@@ -10,6 +10,7 @@ import { TrendsStackParamList } from "../../navigation/Trends/TrendsNavProps";
 import HistoryStyles from '../../styles/HistoryStyles';
 import HistoryDao from '../../_services/database/dao/HistoryDao';
 import sleepDatesService from '../../_services/helpers/sleepDates.service';
+import { GetUpdateContext } from '../../_services/Providers/UpdateProvider';
 
 type Props = {
     navigation: any;
@@ -36,7 +37,9 @@ function SeizureCard(props: RenderProps) {
                     <Text>Location: {props.log.location}</Text>
                     <Text>Notes: {props.log.notes}</Text>
                 </View>
-                <Pressable onPress={() => props.navigation.navigate("UpdateSeizureLog", {tab:TabOptions.trends, seizure_id: props.log.id })}>
+                <Pressable onPress={() => {
+                    return props.navigation.navigate("UpdateSeizureLog", { tab: TabOptions.trends, seizure_id: props.log.id });
+                }}>
                     <MaterialCommunityIcons name="pencil" size={25} color={'#44C2B3'} />
                 </Pressable>
             </View>
@@ -74,6 +77,7 @@ function MedicationCard(props: RenderProps) {
 }
 
 const DateHistory = (props: Props) => {
+    const updateContext = GetUpdateContext();
     const { date } = props.route.params;
 
     const [seizures, setSeizures] = useState<SeizureLog[]>([]);

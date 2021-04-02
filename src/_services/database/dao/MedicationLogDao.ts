@@ -50,9 +50,11 @@ export default class MedicationLogDao extends Dao {
                 ${MedicationLogDb.table}
             WHERE 
                 ${MedicationLogDb.fields.id} = ?
+            LIMIT 1;
         ;`;
         const resultMedicationLog = await this.runQuery(sql, [medication_id]);
-        return this.convertQueryResultToObj(resultMedicationLog, MedicationLog);
+        const convertedMedLogs =  this.convertQueryResultToObj(resultMedicationLog, MedicationLog)[0];
+        return convertedMedLogs?convertedMedLogs:undefined;
     }
 
     static async delete(id: number | string) {

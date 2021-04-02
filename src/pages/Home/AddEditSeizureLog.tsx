@@ -7,7 +7,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from "../../navigation/Home/HomeNavProps";
 import SeizureLogDao from '../../_services/database/dao/SeizureLogDao';
 import SeizureLog, { SeizureLogDb } from '../../models/SeizureLog';
-import { CopyAndSetKey } from '../../functions';
+import { CopyAndSetKey, returnToPreviousPage } from '../../functions';
 import { GetAuthContext } from '../../_services/Providers/AuthProvider';
 import {Picker} from '@react-native-picker/picker';
 import Location from '../../models/Location';
@@ -41,6 +41,18 @@ export default function AddEditSeizureLog(props: Props) {
     const [seizureLog, setSeizureLog] = useState(new SeizureLog(user!.id!));
     const [locations, setLocations] = useState<Location[]>([]);
 
+    useEffect(() => {
+        (async () => {
+            if (props.route.params.seizure_id) {
+                const id = props.route.params.seizure_id;
+                const foundSeizure = await SeizureLogDao.getById(id);
+                if (foundSeizure) {
+                    setSeizureLog(foundSeizure);
+                }
+            }
+        })();
+    }, [props.route.params.seizure_id]);
+
     function updateValue(key:keyof SeizureLog, value:any){
         const seizLog = CopyAndSetKey(seizureLog, key, value);
         setSeizureLog(seizLog);
@@ -72,23 +84,11 @@ export default function AddEditSeizureLog(props: Props) {
     }, [seizureLog.location_id]);
 
     useEffect(() => {
-        const updatedObj = updateContext.getUpdatedObj(props.route.name, Location);
+        const updatedObj = updateContext.getUpdatedObjbyType(props.route.name, Location);
         if (updatedObj) {
             updateValue(SeizureLogDb.fields.location_id, updatedObj.id);
         }
     }, [updateContext.hasObject]);
-
-    useEffect(() => {
-        (async () => {
-            if (props.route.params.seizure_id) {
-                const id = props.route.params.seizure_id;
-                const foundSeizure = await SeizureLogDao.getById(id);
-                if (foundSeizure) {
-                    setSeizureLog(foundSeizure);
-                }
-            }
-        })();
-    }, [props.route.params.seizure_id]);
 
     const onChangeDate = (_event: Event, selectedDate: Date | undefined) => {
         const currentDate = selectedDate || seizureLog.date;
@@ -124,16 +124,13 @@ export default function AddEditSeizureLog(props: Props) {
 
     const insertQuery = async () => {
         let results = await SeizureLogDao.save(seizureLog);
-        if (props.route.params.previousPage) {
-            if (props.route.params.tab === TabOptions.home) {
-                let homeNav = props.navigation as homeNavProp;
-                homeNav.navigate(props.route.params.previousPage, {tab:TabOptions.home})
-            } else {
-                let homeNav = props.navigation as trendNavProp;
-                homeNav.navigate(props.route.params.previousPage, {tab:TabOptions.trends})
-            }
-        } else {
-            props.navigation.goBack();
+        if (results) {
+            returnToPreviousPage(
+                seizureLog,
+                results,
+                updateContext,
+                props.navigation.goBack
+            );
         }
     }
 

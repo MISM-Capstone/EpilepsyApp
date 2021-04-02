@@ -50,7 +50,7 @@ export default function PersonalSurveys(props:Props) {
     }, []);
 
     useEffect(() => {
-        const updatedObj = updateContext.getUpdatedObj(props.route.name, Survey);
+        const updatedObj = updateContext.getUpdatedObjbyType(props.route.name, Survey);
         if (updatedObj) {
             const newSurveys = [...surveys];
             if (updatedObj.obj.id) {
