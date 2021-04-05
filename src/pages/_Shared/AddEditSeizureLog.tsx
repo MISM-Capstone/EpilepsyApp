@@ -58,8 +58,10 @@ export default function AddEditSeizureLog(props: Props) {
 
     function updateValue(key:keyof SeizureLog, value:any){
         const seizLog = CopyAndSetKey(seizureLog, key, value);
+        console.log('Seizure Log: ', seizLog);
         setSeizureLog(seizLog);
     }
+    
     async function getLocations() {
         const locs = await LocationDao.getAll();
         const currentLocation = locs.find((loc) => {
