@@ -44,6 +44,7 @@ export default function SurveyFieldDisplay(props:SurveyFieldProps) {
                     const selectedType = FIELD_TYPES[index];
                     props.updateField(props.field, SurveyFieldDb.fields.field_type, selectedType.db)
                 }}
+                dropdownStyle={{borderColor:'#000',borderWidth: 2 }}
             />
                     
             </InputContainer>

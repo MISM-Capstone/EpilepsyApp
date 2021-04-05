@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StatusBar, View } from 'react-native';
+import { StatusBar, Text, View } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 
 import {default as mainStyle} from "../styles/MainStyles";
@@ -23,7 +23,11 @@ export default function Register() {
     return (
         <SafeAreaView style={mainStyle.container}>
             <StatusBar barStyle="dark-content" />
+            
             <View style={LoginStyles.mainContainer}>
+                <Text style={LoginStyles.titleText}>Welcome to EpiLog Seizure Tracker!</Text>
+                <Text style={LoginStyles.noticeText}>To get started please tell us your name so we can personalize your experience within the app.</Text>
+                <Text style={LoginStyles.noticeText}>Notice: We do not save any of your personal information. Any information you enter using this app will be kept on your phone only.</Text>
                 <TextInput
                     placeholder="First Name"
                     value={user.first_name}

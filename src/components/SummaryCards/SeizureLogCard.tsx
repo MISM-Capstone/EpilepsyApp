@@ -16,7 +16,7 @@ export default function SeizureLogCard(props: RenderProps) {
     });
     const location = currentLocation?currentLocation.name:"";
     return (
-        <EditCard onClick={props.onClick} title="">
+        <EditCard onClick={props.onClick} title={props.seizure.date.toDateString()}>
             <Text>Time: {props.seizure.time}</Text>
             <Text>Location: {location}</Text>
             <Text>Notes: {props.seizure.notes}</Text>

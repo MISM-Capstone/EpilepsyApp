@@ -9,7 +9,6 @@ import SeizureLogDao from '../../_services/database/dao/SeizureLogDao';
 import SeizureLog, { SeizureLogDb } from '../../models/SeizureLog';
 import { CopyAndSetKey, returnToPreviousPage } from '../../functions';
 import { GetAuthContext } from '../../_services/Providers/AuthProvider';
-import {Picker} from '@react-native-picker/picker';
 import Location from '../../models/Location';
 import { RouteProp } from '@react-navigation/native';
 import LocationDao from '../../_services/database/dao/LocationDao';
@@ -18,6 +17,9 @@ import { MultiInput } from '../../components/Inputs/Input';
 import { TrendOptions, TrendsStackParamList } from "../../navigation/Trends/TrendsNavProps";
 import { TabOptions } from "../../components/TabOptions";
 import { GetUpdateContext } from '../../_services/Providers/UpdateProvider';
+import RNPickerSelect from 'react-native-picker-select';
+import PickerStyles from '../../styles/PickerStyles';
+import { PickerItem } from '../../models/PickerItem';
 
 type HomeNavProp = StackNavigationProp<HomeStackParamList, HomeOptions.LogSeizure>;
 type HomeRouteProp = RouteProp<HomeStackParamList, HomeOptions.LogSeizure>;
@@ -40,6 +42,7 @@ export default function AddEditSeizureLog(props: Props) {
     const updateContext = GetUpdateContext();
     const [seizureLog, setSeizureLog] = useState(new SeizureLog(user!.id!));
     const [locations, setLocations] = useState<Location[]>([]);
+    const [locationsAsItems, setLocationsAsItems] = useState<PickerItem[]>([]);
     const id = props.route.params.id;
 
     useEffect(() => {
@@ -66,6 +69,16 @@ export default function AddEditSeizureLog(props: Props) {
             updateValue(SeizureLogDb.fields.location_id, locs[0].id)
         }
         setLocations(locs);
+
+        const locationsAsItems: PickerItem[] = new Array<PickerItem>();
+        locs.forEach((loc: Location) => {
+            let locAsItem: PickerItem = {
+                label: loc.name,
+                value: loc.id,
+            }
+            locationsAsItems.push(locAsItem)
+        });
+        setLocationsAsItems(locationsAsItems);
     }
     
     const errors: ErrorObject = {};
@@ -158,6 +171,21 @@ export default function AddEditSeizureLog(props: Props) {
                     />
                 </InputContainer>
                 <InputContainer title="Location">
+                    
+                    {
+                        locations.length ?
+                            <View style={{marginVertical: 4}}>
+                                <RNPickerSelect
+                                    onValueChange={(itemValue) => {
+                                        updateValue(SeizureLogDb.fields.location_id, itemValue);
+                                    }}
+                                    items={locationsAsItems}
+                                    style={PickerStyles}
+                                />
+                            </View>
+                        :
+                            <Text>Please Add a Location</Text>
+                    }
                     <Button title="Add Location" onPress={() => {
                         updateContext.setPageToUpdate(props.route.name);
                         if (props.route.params.tab ===  TabOptions.home) {
@@ -168,22 +196,6 @@ export default function AddEditSeizureLog(props: Props) {
                             nav.navigate(TrendOptions.UpdateLocation, {tab:TabOptions.trends});
                         }
                     }} />
-                    {
-                        locations.length ?
-                            <Picker
-                                selectedValue={seizureLog.location_id}
-                                onValueChange={(itemValue) => {
-                                    updateValue(SeizureLogDb.fields.location_id, itemValue);
-                            }}>
-                                {
-                                    locations.map((location) => {
-                                        return <Picker.Item key={location.id} label={location.name} value={location.id!} />
-                                    })
-                                }
-                            </Picker>
-                        :
-                            <Text>Please Add a Location</Text>
-                    }
                     
                 </InputContainer>
                 <MultiInput

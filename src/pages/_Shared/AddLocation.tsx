@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { View, Button } from 'react-native';
+import { View, Button, Text } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeOptions, HomeStackParamList } from "../../navigation/Home/HomeNavProps";
@@ -53,6 +53,7 @@ export default function AddLocation(props: Props) {
     return (
         <SafeAreaView>
             <View style={{ padding: 12 }}>
+                <Text style={{fontStyle: 'italic', color: '#555'}}>Add a location for tracking where your seizures occur. For example home, work, or school.</Text>
                 <SingleInput
                     title="Name"
                     onChange={(value) => {

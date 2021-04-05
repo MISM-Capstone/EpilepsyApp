@@ -16,12 +16,14 @@ import MedicationDao from '../../_services/database/dao/MedicationDao';
 import Medication from '../../models/Medication/Medication';
 import DosageUnit from '../../models/DosageUnits';
 import DosageUnitDao from '../../_services/database/dao/DosageUnitDao';
-import { Picker } from '@react-native-picker/picker';
 import { InputContainer } from '../../components/Inputs/InputComponents';
 import { SingleInput } from '../../components/Inputs/Input';
 import { TabOptions } from "../../components/TabOptions";
 import { GetUpdateContext } from '../../_services/Providers/UpdateProvider';
 import { TrendOptions, TrendsStackParamList } from '../../navigation/Trends/TrendsNavProps';
+import RNPickerSelect from 'react-native-picker-select';
+import PickerStyles from '../../styles/PickerStyles';
+import { PickerItem } from '../../models/PickerItem';
 
 type HomeNavProp = StackNavigationProp<HomeStackParamList, HomeOptions.RecordMedication>;
 type HomeRouteProps = RouteProp<HomeStackParamList, HomeOptions.RecordMedication>;
@@ -41,6 +43,8 @@ export default function RecordMedication(props: Props) {
     const [medicationLog, setMedicationLog] = useState<MedicationLog>(new MedicationLog(user!.id!));
     const [medications, setMedications] = useState<Medication[]>([]);
     const [dosageUnits, setDosageUnits] = useState<DosageUnit[]>([]);
+    const [medicationsAsItems, setMedicationsAsItems] = useState<PickerItem[]>([]);
+    const [dosageAsItems, setDosageAsItems] = useState<PickerItem[]>([]);
     const id = props.route.params.id;
 
     useEffect(() => {
@@ -90,6 +94,16 @@ export default function RecordMedication(props: Props) {
             updateMedication(currentMed);
         }
         setMedications(meds);
+
+        const medsAsItems: PickerItem[] = new Array<PickerItem>();
+        meds.forEach((med: Medication) => {
+            let medAsItem: PickerItem = {
+                label: med.name,
+                value: med.id,
+            }
+            medsAsItems.push(medAsItem)
+        });
+        setMedicationsAsItems(medsAsItems);
     }
 
     async function getDosageUnits() {
@@ -101,6 +115,16 @@ export default function RecordMedication(props: Props) {
             update(medicationLog.db.fields.dosage_unit_id, dosages[0].id!)
         }
         setDosageUnits(dosages);
+
+        const dosAsItems: PickerItem[] = new Array<PickerItem>();
+        dosages.forEach((dos: DosageUnit) => {
+            let dosAsItem: PickerItem = {
+                label: dos.name,
+                value: dos.id,
+            }
+            dosAsItems.push(dosAsItem)
+        });
+        setDosageAsItems(dosAsItems);
     }
 
     useEffect(() => {
@@ -198,17 +222,26 @@ export default function RecordMedication(props: Props) {
                         }} />
                         {
                             medications.length ?
-                                <Picker
-                                    selectedValue={medicationLog.medication_id}
-                                    onValueChange={(_, itemIndex) => {
-                                        updateMedication(medications[itemIndex]);
-                                }}>
-                                    {
-                                        medications.map((med) => {
-                                            return <Picker.Item key={med.id} label={med.name} value={med.id!} />
-                                        })
-                                    }
-                                </Picker>
+                                // <Picker
+                                //     selectedValue={medicationLog.medication_id}
+                                //     onValueChange={(_, itemIndex) => {
+                                //         updateMedication(medications[itemIndex]);
+                                // }}>
+                                //     {
+                                //         medications.map((med) => {
+                                //             return <Picker.Item key={med.id} label={med.name} value={med.id!} />
+                                //         })
+                                //     }
+                                // </Picker>
+                                <View style={{marginVertical: 4}}>
+                                    <RNPickerSelect
+                                        onValueChange={(_, itemIndex) => {
+                                            updateMedication(medications[itemIndex]);
+                                        }}
+                                        items={medicationsAsItems}
+                                        style={PickerStyles}
+                                    />
+                                </View>
                             :
                                 <Text>Please Add a Medication</Text>
                         }
@@ -234,17 +267,26 @@ export default function RecordMedication(props: Props) {
                         }} />
                         {
                             dosageUnits.length ?
-                                <Picker
-                                    selectedValue={medicationLog.dosage_unit_id}
-                                    onValueChange={(itemValue) => {
-                                        update(medicationLog.db.fields.dosage_unit_id, itemValue);
-                                }}>
-                                    {
-                                        dosageUnits.map((units) => {
-                                            return <Picker.Item key={units.id} label={units.name} value={units.id!} />
-                                        })
-                                    }
-                                </Picker>
+                                // <Picker
+                                //     selectedValue={medicationLog.dosage_unit_id}
+                                //     onValueChange={(itemValue) => {
+                                //         update(medicationLog.db.fields.dosage_unit_id, itemValue);
+                                // }}>
+                                //     {
+                                //         dosageUnits.map((units) => {
+                                //             return <Picker.Item key={units.id} label={units.name} value={units.id!} />
+                                //         })
+                                //     }
+                                // </Picker>
+                                <View style={{marginVertical: 4}}>
+                                    <RNPickerSelect
+                                        onValueChange={(itemValue) => {
+                                            update(medicationLog.db.fields.dosage_unit_id, itemValue);
+                                        }}
+                                        items={dosageAsItems}
+                                        style={PickerStyles}
+                                    />
+                                </View>
                             :
                                 <Text>Please Add a Dosage Unit</Text>
                         }

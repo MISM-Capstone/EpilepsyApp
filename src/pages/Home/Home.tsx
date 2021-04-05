@@ -47,7 +47,7 @@ export default function Home(props:Props) {
                     navigate={() => props.navigation.navigate(HomeOptions.PersonalSurveys, {tab:TabOptions.home})}
                 />
                 <NavigationButton
-                    title="Survey History"
+                    title="Your Survey History"
                     icon="archive"
                     navigate={() => props.navigation.navigate(HomeOptions.SurveyHistory, {tab:TabOptions.home})}
                 />
