@@ -21,18 +21,18 @@ type Props = {
     route: AddEditSurveyScreenRouteProp;
 };
 
-export default function AddEditSurvey(props:Props) {
+export default function AddEditSurvey(props: Props) {
     // TODO - Maybe use reducer instead of use state for the fields
     const updateContext = GetUpdateContext();
     const [survey, setSurvey] = useState(new Survey());
     const [fields, setFields] = useState<SurveyField[]>([]);
 
-    function updateValue(key:keyof Survey, value:any){
+    function updateValue(key: keyof Survey, value: any) {
         const sur = CopyAndSetKey(survey, key, value);
         setSurvey(sur);
     }
 
-    function updateField<Tkey extends keyof SurveyField>(field:SurveyField, key:Tkey, value: SurveyField[Tkey]) {
+    function updateField<Tkey extends keyof SurveyField>(field: SurveyField, key: Tkey, value: SurveyField[Tkey]) {
         const newFields = fields.map((oldField) => {
             if (oldField.id === field.id) {
                 const newField = CopyAndSetKey(field, key, value);
@@ -45,7 +45,7 @@ export default function AddEditSurvey(props:Props) {
 
     function addField() {
         const newFields = Array.from(fields);
-        newFields.push(new SurveyField(survey.id?survey.id:undefined));
+        newFields.push(new SurveyField(survey.id ? survey.id : undefined));
         setFields(newFields);
     }
 
@@ -59,7 +59,7 @@ export default function AddEditSurvey(props:Props) {
                 }
             }
         })();
-    },[props.route.params.id]);
+    }, [props.route.params.id]);
 
     useEffect(() => {
         (async () => {
@@ -68,12 +68,12 @@ export default function AddEditSurvey(props:Props) {
                 setFields(surveyFields);
             }
         })();
-    },[survey.id]);
+    }, [survey.id]);
 
     const insertQuery = async () => {
         let surveyResult = await SurveyDao.save(survey);
         if (surveyResult) {
-            const surveyId = survey.id?survey.id:surveyResult.insertId
+            const surveyId = survey.id ? survey.id : surveyResult.insertId
             await Promise.all(fields.map(async (field) => {
                 field.survey_id = surveyId;
                 await SurveyFieldDao.save(field);
@@ -90,6 +90,7 @@ export default function AddEditSurvey(props:Props) {
     return (
         <SafeAreaView>
             <ScrollView style={{ padding: 12 }}>
+                <Text style={{ fontStyle: 'italic', color: '#555' }}>Create a survey with custom fields to track, such as your stress levels, sleep patterns, or exercise habits.</Text>
                 <SingleInput
                     title="Name"
                     onChange={(value) => {
@@ -106,14 +107,14 @@ export default function AddEditSurvey(props:Props) {
                 />
                 <View
                     style={{
-                        borderTopColor:'black',
+                        borderTopColor: 'black',
                         borderBottomWidth: 1,
                     }}
                 >
-                    <Text style={{fontSize: 25, color: `#333`}}>
-                        Fields
+                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <Text style={{ fontSize: 25, color: `#333` }}>Fields</Text>
                         <Button title="Add" onPress={addField} />
-                    </Text>
+                    </View>
                 </View>
                 {
                     fields.map((field) => {
@@ -129,7 +130,7 @@ export default function AddEditSurvey(props:Props) {
 
                 <Button title="Save" onPress={insertQuery} />
                 <Button title="Cancel" onPress={props.navigation.goBack} />
-                <View style={{height:12}}></View>
+                <View style={{ height: 12 }}></View>
             </ScrollView>
         </SafeAreaView>
     );
