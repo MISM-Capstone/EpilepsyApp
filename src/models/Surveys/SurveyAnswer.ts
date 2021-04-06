@@ -1,7 +1,7 @@
 import Db, { DbFields } from "../AbstractClasses/Db";
 
 export default class SurveyAnswer extends Db {
-    answer: string = "";
+    answer: any = "";
     survey_log_id: number;
     survey_field_id: number;
     get db() {

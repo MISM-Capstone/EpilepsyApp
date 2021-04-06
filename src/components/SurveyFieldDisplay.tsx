@@ -27,7 +27,7 @@ export default function SurveyFieldDisplay(props: SurveyFieldProps) {
                 borderBottomWidth: 1,
             }}
         >
-            <Text style={{ marginTop: 4 }}>Field Name:</Text>
+            <Text style={{ marginTop: 4 }}>Write a question:</Text>
             <SingleInput
                 title=""
                 onChange={(value) => {
