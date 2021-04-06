@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { View, Button } from 'react-native';
+import { View, Button, Text } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeOptions, HomeStackParamList } from "../../navigation/Home/HomeNavProps";
@@ -52,6 +52,7 @@ export default function AddDosageUnit(props: Props) {
     return (
         <SafeAreaView>
             <View style={{ padding: 12 }}>
+                <Text style={{fontStyle: 'italic', color: '#555'}}>Add a dosage unit for medications that you take. For example pill counts, milligrams, or other measurements.</Text>
                 <SingleInput
                     title="Name"
                     onChange={(value) => {

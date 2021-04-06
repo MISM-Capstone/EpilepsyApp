@@ -155,10 +155,10 @@ export class DatabaseInitialization {
             INSERT INTO survey_field
                 (question, field_type, survey_id, date_modified)
             VALUES
-                ('In the last month, how often have you felt that you were unable to control the important things in your life?', 'integer', 2, ${time}),
-                ('In the last month, how often have you felt confident about your ability to handle your personal problems?', 'integer', 2, ${time}),
-                ('In the last month, how often have you felt that things were going your way?', 'integer', 2, ${time}),
-                ('In the last month, how often have you felt difficulties were piling up so high that you could not overcome them?', 'integer', 2, ${time});
+                ('In the last month, how often have you felt that you were unable to control the important things in your life?', 'number', 2, ''),
+                ('In the last month, how often have you felt confident about your ability to handle your personal problems?', 'number', 2, ''),
+                ('In the last month, how often have you felt that things were going your way?', 'number', 2, ''),
+                ('In the last month, how often have you felt difficulties were piling up so high that you could not overcome them?', 'number', 2, '');
         `);
         // Lastly, update the database version
         transaction.executeSql("INSERT INTO Version (version) VALUES (1);");

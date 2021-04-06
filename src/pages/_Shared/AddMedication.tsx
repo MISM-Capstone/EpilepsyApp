@@ -94,6 +94,7 @@ export default function AddMedication(props: Props) {
     return (
         <SafeAreaView>
             <View style={{ padding: 12 }}>
+                <Text style={{fontStyle: 'italic', color: '#555'}}>Add the name and details about any medications you take to manage your epilepsy.</Text>
                 <SingleInput
                     title="Name"
                     onChange={(value) => {

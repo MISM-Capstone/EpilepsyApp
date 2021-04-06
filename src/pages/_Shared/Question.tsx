@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, TextInput } from 'react-native';
+import { Text, TextInput, View } from 'react-native';
 import ButtonSet from '../../components/Inputs/ButtonSet';
 import { MultiInput } from '../../components/Inputs/Input';
 import SurveyAnswer, { SurveyAnswerDb } from "../../models/Surveys/SurveyAnswer";
@@ -30,14 +30,14 @@ function Question(props: Props) {
             <Text><Text style={{ fontWeight: 'bold' }}>Question: </Text>{surveyField?.question}</Text>
             {surveyField?.field_display === "True/False" &&
                 <>
-                    <Text>True/False</Text>
-                    <ButtonSet />
+                    <ButtonSet 
+                        onChange={()=> console.log('changed')}
+                    />
                     {/* TODO: add the attributes for the Button Set */}
                 </>
             }
             {surveyField?.field_display === "Number" &&
                 <>
-                    <Text>Number</Text>
                     <TextInput
                         style={{ height: 40, backgroundColor: 'lightgray' }}
                         onChangeText={(value) => {
@@ -50,14 +50,6 @@ function Question(props: Props) {
             }
             {surveyField?.field_display === "Text" &&
                 <>
-                    <Text>Text</Text>
-                    {/* <TextInput
-                                            style={{ height: 40, backgroundColor: 'lightgray' }}
-                                            onChangeText={(value) => {
-                                                updateValue(SurveyAnswerDb.fields.answer,value,index)
-                                            }}
-                                            value={surveyAnswers[index].answer}
-                                            keyboardType="numeric" /> */}
                     <MultiInput
                         title=""
                         onChange={(value) => {
@@ -69,7 +61,6 @@ function Question(props: Props) {
             }
             {surveyField?.field_display === "Date with Time" &&
                 <>
-                    <Text>Date with Time</Text>
                     <DateTimePicker
                         testID="datePicker"
                         mode="date"
@@ -77,8 +68,20 @@ function Question(props: Props) {
                         onChange={(value) => {
                             updateValue(SurveyAnswerDb.fields.answer, value)
                         }}
-                        value={surveyAnswer.answer as unknown as Date}
+                        value={new Date()}
+                        maximumDate={new Date()}
+                        style={{ marginBottom: 6}} />
+                    
+                    <DateTimePicker
+                        testID="datePicker"
+                        mode="time"
+                        display="default"
+                        onChange={(value) => {
+                            updateValue(SurveyAnswerDb.fields.answer, value)
+                        }}
+                        value={new Date()}
                         maximumDate={new Date()} />
+                
                 </>
             }
         </>

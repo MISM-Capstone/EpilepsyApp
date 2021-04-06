@@ -68,7 +68,7 @@ export default function PersonalSurveys(props:Props) {
     return (
         <SafeAreaView>
             <ScrollView>
-                <Text style={HistoryStyles.SectionHeader}>Suveys</Text>
+                <Text style={HistoryStyles.SectionHeader}>Surveys</Text>
                 {surveys.length > 0 ?
                     surveys.map(function (survey) {
                         return (
