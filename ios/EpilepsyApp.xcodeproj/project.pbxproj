@@ -307,7 +307,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 54LWQR937V;
+						DevelopmentTeam = 45526B5X3T;
 						LastSwiftMigration = 1230;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -739,7 +739,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = EpilepsyApp/EpilepsyApp.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 54LWQR937V;
+				DEVELOPMENT_TEAM = 45526B5X3T;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = EpilepsyApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -748,7 +748,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.epilepsyapp.epilog.app;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = EpilepsyApp;
 				SWIFT_OBJC_BRIDGING_HEADER = "EpilepsyApp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -765,7 +765,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = EpilepsyApp/EpilepsyApp.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 54LWQR937V;
+				DEVELOPMENT_TEAM = 45526B5X3T;
 				INFOPLIST_FILE = EpilepsyApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -773,7 +773,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.epilepsyapp.epilog.app;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = EpilepsyApp;
 				SWIFT_OBJC_BRIDGING_HEADER = "EpilepsyApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

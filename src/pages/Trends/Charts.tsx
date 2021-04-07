@@ -15,12 +15,10 @@ function Charts() {
     useEffect(() => {
         (async () => {
             const results = await chartsService.getChartDataDay();
-            console.log(results);
             setDayData(results);
         })();
         (async () => {
             const results = await chartsService.getChartDataTime();
-            console.log(results);
             setTimeData(results);
         })();
     }, []);

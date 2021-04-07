@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="/Users/student/Desktop/demo/EpilepsyApp/ios/EpilepsyApp/www/epilepsy.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="2578"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,15:mainsqlite_sequence"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="SQL 1">INSERT INTO epilepsy_type
+                (name, description, date_modified)
+            VALUES
+                ('Focal Epilepsy, Type Unknown', '', ${time}),
+                ('Focal Seizure with Loss of Awareness', '', ${time}),
+                ('Generalized Epilepsy, Type Unknown', '', ${time}),
+                ('Absence', 'Blank Staring, Spacing Out', ${time}),
+                ('Atonic', 'Drop Attacks', ${time}),
+                ('Myoclonic', 'Brief Muscle Jerking', ${time}),
+                ('Tonic Clonic', 'Convulsion or Grande Mal', ${time}),
+                ('Rare Epilepsy Subtype', '', ${time}),
+                ('No Specific Diagnosis', '', ${time}),
+                ('Not Sure', '', ${time});
+        `);
+        transaction.executeSql(`
+            INSERT INTO dosage_unit
+                (name, description, is_default, date_modified)
+            VALUES
+                ('pill', '', false, ${time}),
+                ('tsp', 'Teaspoon', false, ${time}),
+                ('mg', 'Milligram', true, ${time}),
+                ('ml', 'Milliliter', false, ${time});
+        `);
+        transaction.executeSql(`
+            INSERT INTO survey
+                (name, description, date_modified)
+            VALUES
+                ('Daily Survey', 'A survey for you to take each day', ${time}),
+                ('Monthly Survey', 'A survey for you to take each month', ${time});
+        `);
+        transaction.executeSql(`
+            INSERT INTO survey_field
+                (question, field_type, survey_id, date_modified)
+            VALUES
+                ('What time did you go to sleep last night?', 'Date', 1, ${time}),
+                ('What time did you wake up today?', 'Date', 1, ${time}),
+                ('Have you felt sick today?', 'boolean', 1, ${time}),
+                ('Have you had a fever?', 'boolean', 1, ${time}),
+                ('Have you missed any meals?', 'boolean', 1, ${time}),
+                ('Have you taken proper medications?', 'boolean', 1, ${time});
+        `);
+        transaction.executeSql(`
+            INSERT INTO survey_field
+                (question, field_type, survey_id, date_modified)
+            VALUES
+                ('In the last month, how often have you felt that you were unable to control the important things in your life?', 'integer', 2, ${time}),
+                ('In the last month, how often have you felt confident about your ability to handle your personal problems?', 'integer', 2, ${time}),
+                ('In the last month, how often have you felt that things were going your way?', 'integer', 2, ${time}),
+                ('In the last month, how often have you felt difficulties were piling up so high that you could not overcome them?', 'integer', 2, ${time});</sql><current_tab id="0"/></tab_sql></sqlb_project>

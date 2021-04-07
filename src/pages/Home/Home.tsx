@@ -4,55 +4,55 @@ import { Text, View } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import {HomeStackParamList} from "../../navigation/HomeNavigation"
+import { HomeOptions, HomeStackParamList } from "../../navigation/Home/HomeNavProps";
 import NavigationButton from "../../components/NavigationButton";
 
 import HomeStyles from "../../styles/HomeStyles";
 import {default as mainStyle} from "../../styles/MainStyles";
+import { GetAuthContext } from '../../_services/Providers/AuthProvider';
+import { ScrollView } from 'react-native-gesture-handler';
+import { TabOptions } from "../../components/TabOptions";
+import { RouteProp } from '@react-navigation/core';
 
-type HomeScreenNavigationProp = StackNavigationProp<HomeStackParamList,'Home'>;
+type HomeNavProp = StackNavigationProp<HomeStackParamList,HomeOptions.Home>;
+type HomeRouteProp = RouteProp<HomeStackParamList,HomeOptions.Home>;
 
 type Props = {
-  navigation: HomeScreenNavigationProp;
+  navigation: HomeNavProp;
+  route:HomeRouteProp
 };
 
 
-const Home = (props:Props) => {
+export default function Home(props:Props) {
+    const {user} = GetAuthContext();
     return (
         <SafeAreaView style={mainStyle.container}>
-            <View style={HomeStyles.HomeContainer}>
+            <ScrollView style={HomeStyles.HomeContainer}>
                 <View style={HomeStyles.welcomeMessageContainer}>
-                <Text style={HomeStyles.welcomeMessageText}>Hi, Username!</Text>
+                <Text style={HomeStyles.welcomeMessageText}>Hi, {user!.first_name}!</Text>
                 </View>
                 <NavigationButton
                     title="Log a Seizure"
                     icon="clipboard-pulse"
-                    navigate={() => props.navigation.navigate("LogSeizure")}
-                />
-                <NavigationButton
-                    title="Take Daily Survey"
-                    icon="comment"
-                    navigate={() => props.navigation.navigate("DailySurvey")}
+                    navigate={() => props.navigation.navigate(HomeOptions.LogSeizure, {tab:TabOptions.home})}
                 />
                 <NavigationButton
                     title="Record Medication"
                     icon="pill"
-                    navigate={() => props.navigation.navigate("RecordMedication")}
+                    navigate={() => props.navigation.navigate(HomeOptions.RecordMedication, {tab:TabOptions.home})}
                 />
                 <NavigationButton
-                    title="Survey History"
-                    icon="archive"
-                    navigate={() => props.navigation.navigate("SurveyHistory")}
+                    title="My Surveys"
+                    icon="file"
+                    navigate={() => props.navigation.navigate(HomeOptions.PersonalSurveys, {tab:TabOptions.home})}
                 />
-                {/* <NavigationButton
-                    title="Healthkit"
-                    icon="hospital-box"
-                    navigate={() => props.navigation.navigate("HealthKitTest")}
-                /> */}
-            </View>
+                <NavigationButton
+                    title="Your Survey History"
+                    icon="archive"
+                    navigate={() => props.navigation.navigate(HomeOptions.SurveyHistory, {tab:TabOptions.home})}
+                />
+            </ScrollView>
 
         </SafeAreaView>
     );
 }
-
-export default Home;

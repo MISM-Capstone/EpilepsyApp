@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Platform, StatusBar, View } from 'react-native';
+import { Button, StatusBar, View } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { StackNavigationProp } from '@react-navigation/stack';
 
