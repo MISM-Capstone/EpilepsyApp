@@ -13,7 +13,7 @@ type Props = {
 };
 
 function Question(props: Props) {
-    const [surveyAnswer, setSurveyAnswer] = useState<SurveyAnswer>(new SurveyAnswer(undefined, props.surveyField.id!));
+    const [surveyAnswer, setSurveyAnswer] = useState<SurveyAnswer>(new SurveyAnswer(undefined, props.surveyField));
 
     function updateValue(key: keyof SurveyAnswer, value: any) {
         const ans = CopyAndSetKey(surveyAnswer, key, value);
