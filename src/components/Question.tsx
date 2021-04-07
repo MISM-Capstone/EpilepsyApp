@@ -1,9 +1,18 @@
+<<<<<<< HEAD:src/components/Question.tsx
 import React, { useState } from 'react';
 import { Text, TextInput } from 'react-native';
 import ButtonSet from './Inputs/ButtonSet';
 import { MultiInput } from './Inputs/Input';
 import SurveyAnswer, { SurveyAnswerDb } from "../models/Surveys/SurveyAnswer";
 import SurveyField, { SURVEY_FIELD_TYPE } from '../models/Surveys/SurveyField';
+=======
+import React, { useEffect, useState } from 'react';
+import { Text, TextInput, View } from 'react-native';
+import ButtonSet from '../../components/Inputs/ButtonSet';
+import { MultiInput } from '../../components/Inputs/Input';
+import SurveyAnswer, { SurveyAnswerDb } from "../../models/Surveys/SurveyAnswer";
+import SurveyField from '../../models/Surveys/SurveyField';
+>>>>>>> 4b15cdbe43939b93315f8d1a6fccc2947a5ca6df:src/pages/_Shared/Question.tsx
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { CopyAndSetKey } from '../functions';
 
@@ -30,14 +39,14 @@ function Question(props: Props) {
             </Text>
             {props.surveyField.field_type === SURVEY_FIELD_TYPE.bool &&
                 <>
-                    <Text>True/False</Text>
-                    <ButtonSet />
+                    <ButtonSet 
+                        onChange={()=> console.log('changed')}
+                    />
                     {/* TODO: add the attributes for the Button Set */}
                 </>
             }
             {props.surveyField.field_type === SURVEY_FIELD_TYPE.num &&
                 <>
-                    <Text>Number</Text>
                     <TextInput
                         style={{ height: 40, backgroundColor: 'lightgray' }}
                         onChangeText={(value) => {
@@ -50,14 +59,6 @@ function Question(props: Props) {
             }
             {props.surveyField.field_type === SURVEY_FIELD_TYPE.str &&
                 <>
-                    <Text>Text</Text>
-                    {/* <TextInput
-                                            style={{ height: 40, backgroundColor: 'lightgray' }}
-                                            onChangeText={(value) => {
-                                                updateValue(SurveyAnswerDb.fields.answer,value,index)
-                                            }}
-                                            value={surveyAnswers[index].answer}
-                                            keyboardType="numeric" /> */}
                     <MultiInput
                         title=""
                         onChange={(value) => {
@@ -69,7 +70,6 @@ function Question(props: Props) {
             }
             {props.surveyField.field_type === SURVEY_FIELD_TYPE.datetime &&
                 <>
-                    <Text>Date with Time</Text>
                     <DateTimePicker
                         testID="datePicker"
                         mode="date"
@@ -78,7 +78,19 @@ function Question(props: Props) {
                             updateValue(SurveyAnswerDb.fields.answer, value)
                         }}
                         value={new Date()}
+                        maximumDate={new Date()}
+                        style={{ marginBottom: 6}} />
+                    
+                    <DateTimePicker
+                        testID="datePicker"
+                        mode="time"
+                        display="default"
+                        onChange={(value) => {
+                            updateValue(SurveyAnswerDb.fields.answer, value)
+                        }}
+                        value={new Date()}
                         maximumDate={new Date()} />
+                
                 </>
             }
         </>
