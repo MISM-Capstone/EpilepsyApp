@@ -8,25 +8,12 @@ const LoginStyles = StyleSheet.create({
         padding: 40,
     },
     input: {
-        marginBottom: 20,
+        marginBottom: 40,
         padding: 10,
         backgroundColor: "#FFFFFF",
-        fontSize: 24,
+        fontSize: 30,
+        borderRadius: 8,
     },
-    titleText: {
-        color: '#eee',
-        fontSize: 32,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        marginBottom: 16
-    },
-    noticeText: {
-        color: '#eee',
-        fontSize: 16,
-        fontStyle: `italic`,
-        marginBottom: 16
-    },
-    nameHeader: {color: '#eee', fontSize: 18, marginBottom: 4}
 });
 
 export default LoginStyles;

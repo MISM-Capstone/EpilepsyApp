@@ -1,15 +1,13 @@
 import Log, { LogFields } from "./AbstractClasses/Log";
+import Location from "./Location";
+import User from "./User";
 
 export default class SeizureLog extends Log {
-    notes: string = "";
+    details: string = "";
     location_id: number;
-    get db() {
-        return SeizureLogDb;
-    }
-    
-    constructor(user:number=0, locationId:number=0) {
+    constructor(user:User, location:Location) {
         super(user);
-        this.location_id = locationId;
+        this.location_id = location.id!;
     }
 }
 
@@ -17,8 +15,7 @@ export const SeizureLogDb = {
     table: "seizure_log",
     fields: {
         ...LogFields,
-        time: "time",
-        notes: "notes",
+        details: "details",
         location_id: "location_id",
     }
-} as const;
+}

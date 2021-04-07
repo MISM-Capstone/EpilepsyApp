@@ -25,7 +25,7 @@ const ButtonStyles = StyleSheet.create({
         textAlign:"left",
         paddingLeft : 10,
         paddingRight : 10,
-        fontSize: 28,
+        fontSize: 30,
     },
     navigationButtonRow:{
         flexDirection: 'row', 

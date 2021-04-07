@@ -1,14 +1,12 @@
 import Log, { LogFields } from "../AbstractClasses/Log";
+import Survey from "./Survey";
+import User from "../User";
 
 export default class SurveyLog extends Log {
     survey_id: number;
-    get db() {
-        return SurveyLogDb;
-    }
-    
-    constructor(user:number=0, surveyId:number=0) {
+    constructor(user: User, survey: Survey) {
         super(user);
-        this.survey_id = surveyId;
+        this.survey_id = survey.id!;
     }
 }
 
@@ -18,4 +16,4 @@ export const SurveyLogDb = {
         ...LogFields,
         survey_id: "survey_id",
     }
-} as const;
+}
