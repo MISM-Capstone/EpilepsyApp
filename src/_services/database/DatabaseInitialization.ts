@@ -28,12 +28,6 @@ export class DatabaseInitialization {
     // Perform initial setup of the database tables
     private static createTables(transaction: SQLite.Transaction) {
         // DANGER! For dev only
-        const dropOldTables = false;
-        if (dropOldTables) {
-            transaction.executeSql("DROP TABLE IF EXISTS seizure_log;");
-            transaction.executeSql("DROP TABLE IF EXISTS survey_log;");
-            transaction.executeSql("DROP TABLE IF EXISTS medication_log;");
-        }
         const dropAllTables = false;
         // const dropAllTables = true;
         if (dropAllTables) {
@@ -144,8 +138,8 @@ export class DatabaseInitialization {
             INSERT INTO survey_field
                 (question, field_type, survey_id, date_modified)
             VALUES
-                ('What time did you go to sleep last night?', 'Date', 1, ${time}),
-                ('What time did you wake up today?', 'Date', 1, ${time}),
+                ('What time did you go to sleep last night?', 'dateTime', 1, ${time}),
+                ('What time did you wake up today?', 'dateTime', 1, ${time}),
                 ('Have you felt sick today?', 'boolean', 1, ${time}),
                 ('Have you had a fever?', 'boolean', 1, ${time}),
                 ('Have you missed any meals?', 'boolean', 1, ${time}),
@@ -155,10 +149,10 @@ export class DatabaseInitialization {
             INSERT INTO survey_field
                 (question, field_type, survey_id, date_modified)
             VALUES
-                ('In the last month, how often have you felt that you were unable to control the important things in your life?', 'integer', 2, ${time}),
-                ('In the last month, how often have you felt confident about your ability to handle your personal problems?', 'integer', 2, ${time}),
-                ('In the last month, how often have you felt that things were going your way?', 'integer', 2, ${time}),
-                ('In the last month, how often have you felt difficulties were piling up so high that you could not overcome them?', 'integer', 2, ${time});
+                ('In the last month, how often have you felt that you were unable to control the important things in your life?', 'number', 2, ${time}),
+                ('In the last month, how often have you felt confident about your ability to handle your personal problems?', 'number', 2, ${time}),
+                ('In the last month, how often have you felt that things were going your way?', 'number', 2, ${time}),
+                ('In the last month, how often have you felt difficulties were piling up so high that you could not overcome them?', 'number', 2, ${time});
         `);
         // Lastly, update the database version
         transaction.executeSql("INSERT INTO Version (version) VALUES (1);");

@@ -8,41 +8,88 @@ import SurveyDao from "../../_services/database/dao/SurveyDao";
 import SurveyFieldDao from "../../_services/database/dao/SurveyFieldDao";
 import SurveyAnswerDao from "../../_services/database/dao/SurveyAnswerDao";
 import SurveyAnswer from "../../models/Surveys/SurveyAnswer";
-import Question from "../_Shared/Question";
+import Question from "../../components/Question";
+import SurveyLog from "../../models/Surveys/SurveyLog";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RouteProp } from '@react-navigation/core';
+import { HomeOptions, HomeStackParamList } from "../../navigation/Home/HomeNavProps";
+import { GetAuthContext } from "../../_services/Providers/AuthProvider";
+import SurveyLogDao from "../../_services/database/dao/SurveyLogDao";
+import { GetUpdateContext } from "../../_services/Providers/UpdateProvider";
+import { returnToPreviousPage } from "../../functions";
+
+type HomeNavProp = StackNavigationProp<HomeStackParamList,HomeOptions.TakeSurvey>;
+type HomeRouteProp = RouteProp<HomeStackParamList,HomeOptions.TakeSurvey>;
 
 type Props = {
-    navigation: any;
-    route: any;
+  navigation: HomeNavProp;
+  route:HomeRouteProp
 };
 
 export default function TakeSurvey(props: Props) {
+    const surveyId = props.route.params.surveyId;
+    const { user } = GetAuthContext();
+    const updateContext = GetUpdateContext();
     const [survey, setSurvey] = useState(new Survey());
     const [surveyFields, setSurveyFields] = useState<SurveyField[]>([]);
+    const [surveyLog, setSurveyLog] = useState(new SurveyLog(user!.id!, surveyId));
     const [surveyAnswers, setSurveyAnswers] = useState<SurveyAnswer[]>([]);
 
     useEffect(() => {
         (async () => {
-            const surveyId = props.route.params.id;
+            const logId = props.route.params.id;
+            if (logId) {
+                const log = await SurveyLogDao.getById(logId);
+                if (log) {
+                    setSurveyLog(log);
+                }
+            }
+        })();
+    }, [props.route.params.id]);
+
+    useEffect(() => {
+        (async () => {
+            if (surveyLog.id) {
+                const answers = await SurveyAnswerDao.getBySurveyLogId(surveyLog.id);
+                setSurveyAnswers(answers);
+            }
+        })();
+    }, [surveyLog.id]);
+
+    useEffect(() => {
+        (async () => {
             if (surveyId) {
                 const surv = await SurveyDao.getById(surveyId);
                 if (surv) {
                     setSurvey(surv);
-                    let id: number = surv.id as number;
-                    const survFields = await SurveyFieldDao.getBySurveyId(id);
+                    const survFields = await SurveyFieldDao.getBySurveyId(surv.id!);
                     
                     let survAnswers: SurveyAnswer[] = new Array<SurveyAnswer>();
                     survFields.forEach(survField => {
-                        console.log('surv field in loop: ', survField)
-                        survAnswers.push(new SurveyAnswer(undefined, survField.id as number));
+                        survAnswers.push(new SurveyAnswer(undefined, survField));
                     });
                     setSurveyAnswers(survAnswers);
                     setSurveyFields(survFields);
                 }
             }
         })();
-    }, [props.route.params.id]);
+    }, [surveyId]);
 
     const insertQuery = async () => {
+        let surveyLogResult = await SurveyLogDao.save(surveyLog);
+        if (surveyLogResult) {
+            const surveyLogId = surveyLog.id ? surveyLog.id : surveyLogResult.insertId
+            await Promise.all(surveyAnswers.map(async (answer) => {
+                answer.survey_log_id = surveyLogId;
+                await SurveyAnswerDao.save(answer);
+            }));
+            returnToPreviousPage(
+                surveyLog,
+                surveyLogResult,
+                updateContext,
+                props.navigation.goBack
+            );
+        }
         let resultsArray: any[] = new Array<any>();
         surveyFields.forEach(async surveyField => {
             console.log('Survey Field to be saved: ', surveyField);

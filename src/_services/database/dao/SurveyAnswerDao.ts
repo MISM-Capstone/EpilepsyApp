@@ -1,16 +1,26 @@
-import SurveyAnswer from "../../../models/Surveys/SurveyAnswer";
+import SurveyAnswer, { SurveyAnswerDb } from "../../../models/Surveys/SurveyAnswer";
 import LogDao from "./LogDao";
 
 export default class SurveyAnswerDao extends LogDao {
-    static async getSurveyAnswers() {
+    static async getAll() {
         return await this.pullAll(SurveyAnswer);
     }
+    static async getBySurveyLogId(surveyLogId:number) {
+        const sql = `
+            SELECT
+                *
+            FROM
+                ${SurveyAnswerDb.table}
+            WHERE
+                ${SurveyAnswerDb.fields.survey_log_id}=?
+            ORDER BY
+                ${SurveyAnswerDb.fields.id};
+        `;
+        const resultSurveyField = await this.runQuery(sql, [surveyLogId]);
+        return this.convertQueryResultToObj(resultSurveyField, SurveyAnswer);
+    }
 
-    // static async getSurveyAnswersByDate(date: Date) {
-    //     return await this.pullfromDateRange(date, date, SurveyAnswer);
-    // }
-
-    static async getSurveyAnswersById(survey_id: number) {
+    static async getById(survey_id: number) {
         return await this.pullById(survey_id, SurveyAnswer);
     }
 }

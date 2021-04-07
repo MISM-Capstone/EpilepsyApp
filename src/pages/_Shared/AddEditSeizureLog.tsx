@@ -183,6 +183,7 @@ export default function AddEditSeizureLog(props: Props) {
                                     }}
                                     items={locationsAsItems}
                                     style={PickerStyles}
+                                    placeholder={{label: "Select a Location"}}
                                 />
                             </View>
                         :

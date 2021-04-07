@@ -7,13 +7,16 @@ type TabProps = {
 interface EditLogProps extends TabProps {
     date?: Date;
 }
+interface TakeSurveyLogProps extends EditLogProps {
+    surveyId?: number;
+}
 
 
 export type HomeStackParamList = {
     Home: TabProps;
     LogSeizure: EditLogProps;
     RecordMedication: EditLogProps;
-    TakeSurvey: TabProps;
+    TakeSurvey: TakeSurveyLogProps;
     SurveyHistory: TabProps;
     HealthKitTest: TabProps;
     AddDosageUnit: TabProps;

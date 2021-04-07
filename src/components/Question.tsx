@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Text, TextInput } from 'react-native';
-import ButtonSet from '../../components/Inputs/ButtonSet';
-import { MultiInput } from '../../components/Inputs/Input';
-import SurveyAnswer, { SurveyAnswerDb } from "../../models/Surveys/SurveyAnswer";
-import SurveyField from '../../models/Surveys/SurveyField';
+import ButtonSet from './Inputs/ButtonSet';
+import { MultiInput } from './Inputs/Input';
+import SurveyAnswer, { SurveyAnswerDb } from "../models/Surveys/SurveyAnswer";
+import SurveyField, { SURVEY_FIELD_TYPE } from '../models/Surveys/SurveyField';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { CopyAndSetKey } from '../../functions';
+import { CopyAndSetKey } from '../functions';
 
 type Props = {
     surveyField: SurveyField,
@@ -13,12 +13,7 @@ type Props = {
 };
 
 function Question(props: Props) {
-    const [surveyAnswer, setSurveyAnswer] = useState<SurveyAnswer>(new SurveyAnswer());
-    const [surveyField, setSurveyFieldn] = useState<SurveyField>();
-
-    useEffect(() => {
-        setSurveyFieldn(props.surveyField);
-    }, []);
+    const [surveyAnswer, setSurveyAnswer] = useState<SurveyAnswer>(new SurveyAnswer(undefined, props.surveyField.id!));
 
     function updateValue(key: keyof SurveyAnswer, value: any) {
         const ans = CopyAndSetKey(surveyAnswer, key, value);
@@ -27,15 +22,20 @@ function Question(props: Props) {
 
     return (
         <>
-            <Text><Text style={{ fontWeight: 'bold' }}>Question: </Text>{surveyField?.question}</Text>
-            {surveyField?.field_display === "True/False" &&
+            <Text>
+                <Text style={{ fontWeight: 'bold' }}>
+                    Question: 
+                </Text>
+                {props.surveyField.question}
+            </Text>
+            {props.surveyField.field_type === SURVEY_FIELD_TYPE.bool &&
                 <>
                     <Text>True/False</Text>
                     <ButtonSet />
                     {/* TODO: add the attributes for the Button Set */}
                 </>
             }
-            {surveyField?.field_display === "Number" &&
+            {props.surveyField.field_type === SURVEY_FIELD_TYPE.num &&
                 <>
                     <Text>Number</Text>
                     <TextInput
@@ -48,7 +48,7 @@ function Question(props: Props) {
                     />
                 </>
             }
-            {surveyField?.field_display === "Text" &&
+            {props.surveyField.field_type === SURVEY_FIELD_TYPE.str &&
                 <>
                     <Text>Text</Text>
                     {/* <TextInput
@@ -67,7 +67,7 @@ function Question(props: Props) {
                     />
                 </>
             }
-            {surveyField?.field_display === "Date with Time" &&
+            {props.surveyField.field_type === SURVEY_FIELD_TYPE.datetime &&
                 <>
                     <Text>Date with Time</Text>
                     <DateTimePicker
@@ -77,7 +77,7 @@ function Question(props: Props) {
                         onChange={(value) => {
                             updateValue(SurveyAnswerDb.fields.answer, value)
                         }}
-                        value={surveyAnswer.answer as unknown as Date}
+                        value={new Date()}
                         maximumDate={new Date()} />
                 </>
             }

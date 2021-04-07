@@ -90,7 +90,7 @@ export default function PersonalSurveys(props:Props) {
                                         HomeOptions.TakeSurvey,
                                         {
                                             tab:TabOptions.home,
-                                            id: survey.id!,
+                                            surveyId: survey.id!,
                                         }
                                     );
                                 }}

@@ -5,7 +5,7 @@ import { Button, ScrollView, View, Text } from "react-native";
 import SafeAreaView from 'react-native-safe-area-view';
 import { MultiInput, SingleInput } from "../../components/Inputs/Input";
 import { CopyAndSetKey, returnToPreviousPage } from "../../functions";
-import Survey, { SurveyDb } from "../../models/Surveys/Survey";
+import Survey from "../../models/Surveys/Survey";
 import SurveyField from "../../models/Surveys/SurveyField";
 import { HomeOptions, HomeStackParamList } from "../../navigation/Home/HomeNavProps";
 import SurveyDao from "../../_services/database/dao/SurveyDao";
@@ -94,14 +94,14 @@ export default function AddEditSurvey(props: Props) {
                 <SingleInput
                     title="Name"
                     onChange={(value) => {
-                        updateValue(SurveyDb.fields.name, value);
+                        updateValue(survey.db.fields.name, value);
                     }}
                     value={survey.name}
                 />
                 <MultiInput
                     title="Description"
                     onChange={(value) => {
-                        updateValue(SurveyDb.fields.description, value);
+                        updateValue(survey.db.fields.description, value);
                     }}
                     value={survey.description}
                 />

@@ -4,7 +4,9 @@ export enum SURVEY_FIELD_TYPE {
     bool = "boolean",
     str = "string",
     num = "number",
-    date = "Date",
+    date = "date",
+    time = "time",
+    datetime = "dateTime",
 }
 
 
@@ -26,8 +28,16 @@ export const FIELD_TYPES:FieldOption[] = [
         db:SURVEY_FIELD_TYPE.num
     },
     {
-        display:"Date with Time",
+        display:"Date",
         db:SURVEY_FIELD_TYPE.date
+    },
+    {
+        display:"Time",
+        db:SURVEY_FIELD_TYPE.time
+    },
+    {
+        display:"Date with Time",
+        db:SURVEY_FIELD_TYPE.datetime
     }
  ]
 
