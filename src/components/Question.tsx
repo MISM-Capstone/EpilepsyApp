@@ -1,18 +1,9 @@
-<<<<<<< HEAD:src/components/Question.tsx
 import React, { useState } from 'react';
 import { Text, TextInput } from 'react-native';
 import ButtonSet from './Inputs/ButtonSet';
 import { MultiInput } from './Inputs/Input';
 import SurveyAnswer, { SurveyAnswerDb } from "../models/Surveys/SurveyAnswer";
 import SurveyField, { SURVEY_FIELD_TYPE } from '../models/Surveys/SurveyField';
-=======
-import React, { useEffect, useState } from 'react';
-import { Text, TextInput, View } from 'react-native';
-import ButtonSet from '../../components/Inputs/ButtonSet';
-import { MultiInput } from '../../components/Inputs/Input';
-import SurveyAnswer, { SurveyAnswerDb } from "../../models/Surveys/SurveyAnswer";
-import SurveyField from '../../models/Surveys/SurveyField';
->>>>>>> 4b15cdbe43939b93315f8d1a6fccc2947a5ca6df:src/pages/_Shared/Question.tsx
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { CopyAndSetKey } from '../functions';
 
