@@ -51,11 +51,6 @@ export default function Home(props:Props) {
                     icon="archive"
                     navigate={() => props.navigation.navigate(HomeOptions.SurveyHistory, {tab:TabOptions.home})}
                 />
-                {/* <NavigationButton
-                    title="Healthkit"
-                    icon="hospital-box"
-                    navigate={() => props.navigation.navigate(HomeOptions.HealthKitTest, {tab:TabOptions.home})}
-                /> */}
             </ScrollView>
 
         </SafeAreaView>
