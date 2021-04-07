@@ -23,7 +23,7 @@ export default function MedicationLogCard(props: RenderProps) {
     });
     const dosageUnit = currentDos?currentDos.name:"";
     return (
-        <EditCard onClick={props.onClick} title="">
+        <EditCard onClick={props.onClick} title={props.medicationLog.date.toDateString()}>
         <Text>Time: {props.medicationLog.time}</Text>
         <Text>Medication: {medication}</Text>
         <Text>Dosage: {props.medicationLog.dosage} {dosageUnit}</Text>

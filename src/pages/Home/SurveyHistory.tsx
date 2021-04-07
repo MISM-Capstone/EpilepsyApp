@@ -18,7 +18,6 @@ import DosageUnitDao from '../../_services/database/dao/DosageUnitDao';
 import HistoryDao from '../../_services/database/dao/HistoryDao';
 import LocationDao from '../../_services/database/dao/LocationDao';
 import MedicationDao from '../../_services/database/dao/MedicationDao';
-import sleepDatesService from '../../_services/helpers/sleepDates.service';
 import { GetUpdateContext } from '../../_services/Providers/UpdateProvider';
 
 type HistNavProp = StackNavigationProp<HomeStackParamList, HomeOptions.SurveyHistory>;
@@ -28,27 +27,6 @@ type Props = {
     navigation: HistNavProp;
     route: HistRouteProp;
 };
-
-type RenderProps = {
-    log: any;
-}
-
-function SurveyCard(props: RenderProps) {
-    const sleepTime = sleepDatesService.getSleepTime(props.log.sleep_start_date, props.log.sleep_end_date);
-    return (
-        <View style={HistoryStyles.HistoryEventCard}>
-            <Text style={HistoryStyles.HistoryCardTitle}>{props.log.date}</Text>
-            <View>
-                <Text>Sleep Time: {sleepTime.hours} hours {sleepTime.minutes} minutes</Text>
-                <Text>Stress Level: {props.log.stress_level}</Text>
-                <Text>Felt Illness: {props.log.illness ? 'Yes' : 'No'}</Text>
-                <Text>Had a Fever: {props.log.fever ? 'Yes' : 'No'}</Text>
-                <Text>Missed a Meal: {props.log.miss_meal ? 'Yes' : 'No'}</Text>
-                <Text>Took Medication: {props.log.medication ? 'Yes' : 'No'}</Text>
-            </View>
-        </View>
-    )
-}
 
 export default function SurveyHistory(props: Props) {
     const updateContext = GetUpdateContext();
@@ -117,7 +95,14 @@ export default function SurveyHistory(props: Props) {
                 <Text style={HistoryStyles.SectionHeader}>Surveys</Text>
                 {results.surveys.length > 0 ?
                     results.surveys.map(function (survey, key) {
-                        return <SurveyCard log={survey} key={key} />
+                        let dt: Date = new Date(survey.date);
+                        return (
+                        <View key={key} style={{ display: 'flex', flexDirection: `row`, justifyContent: 'space-between' }}>
+                            <View style={HistoryStyles.HistoryEventCard}>
+                                <Text style={HistoryStyles.HistoryCardTitle}>{dt.toDateString()}</Text>
+                            </View>
+                        </View>
+                        )
                     })
                     :
                     <Text style={HistoryStyles.HistoryAlternateText}>
