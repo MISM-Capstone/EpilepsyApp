@@ -7,7 +7,6 @@ import AddEditSeizureLog from "../../pages/_Shared/AddEditSeizureLog";
 import RecordMedication from "../../pages/_Shared/RecordMedication";
 
 import HeaderStyle from "../../styles/HeaderStyle";
-import HealthKitTest from '../../pages/Home/HealthKitTest';
 import AddLocation from '../../pages/_Shared/AddLocation';
 import AddMedication from '../../pages/_Shared/AddMedication';
 import AddDosageUnit from '../../pages/_Shared/AddDosageUnit';
@@ -72,13 +71,6 @@ const HomeNavigation = () => {
                     component={RecordMedication}
                     options={{
                         title: 'Record Medication'
-                    }}
-                />
-                <Stack.Screen
-                    name={HomeOptions.HealthKitTest}
-                    component={HealthKitTest}
-                    options={{
-                        title: 'Health Kit Test'
                     }}
                 />
                 <Stack.Screen

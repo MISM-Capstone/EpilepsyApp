@@ -7,7 +7,8 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/EpilepsyApp/main.jsbundle' --dev=false --platform='ios' --assets-dest='./ios'"
   },
   "dependencies": {
     "@react-native-community/datetimepicker": "^3.0.9",
@@ -26,7 +27,6 @@
     "react-native-file-viewer": "^2.1.4",
     "react-native-fs": "^2.16.6",
     "react-native-gesture-handler": "^1.9.0",
-    "react-native-health": "^1.4.0",
     "react-native-html-to-pdf": "^0.9.1",
     "react-native-modal-dropdown": "^1.0.0",
     "react-native-picker-select": "^8.0.4",

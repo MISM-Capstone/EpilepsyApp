@@ -18,7 +18,6 @@ export type HomeStackParamList = {
     RecordMedication: EditLogProps;
     TakeSurvey: TakeSurveyLogProps;
     SurveyHistory: TabProps;
-    HealthKitTest: TabProps;
     AddDosageUnit: TabProps;
     AddLocation: TabProps;
     AddMedication: TabProps;
@@ -32,7 +31,6 @@ export enum HomeOptions {
     RecordMedication="RecordMedication",
     TakeSurvey="TakeSurvey",
     SurveyHistory="SurveyHistory",
-    HealthKitTest="HealthKitTest",
     AddDosageUnit="AddDosageUnit",
     AddLocation="AddLocation",
     AddMedication="AddMedication",
